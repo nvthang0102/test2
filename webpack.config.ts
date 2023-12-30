@@ -22,6 +22,10 @@ module.exports = {
         { loader: "sass-loader" }
       ]
     },
+    {
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    },
   ],
   resolve: {
     fallback: {

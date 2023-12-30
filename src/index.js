@@ -7,7 +7,7 @@ import ProtectedRoute from './routers/ProtectedRouter';
 import Authentication from './pages/authentication';
 import "./index.scss"
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root') 
 );
 root.render(
       <Router>
