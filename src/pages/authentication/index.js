@@ -6,9 +6,9 @@ const Authentication = () => {
   
     return(
         
-      <div className={`wrapperAuthPage  `}>
+      <div className={`wrapperAuthPage`}>
         <div  className="wrapperFormInput  w-full h-full  md-mb:bg-bloginMB sm-tl:bg-bgloginTL bg-bgloginPC ">
-          <div className="headerLogin p-[3.3rem]">
+          <div className="headerLogin p-[3.3rem ]">
            <IconArrowLeft/>
           </div>
         </div>

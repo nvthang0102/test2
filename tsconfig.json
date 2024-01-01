@@ -105,5 +105,5 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx"
-  ],
+, "src/index.js", "src/routers/ProtectedRouter.js", "src/pages/authentication/index.js", "src/pages/authentication/FormRegister.js", "src/pages/authentication/FormLogin.js", "src/layouts/MainLayout.js", "src/components/button/BaseButton.js", "src/assets/icons/index.js"  ],
 }

@@ -17,7 +17,11 @@ module.exports = {
     'bgloginMB': `url('assets/images/bg_loginMB.png')`,
     'bgloginTL': `url('assets/images/bg_loginTL.png')`,
     'bgloginPC': `url('assets/images/bg_loginPC.png')`,
-  }
+  },
+  textColor: {
+    'labelText': 'rgba(255,255,255,0.6)', // Thêm một màu tùy chỉnh với tên 'custom-color'
+    'whiteText': '#fff', // Thêm một màu tùy chỉnh với tên 'custom-color'
+  },
   },
   plugins: [],
 }

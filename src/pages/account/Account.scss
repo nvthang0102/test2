@@ -1,0 +1,23 @@
+.contentInfo{
+    margin-top: 1.8rem;
+    .infoItem{
+        .iconItem{
+            
+            margin-right: 12px;
+        }
+    }
+    .borderDashed{
+        border-bottom: 1px dashed #1B94D2;
+    }
+    .borderBottom{
+        border-radius: none !important;
+        border-bottom: 1px solid ;
+        &:focus{
+            box-shadow: none;
+        }
+    }
+    .ant-input{
+        border-radius: unset !important;
+        padding-left: unset;
+    }
+}

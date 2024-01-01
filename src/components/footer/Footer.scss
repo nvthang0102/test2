@@ -1,0 +1,13 @@
+@import "/src/assets/styles/validate.scss";
+.footer{
+    display: flex;
+    justify-content: center;
+    background:$--glass-grad-1 ;
+    padding: 1.5rem 0;
+    backdrop-filter: blur(9px);
+    position: fixed;
+    bottom: 0;
+    span{
+        color: $--main-color;
+    }
+}

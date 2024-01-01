@@ -1,0 +1,22 @@
+@import "../../assets/styles/validate.scss";
+.btnBase{
+    background: linear-gradient(180deg, #00D4FC 0%, #1955B6 100%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 12px;
+    font-style: normal;
+    padding: 0 9px;
+    border-radius: 8px;
+    .contentBtn{
+        font-weight: 600;
+    }
+    .preFix{
+        margin-right: 0.6rem;
+    }
+    .subFix{
+        margin-left: 0.6rem;
+    }
+}

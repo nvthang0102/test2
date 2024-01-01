@@ -1,2 +1,15 @@
-export { ReactComponent as IconArrowLeft } from "./IconArrowLeft.svg";
-export { ReactComponent as IconTest } from "./Icontest.svg";
+export {ReactComponent as IconUpLevel} from "./IconUpLevel.svg"
+export {ReactComponent as IconArrowLeft} from "./IconArrowLeft.svg"
+export {ReactComponent as IconBar} from "./IconBar.svg"
+export {ReactComponent as IconEdit} from "./IconEdit.svg"
+export {ReactComponent as IconAccount} from "./IconAccount.svg"
+export {ReactComponent as IconCalenda} from "./IconCalenda.svg"
+export {ReactComponent as IconPhoneCall} from "./IconPhoneCall.svg"
+export {ReactComponent as IconEmail} from "./IconEmail.svg"
+export {ReactComponent as IconBanner} from "./IconBanner.svg"
+export {ReactComponent as IconLock} from "./IconLock.svg"
+export {ReactComponent as IconSuccess} from "./IconSuccess.svg"
+export {ReactComponent as IconInformation} from "./IconInformation.svg"
+export {ReactComponent as IconGoogle} from "./IconGoogle.svg"
+export {ReactComponent as IconLink} from "./IconLink.svg"
+export {ReactComponent as IconUnLink} from "./IconUnLink.svg"
