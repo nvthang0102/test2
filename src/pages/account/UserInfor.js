@@ -24,6 +24,7 @@ const UserInfor = () => {
   const handleSetEdit = () => {
     setIsEdit(!isEdit)
   }
+  console.log(isEdit);
   return (
     <AccoutItemLayout
       title={'THÔNG TIN CÁ NHÂN'}
@@ -39,7 +40,7 @@ const UserInfor = () => {
             <span className="iconItem">
               <IconAccount />
             </span>
-            {isEdit ? (
+            {!isEdit ? (
               <Input
                 className="flex-1 text-[12px] bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
                 placeholder="Họ và tên"
@@ -61,7 +62,7 @@ const UserInfor = () => {
               <IconCalenda />
             </span>
             
-            {isEdit ? (
+            {!isEdit ? (
               <Input
                 className="flex-1 text-[12px] bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
                 placeholder="DD/MM/YYYY"
@@ -81,7 +82,7 @@ const UserInfor = () => {
             <span className="iconItem">
               <IconPhoneCall />
             </span>
-            {isEdit ? (
+            {!isEdit ? (
               <Input
                 className="flex-1 text-[12px] bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
                 placeholder="Số điện thoại"
