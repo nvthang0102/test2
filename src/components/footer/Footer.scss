@@ -2,11 +2,13 @@
 .footer{
     display: flex;
     justify-content: center;
-    background:$--glass-grad-1 ;
+    background:$--glass-grad-1;
     padding: 1.5rem 0;
-    backdrop-filter: blur(9px);
     position: fixed;
+    backdrop-filter: blur(9px);
     bottom: 0;
+    z-index: 99;
+    width: calc(100vw - 5px );
     span{
         color: $--main-color;
     }

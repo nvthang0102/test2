@@ -1,105 +1,205 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AccoutItemLayout from '../../layouts/AccoutItemLayout'
 import {
   IconAccount,
   IconArrowLeft,
   IconCalenda,
+  IconCamera,
+  IconDelete,
+  IconDown,
   IconEdit,
-  IconEmail,
   IconPhoneCall,
+  IconPlus,
+  IconRight,
 } from '../../assets/icons'
 import imgDefault from '../../assets/images/Img_AccDefault.png'
 import './Account.scss'
 import { Input } from 'antd'
 import moment from 'moment'
+import BaseButton from './../../components/button/BaseButton'
+import { getUserInfo } from '../../service/slices/AccountManagerSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { accountSelector } from '../../service/selectors'
 const UserInfor = () => {
-  const data = {
+  const [data, setData] = useState({
     fullName: '',
-    birthday: '2023-04-12',
-    phones: ['0123456789'],
+    birthday: '',
+    phones: [],
     avatarID: '',
     avatarUrl: '',
-  }
-  const [isEdit, setIsEdit] = useState(true)
+  })
+  const [isEdit, setIsEdit] = useState(false)
+  const dispatch = useDispatch()
+  const accountState = useSelector(accountSelector)
+  const [showMorePhones, setShowMorePhone] = useState(false)
   const handleSetEdit = () => {
     setIsEdit(!isEdit)
   }
-  console.log(isEdit);
+  useEffect(() => {
+    dispatch(getUserInfo())
+  }, [])
+  useEffect(() => {
+    if (accountState?.dataAccountInfo) {
+      setData(accountState.dataAccountInfo)
+    }
+  }, [accountState.dataAccountInfo])
   return (
     <AccoutItemLayout
       title={'THÔNG TIN CÁ NHÂN'}
       handleClick={handleSetEdit}
-      icon={isEdit ? <IconEdit /> : <IconArrowLeft />}
+      icon={isEdit ? <IconArrowLeft /> : <IconEdit />}
     >
       <div className="contentInfo flex ">
-        <div className="img">
-          <img src={imgDefault} alt="imgAccount" />
+        <div className="imgUser">
+          <img src={imgDefault} className="img" alt="imgAccount" />
+          {isEdit ? (
+            <div className="iconAddImage ">
+              <IconCamera />
+            </div>
+          ) : null}
         </div>
-        <div className="ml-[16px]  flex-1 flex flex-col justify-between">
+        <div className="ml-[14px]  flex-1 flex flex-col ">
           <div className="infoItem flex items-center">
-            <span className="iconItem">
+            <div className="iconItem">
               <IconAccount />
-            </span>
-            {!isEdit ? (
+            </div>
+            {isEdit ? (
               <Input
-                className="flex-1 text-[12px] bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
+                className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
                 placeholder="Họ và tên"
-                autoFocus
                 value={data.fullName}
               ></Input>
             ) : (
-              <span
-                className={`leading-6 text-[12px] text-[#fff] textItem ${
+              <div
+                className={` leading-6 text-textSizeMb text-[#fff] textItem ${
                   !data.fullName ? 'italic text-labelText' : null
                 } font-normal`}
               >
                 {data.fullName ? data.fullName : '(Họ và tên)'}
-              </span>
+              </div>
             )}
           </div>
           <div className="infoItem flex">
-            <span className="iconItem">
+            <div className="iconItem">
               <IconCalenda />
-            </span>
-            
-            {!isEdit ? (
+            </div>
+
+            {isEdit ? (
               <Input
-                className="flex-1 text-[12px] bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
+                className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
                 placeholder="DD/MM/YYYY"
-                value={moment(data.birthday).format("DD/MM/YYYY")}
+                value={moment(data.birthday).format('DD/MM/YYYY')}
               ></Input>
             ) : (
-                <span
-                className={`leading-6 text-[12px] text-[#fff] textItem ${
+              <div
+                className={`leading-6 text-textSizeMb text-[#fff] textItem ${
                   !data.birthday ? 'italic text-labelText' : null
                 } font-normal`}
               >
-                {data.birthday ? moment(data.birthday).format("DD/MM/YYYY") : 'DD/MM/YYYY'}
+                {data.birthday
+                  ? moment(data.birthday).format('DD/MM/YYYY')
+                  : 'DD/MM/YYYY'}
+              </div>
+            )}
+          </div>
+
+          <div className="infoItem relative  ">
+            <div className="flex items-center ">
+              <div className="iconItem">
+                <IconPhoneCall />
+              </div>
+              {isEdit ? (
+                <Input
+                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
+                  placeholder="Số điện thoại"
+                  value={data.phones[0]}
+                ></Input>
+              ) : (
+                <div
+                  className={`leading-6 text-textSizeMb text-[#fff] textItem ${
+                    !data.phones ? 'italic text-labelText' : null
+                  } font-normal`}
+                >
+                  {data.phones?.length ? data.phones[0] : '(trống)'}
+                </div>
+              )}
+            </div>
+            {data.phones?.length > 1 && !isEdit ? (
+              <span
+                className="absolute iconSmooth  top-[50%] translate-y-[-50%] right-0"
+                onClick={() => setShowMorePhone(!showMorePhones)}
+              >
+                {showMorePhones ? <IconDown /> : <IconRight />}
               </span>
-            )}
+            ) : null}
           </div>
-          <div className="infoItem flex">
-            <span className="iconItem">
-              <IconPhoneCall />
-            </span>
-            {!isEdit ? (
-              <Input
-                className="flex-1 text-[12px] bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
-                placeholder="Số điện thoại"
-                value={data.phones}
-              ></Input>
-            ) : (
-                <span
-              className={`leading-6 text-[12px] text-[#fff] textItem ${
-                !data.phones ? 'italic text-labelText' : null
-              } font-normal`}
-            >
-              {data.phones ? data.phones : '(trống)'}
-            </span>
-            )}
-          </div>
+          {showMorePhones || isEdit ? (
+            <>
+              {data.phones.map((item, index) => {
+                if (index === 0) return
+                else {
+                  return (
+                    <div className="infoItem ">
+                      <div className="flex items-center ">
+                        <div className="iconItem w-[24px]"></div>
+                        {isEdit ? (
+                          <>
+                            <Input
+                              className="flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
+                              placeholder="Số điện thoại"
+                              value={item}
+                            ></Input>
+                            <IconDelete />
+                          </>
+                        ) : (
+                          <div
+                            className={`leading-6 text-textSizeMb text-[#fff] textItem font-normal`}
+                          >
+                            {item}
+                          </div>
+                        )}
+                      </div>
+                      {/* {
+                        data.phones.length >=1 && !isEdit? <div onClick={()=>setShowMorePhone(!showMorePhones)}>
+                          {showMorePhones}
+                        </div>:null
+                      } */}
+                    </div>
+                  )
+                }
+              })}
+
+              {isEdit ? (
+                <>
+                  <div className="infoItem">
+                    <div className="flex">
+                      <div className="iconItem w-[24px]"></div>
+                      <Input
+                        className="flex-1 mr-[8px] placeholder:italic placeholder:text-labelText text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
+                        value={''}
+                        placeholder="(trống)"
+                      ></Input>
+                      <IconDelete />
+                    </div>
+                  </div>
+                  <div className="infoItem flex  items-center justify-between">
+                    <div className="flex">
+                      <div className="iconItem">
+                        <IconPlus />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : null}
+            </>
+          ) : null}
         </div>
       </div>
+      {isEdit ? (
+        <div className="flex justify-end mt-[12px]">
+          <BaseButton content={'Lưu thay đổi'} />
+        </div>
+      ) : null}
     </AccoutItemLayout>
   )
 }

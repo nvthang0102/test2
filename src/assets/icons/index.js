@@ -1,15 +1,35 @@
-export {ReactComponent as IconUpLevel} from "./IconUpLevel.svg"
-export {ReactComponent as IconArrowLeft} from "./IconArrowLeft.svg"
-export {ReactComponent as IconBar} from "./IconBar.svg"
-export {ReactComponent as IconEdit} from "./IconEdit.svg"
-export {ReactComponent as IconAccount} from "./IconAccount.svg"
-export {ReactComponent as IconCalenda} from "./IconCalenda.svg"
-export {ReactComponent as IconPhoneCall} from "./IconPhoneCall.svg"
-export {ReactComponent as IconEmail} from "./IconEmail.svg"
-export {ReactComponent as IconBanner} from "./IconBanner.svg"
-export {ReactComponent as IconLock} from "./IconLock.svg"
-export {ReactComponent as IconSuccess} from "./IconSuccess.svg"
-export {ReactComponent as IconInformation} from "./IconInformation.svg"
-export {ReactComponent as IconGoogle} from "./IconGoogle.svg"
-export {ReactComponent as IconLink} from "./IconLink.svg"
-export {ReactComponent as IconUnLink} from "./IconUnLink.svg"
+export { ReactComponent as IconUpLevel } from './IconUpLevel.svg'
+export { ReactComponent as IconArrowLeft } from './IconArrowLeft.svg'
+export { ReactComponent as IconBar } from './IconBar.svg'
+export { ReactComponent as IconEdit } from './IconEdit.svg'
+export { ReactComponent as IconAccount } from './IconAccount.svg'
+export { ReactComponent as IconCalenda } from './IconCalenda.svg'
+export { ReactComponent as IconPhoneCall } from './IconPhoneCall.svg'
+export { ReactComponent as IconEmail } from './IconEmail.svg'
+export { ReactComponent as IconBanner } from './IconBanner.svg'
+export { ReactComponent as IconLock } from './IconLock.svg'
+export { ReactComponent as IconSuccess } from './IconSuccess.svg'
+export { ReactComponent as IconInformation } from './IconInformation.svg'
+export { ReactComponent as IconGoogle } from './IconGoogle.svg'
+export { ReactComponent as IconLink } from './IconLink.svg'
+export { ReactComponent as IconUnLink } from './IconUnLink.svg'
+export { ReactComponent as IconCamera } from './IconCamera.svg'
+export { ReactComponent as IconRight } from './IconRight.svg'
+export { ReactComponent as IconDown } from './IconDown.svg'
+export { ReactComponent as IconPlus } from './IconPlus.svg'
+export { ReactComponent as IconXmark } from './IconXmark.svg'
+export { ReactComponent as IconAnalytics } from './IconAnalytics.svg'
+export { ReactComponent as IconCart } from './IconCart.svg'
+export { ReactComponent as IconDanger } from './IconDanger.svg'
+export { ReactComponent as IconShowPass } from './IconShowPass.svg'
+export { ReactComponent as IconHidePass } from './IconHidePass.svg'
+export { ReactComponent as IconDelete } from './IconDelete.svg'
+export { ReactComponent as IconAddAddress } from './IconAddAddress.svg'
+export { ReactComponent as IconRadioUnChecked } from './IconRadioUnChecked.svg'
+export { ReactComponent as IconRadioChecked } from './IconRadioChecked.svg'
+export { ReactComponent as IconSearch } from './IconSearch.svg'
+export { ReactComponent as IconClose } from './IconClose.svg'
+export { ReactComponent as IconCloud } from './IconCloud.svg'
+export { ReactComponent as IconBarMenu } from './IconBarMenu.svg'
+export { ReactComponent as IconRoundChecked } from './IconRoundChecked.svg'
+export { ReactComponent as IconTarget } from './IconTarget.svg'
