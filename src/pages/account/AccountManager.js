@@ -1,6 +1,5 @@
 import React from 'react'
 import UserInfor from './UserInfor'
-import img from '../../assets/images/Img_AccDefault.png'
 import RegisterInfo from './RegisterInfo'
 import AddressInfo from './AddressInfo'
 

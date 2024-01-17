@@ -7,7 +7,7 @@ const AccoutItemLayout = ({
   children,
   className,
   id,
-  handleClick,
+  handleClick = () => {},
 }) => {
   return (
     <div className={`wrapperAccountItem ${className}`}>

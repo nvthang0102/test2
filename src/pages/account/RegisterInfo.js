@@ -19,7 +19,10 @@ import './Account.scss'
 import BaseButton from '../../components/button/BaseButton'
 import { Tooltip } from 'antd'
 import InputForm from './../../components/input/InputForm'
-import { getRegisterInfo } from '../../service/slices/AccountManagerSlice'
+import {
+  getRegisterInfo,
+  setIsEdit,
+} from '../../service/slices/AccountManagerSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { accountSelector } from '../../service/selectors'
 
@@ -30,9 +33,9 @@ const RegisterInfo = () => {
     isMailVerify: true,
     isLinked: true,
   })
-  const [isEdit, setIsEdit] = useState(false)
   const dispatch = useDispatch()
   const accountState = useSelector(accountSelector)
+  const { keyEdit } = accountState
   useEffect(() => {
     if (accountState?.dataRegister) {
       setData(accountState.dataRegister)
@@ -41,35 +44,27 @@ const RegisterInfo = () => {
   useEffect(() => {
     dispatch(getRegisterInfo())
   }, [])
-  const handleShareClick = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: 'Shared Image',
-          text: 'Check out this image!',
-          url: { imgDefault },
-        })
-      } else {
-        console.log('Web Share API not supported in this browser.')
-        // Handle fallback mechanism (e.g., show a modal with sharing options).
-      }
-    } catch (error) {
-      console.error('Error sharing:', error)
-    }
+  const handleSetEdit = () => {
+    dispatch(setIsEdit('registerInfo'))
   }
-  const handleClick = () => {
-    setIsEdit(!isEdit)
+  const handleHiddenEdit = () => {
+    dispatch(setIsEdit(''))
   }
 
   return (
     <AccoutItemLayout
       className={'wrapperRegisInfo'}
       title={'THÔNG TIN ĐĂNG KÝ'}
-      handleClick={handleClick}
-      icon={isEdit ? <IconArrowLeft /> : <IconEdit />}
+      icon={
+        keyEdit === 'registerInfo' ? (
+          <IconArrowLeft onClick={handleHiddenEdit} />
+        ) : (
+          <IconEdit onClick={handleSetEdit} />
+        )
+      }
     >
       <div className="contentInfo flex ">
-        {isEdit ? (
+        {keyEdit === 'registerInfo' ? (
           <div className=" flex-1 flex flex-col justify-between">
             <div className="infoItem flex align-middle">
               <InputForm
@@ -169,7 +164,7 @@ const RegisterInfo = () => {
           </div>
         )}
       </div>
-      {isEdit ? (
+      {keyEdit === 'registerInfo' ? (
         <div className="flex mt-[24px] items-center justify-between font-semibold text-[12px] text-labelText ">
           <span className="italic">Quên mật khẩu</span>
           <BaseButton content={'Lưu thay đổi'} />

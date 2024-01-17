@@ -12,7 +12,9 @@ const AccountManagerSlice = createSlice({
   name: 'account',
   initialState,
   reducers: {
-    setIsEdit: (state, action) => {},
+    setIsEdit: (state, action) => {
+      state.keyEdit = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -92,4 +94,4 @@ export const getAdressManager = createAsyncThunk(
 )
 
 export default AccountManagerSlice
-export const {} = AccountManagerSlice.actions
+export const { setIsEdit } = AccountManagerSlice.actions

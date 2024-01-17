@@ -19,16 +19,19 @@ import {
   getWard,
 } from '../../service/slices/ProvinceSlice'
 import { accountSelector, provinceSelector } from '../../service/selectors'
-import { getAdressManager } from '../../service/slices/AccountManagerSlice'
+import {
+  getAdressManager,
+  setIsEdit,
+} from '../../service/slices/AccountManagerSlice'
 const AddressInfo = () => {
   const dispatch = useDispatch()
-  const [isEdit, setIsEdit] = useState(false)
   const provinceState = useSelector(provinceSelector)
   const accountState = useSelector(accountSelector)
   const { dataCity, dataDistrict, dataWard } = provinceState
   const [idCity, setIdCity] = useState('')
   const [idDistrict, setIdDistrict] = useState('')
   const [data, setData] = useState([])
+  const { keyEdit } = accountState
   useEffect(() => {
     if (accountState?.dataAdress) {
       setData(accountState.dataAdress)
@@ -76,7 +79,7 @@ const AddressInfo = () => {
   }, [dataWard])
 
   const handleClick = () => {
-    setIsEdit(!isEdit)
+    setIsEdit(!keyEdit === 'AddressInfo')
   }
   useEffect(() => {
     dispatch(getCity())
@@ -91,12 +94,24 @@ const AddressInfo = () => {
       dispatch(getWard(idDistrict))
     }
   }, [idDistrict])
+  const handleSetEdit = () => {
+    dispatch(setIsEdit('AddressInfo'))
+  }
+  const handleHiddenEdit = () => {
+    dispatch(setIsEdit(''))
+  }
+
   console.log(dataWard)
   return (
     <AccoutItemLayout
       title={'QUẢN LÝ ĐỊA CHỈ'}
-      handleClick={handleClick}
-      icon={isEdit ? <IconArrowLeft /> : <IconEdit />}
+      icon={
+        keyEdit === 'AddressInfo' ? (
+          <IconArrowLeft onClick={handleHiddenEdit} />
+        ) : (
+          <IconEdit onClick={handleSetEdit} />
+        )
+      }
     >
       <div className="contentInfo ">
         {data.length ? (
@@ -104,12 +119,12 @@ const AddressInfo = () => {
             return (
               <div
                 className={`text-textSizeMb pt-[12px] ${
-                  data.length !== index + 1 || isEdit
+                  data.length !== index + 1 || keyEdit === 'AddressInfo'
                     ? 'borderDashed  pb-[12px] mb-[12px]  py-[12px] '
                     : null
                 }`}
               >
-                {isEdit ? (
+                {keyEdit === 'AddressInfo' ? (
                   <>
                     <div className="mb-[12px] flex items-center">
                       <Input
@@ -262,12 +277,12 @@ const AddressInfo = () => {
           </span>
         )}
       </div>
-      {isEdit ? (
+      {keyEdit === 'AddressInfo' ? (
         <div className="">
           <IconAddAddress />
         </div>
       ) : null}
-      {isEdit ? (
+      {keyEdit === 'AddressInfo' ? (
         <div className="flex justify-end mt-[12px]">
           <BaseButton content={'Lưu thay đổi'} />
         </div>
