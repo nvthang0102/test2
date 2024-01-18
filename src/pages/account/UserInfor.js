@@ -25,6 +25,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { accountSelector } from '../../service/selectors'
 import { validPhoneNumber } from '../../util'
+import { setNotify } from '../../service/slices/CommonSlice'
 const UserInfor = () => {
   const [data, setData] = useState({
     fullName: '',
@@ -80,11 +81,9 @@ const UserInfor = () => {
 
   const handleUpdateUser = () => {
     const resultPhone = dataPhones.filter((item) => item !== 'Rỗng')
-
     const differenceArray = resultPhone.filter(
       (item) => !dataAccountInfo.phones.includes(item)
     )
-
     if (
       differenceArray.length ||
       data.fullName !== dataAccountInfo.fullName ||
@@ -94,7 +93,13 @@ const UserInfor = () => {
     ) {
       dispatch(updateUserInfo({ ...data, phones: resultPhone }))
     } else {
-      console.log('Dữ liệu không bị thay đổi')
+      dispatch(
+        setNotify({
+          isNotify: true,
+          msg: 'Dự liệu không có sự thay đổi',
+          typeNotify: 'error',
+        })
+      )
     }
   }
   return (
@@ -261,36 +266,32 @@ const UserInfor = () => {
                           } infoItem`}
                           key={indexPhone}
                         >
-                          <div className="flex items-center ">
+                          <div className="flex  w-full items-center ">
                             <div
                               className={`${
                                 isEmpty ? 'emptyPhone' : null
                               } iconItem w-[24px]`}
                             ></div>
-                            <>
-                              <Input
-                                key={indexPhone}
-                                className={`${
-                                  item === 'Rỗng' ? 'italic' : null
-                                } flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText`}
-                                placeholder={
-                                  item !== 'Rỗng' ? 'Số điện thoại' : '(Trống)'
-                                }
-                                value={item !== 'Rỗng' ? item : ''}
-                                onChange={(e) =>
-                                  handleChangePhones(indexPhone, e.target.value)
-                                }
-                              ></Input>
-                              <IconDelete
-                                onClick={() =>
-                                  setDataPhones(
-                                    dataPhones.filter(
-                                      (_, i) => i !== indexPhone
-                                    )
-                                  )
-                                }
-                              />
-                            </>
+                            <Input
+                              key={indexPhone}
+                              className={`${
+                                item === 'Rỗng' ? 'italic' : null
+                              } flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText`}
+                              placeholder={
+                                item !== 'Rỗng' ? 'Số điện thoại' : '(Trống)'
+                              }
+                              value={item !== 'Rỗng' ? item : ''}
+                              onChange={(e) =>
+                                handleChangePhones(indexPhone, e.target.value)
+                              }
+                            ></Input>
+                            <IconDelete
+                              onClick={() =>
+                                setDataPhones(
+                                  dataPhones.filter((_, i) => i !== indexPhone)
+                                )
+                              }
+                            />
                           </div>
                           {/* {
                           data.phones.length >=1 && !keyEdit==="userInfo"? <div onClick={()=>setShowMorePhone(!showMorePhones)}>
