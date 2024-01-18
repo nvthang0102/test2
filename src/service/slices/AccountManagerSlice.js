@@ -92,6 +92,19 @@ export const getAdressManager = createAsyncThunk(
     }
   }
 )
+// request chỉnh sửa thông tin cá nhân
+export const updateUserInfo = createAsyncThunk(
+  'account/updateUserInfo',
+  async (body) => {
+    try {
+      const res = await instance.post(`/v2/user/updateInfo`, body)
+      return res.data
+    } catch (error) {
+      console.log(error)
+      return error.reponse.data
+    }
+  }
+)
 
 export default AccountManagerSlice
 export const { setIsEdit } = AccountManagerSlice.actions

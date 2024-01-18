@@ -26,6 +26,7 @@
     align-items: center;
     height: 36px;
     align-items: center;
+   
     .iconItem {
       margin-right: 12px;
     }
@@ -69,4 +70,9 @@
 .iconSmooth{
   
   transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),opacity 0.3s;
+}
+.emptyPhone{
+ input::placeholder{
+  color: #EB5757 !important;
+ }
 }

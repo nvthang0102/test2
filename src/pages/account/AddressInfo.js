@@ -37,7 +37,6 @@ const AddressInfo = () => {
       setData(accountState.dataAdress)
     }
   }, [accountState.dataAdress])
-  console.log(data)
   const optionCity = useMemo(() => {
     let result = []
     if (dataCity.length) {
@@ -101,7 +100,6 @@ const AddressInfo = () => {
     dispatch(setIsEdit(''))
   }
 
-  console.log(dataWard)
   return (
     <AccoutItemLayout
       title={'QUẢN LÝ ĐỊA CHỈ'}
