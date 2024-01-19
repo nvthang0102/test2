@@ -70,6 +70,18 @@ const AccountManagerSlice = createSlice({
       .addCase(updateUserInfo.rejected, (state) => {
         state.isNotify = false
       })
+      // xóa thông tin địa chỉ
+      .addCase(deleteAddress.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteAddress.fulfilled, (state, action) => {
+        if (action.payload.status === 200 || action.payload.status === 1) {
+          builder.dispatch(getAdressManager())
+        }
+      })
+      .addCase(deleteAddress.rejected, (state) => {
+        state.isNotify = false
+      })
   },
 })
 //lấy thông tin cá nhân
@@ -123,6 +135,22 @@ export const updateUserInfo = createAsyncThunk(
           })
         )
       }
+      return res.data
+    } catch (error) {
+      console.log(error)
+      return error.reponse.data
+    }
+  }
+)
+//request chỉnh sửa thông tin đăng ký
+// request chỉnh sửa địa chỉ
+
+//request xóa địa chỉ
+export const deleteAddress = createAsyncThunk(
+  'account/deleteAddress',
+  async (id, thunkAPI) => {
+    try {
+      const res = await instance.delete(`v2/user/deleteAddress?addressID=${id}`)
       return res.data
     } catch (error) {
       console.log(error)

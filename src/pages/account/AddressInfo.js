@@ -32,12 +32,13 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
   const [idDistrict, setIdDistrict] = useState('')
   const [data, setData] = useState([])
   const { keyEdit, isChanged } = accountState
-  // call api
   useEffect(() => {
     if (accountState?.dataAdress) {
       setData(accountState.dataAdress)
     }
   }, [accountState.dataAdress])
+  console.log('data', data)
+  // call api
   useEffect(() => {
     dispatch(getAdressManager())
   }, [])

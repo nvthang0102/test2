@@ -28,7 +28,6 @@ const SelectSearch = ({
       removeAccents(input.toLowerCase())
     )
   const handleFocus = (e) => {
-    console.log(111)
     e.preventDefault()
     setIsSearch(false)
   }
