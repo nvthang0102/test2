@@ -24,9 +24,7 @@ import {
 } from '../../service/slices/AccountManagerSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { accountSelector } from '../../service/selectors'
-import { validPhoneNumber } from '../../util'
-import { setNotify } from '../../service/slices/CommonSlice'
-const UserInfor = () => {
+const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
   const [data, setData] = useState({
     fullName: '',
     birthday: '',
@@ -36,16 +34,19 @@ const UserInfor = () => {
   const [dataPhones, setDataPhones] = useState([])
   const dispatch = useDispatch()
   const accountState = useSelector(accountSelector)
-  const { keyEdit, dataAccountInfo } = accountState
+  const { keyEdit, dataAccountInfo, isChanged } = accountState
   const [showMorePhones, setShowMorePhone] = useState(false)
   const [isEmpty, setIsEmpty] = useState(false)
-  const [validPhone, setValidPhone] = useState([])
   //xử lý trạng thái chỉnh sửa
   const handleSetEdit = () => {
-    dispatch(setIsEdit('userInfo'))
+    dispatch(setIsEdit({ keyEdit: 'userInfo', isChanged: false }))
   }
   const handleHiddenEdit = () => {
-    dispatch(setIsEdit(''))
+    if (isChanged) {
+      setShowConfirmEdit(true)
+    } else {
+      dispatch(setIsEdit({ keyEdit: '', isChanged: false }))
+    }
   }
 
   // lấy dữ liệu và set state
@@ -65,25 +66,57 @@ const UserInfor = () => {
     }
   }, [dataAccountInfo])
 
+  // check xem đã có sự thay đổi với dữ liệu cũ không để cảnh báo
+  useEffect(() => {
+    const resultPhone = dataPhones.filter((item) => item !== 'Rỗng')
+    let differenceArray = []
+    if (resultPhone.length <= dataAccountInfo.phones) {
+      differenceArray = resultPhone.filter(
+        (item) => !dataAccountInfo.phones.includes(item)
+      )
+    } else {
+      differenceArray = dataAccountInfo?.phones?.filter(
+        (item) => !resultPhone.includes(item)
+      )
+    }
+
+    if (data.avatarID) {
+      if (
+        differenceArray.length ||
+        data.fullName !== dataAccountInfo.fullName ||
+        data.birthday !==
+          moment(accountState.dataAccountInfo.birthday).format('DD/MM/YYYY') ||
+        data.avatarID !== dataAccountInfo.avatarID
+      ) {
+        setDataChange({
+          valueChange: { ...data, phones: resultPhone },
+          handle: updateUserInfo,
+        })
+        dispatch(setIsEdit({ keyEdit, isChanged: true }))
+      } else {
+        setDataChange({})
+        dispatch(setIsEdit({ keyEdit, isChanged: false }))
+      }
+    }
+  }, [data, dataPhones])
   // thực hiện chỉnh sửa dữ liệu
-
-  const [myArray, setMyArray] = useState(['1234', '2322', 'Trống'])
-
   const handleChangePhones = (index, newValue) => {
-    // Tạo một bản sao mới của mảng và thay đổi giá trị của item tại index
-    const newArray = dataPhones.map((item, i) =>
-      i === index ? newValue : item
-    )
-
-    // Cập nhật state với mảng mới
-    setDataPhones(newArray)
+    const result = dataPhones.map((item, i) => (i === index ? newValue : item))
+    setDataPhones(result)
   }
-
+  //lưu chỉnh sửa
   const handleUpdateUser = () => {
     const resultPhone = dataPhones.filter((item) => item !== 'Rỗng')
-    const differenceArray = resultPhone.filter(
-      (item) => !dataAccountInfo.phones.includes(item)
-    )
+    let differenceArray = []
+    if (resultPhone.length <= dataAccountInfo.phones) {
+      differenceArray = resultPhone.filter(
+        (item) => !dataAccountInfo.phones.includes(item)
+      )
+    } else {
+      differenceArray = dataAccountInfo?.phones?.filter(
+        (item) => !resultPhone.includes(item)
+      )
+    }
     if (
       differenceArray.length ||
       data.fullName !== dataAccountInfo.fullName ||
@@ -93,13 +126,7 @@ const UserInfor = () => {
     ) {
       dispatch(updateUserInfo({ ...data, phones: resultPhone }))
     } else {
-      dispatch(
-        setNotify({
-          isNotify: true,
-          msg: 'Dự liệu không có sự thay đổi',
-          typeNotify: 'error',
-        })
-      )
+      return
     }
   }
   return (
@@ -242,6 +269,7 @@ const UserInfor = () => {
                     className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
                     placeholder="Số điện thoại"
                     value={dataPhones[0]}
+                    onChange={(e) => handleChangePhones(0, e.target.value)}
                   ></Input>
                 </div>
                 {dataPhones?.length > 1 && !keyEdit ? (

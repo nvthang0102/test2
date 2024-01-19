@@ -23,7 +23,7 @@ import {
   getAdressManager,
   setIsEdit,
 } from '../../service/slices/AccountManagerSlice'
-const AddressInfo = () => {
+const AddressInfo = ({ setShowConfirmEdit }) => {
   const dispatch = useDispatch()
   const provinceState = useSelector(provinceSelector)
   const accountState = useSelector(accountSelector)
@@ -31,12 +31,31 @@ const AddressInfo = () => {
   const [idCity, setIdCity] = useState('')
   const [idDistrict, setIdDistrict] = useState('')
   const [data, setData] = useState([])
-  const { keyEdit } = accountState
+  const { keyEdit, isChanged } = accountState
+  // call api
   useEffect(() => {
     if (accountState?.dataAdress) {
       setData(accountState.dataAdress)
     }
   }, [accountState.dataAdress])
+  useEffect(() => {
+    dispatch(getAdressManager())
+  }, [])
+  useEffect(() => {
+    dispatch(getCity())
+  }, [])
+  useEffect(() => {
+    if (idCity) {
+      dispatch(getDistrict(idCity))
+    }
+  }, [idCity])
+  useEffect(() => {
+    if (idCity) {
+      dispatch(getWard(idDistrict))
+    }
+  }, [idDistrict])
+
+  // xử lý dữ liệu địa chỉ
   const optionCity = useMemo(() => {
     let result = []
     if (dataCity.length) {
@@ -49,9 +68,6 @@ const AddressInfo = () => {
     }
     return result
   }, [dataCity])
-  useEffect(() => {
-    dispatch(getAdressManager())
-  }, [])
   const optionDistrict = useMemo(() => {
     let result = []
     if (dataDistrict?.length) {
@@ -77,29 +93,21 @@ const AddressInfo = () => {
     return result
   }, [dataWard])
 
-  const handleClick = () => {
-    setIsEdit(!keyEdit === 'AddressInfo')
-  }
-  useEffect(() => {
-    dispatch(getCity())
-  }, [])
-  useEffect(() => {
-    if (idCity) {
-      dispatch(getDistrict(idCity))
-    }
-  }, [idCity])
-  useEffect(() => {
-    if (idCity) {
-      dispatch(getWard(idDistrict))
-    }
-  }, [idDistrict])
+  //xử lý trạng thái chỉnh sửa
   const handleSetEdit = () => {
-    dispatch(setIsEdit('AddressInfo'))
+    if (isChanged) {
+      setShowConfirmEdit(true)
+    } else {
+      dispatch(setIsEdit({ keyEdit: 'AddressInfo', isChanged: false }))
+    }
   }
   const handleHiddenEdit = () => {
-    dispatch(setIsEdit(''))
+    if (isChanged) {
+      setShowConfirmEdit(true)
+    } else {
+      dispatch(setIsEdit({ keyEdit: '', isChanged: false }))
+    }
   }
-
   return (
     <AccoutItemLayout
       title={'QUẢN LÝ ĐỊA CHỈ'}
@@ -153,31 +161,19 @@ const AddressInfo = () => {
                       </div>
                     </div>
                     <div className="text-labelText ">
-                      {/* <div className="   flex align-middle">
-                        <InputForm
-                          className={' text-textSizeMb'}
-                          content={item.city}
-                          placeholder={'Tỉnh/ Thành'}
-                          subFix={<IconDown />}
-                        />
-                      </div> */}
                       <div className="h-[36px] mb-[6px] flex align-middle">
                         <SelectSearch
                           setValueSelect={setIdCity}
                           options={optionCity}
                           placeholder="Tỉnh/ Thành"
+                          defaultValue={
+                            optionCity.find((item) => item.value === item.city)
+                              ?.label
+                          }
                         />
                       </div>
                     </div>
                     <div className="text-labelText ">
-                      {/* <div className=" mb-[6px] flex align-middle">
-                        <InputForm
-                          className={' text-textSizeMb'}
-                          content={item.district}
-                          placeholder={'Quận/ Huyện'}
-                          subFix={<IconDown />}
-                        />
-                      </div> */}
                       <div className="h-[36px] mb-[6px] flex align-middle">
                         <SelectSearch
                           options={optionDistrict}
@@ -188,14 +184,6 @@ const AddressInfo = () => {
                       </div>
                     </div>
                     <div className="text-labelText ">
-                      {/* <div className=" flex align-middle">
-                        <InputForm
-                          className={'  text-textSizeMb'}
-                          content={item.wards}
-                          placeholder={'Phường/ Xã'}
-                          subFix={<IconDown />}
-                        />
-                      </div> */}
                       <div className="h-[36px] mb-[6px] flex align-middle">
                         <SelectSearch
                           options={optionWard}

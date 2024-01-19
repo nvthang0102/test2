@@ -9,6 +9,7 @@ const SelectSearch = ({
   placeholder = '',
   className,
   options = [],
+  defaultValue,
   error,
   preFix,
   subFix,
@@ -34,6 +35,7 @@ const SelectSearch = ({
   return (
     <Select
       showSearch
+      defaultValue={defaultValue}
       maxTagCount={3}
       placement="bottomRight"
       className={`wrapperSeleterSearch w-full ${className}`}

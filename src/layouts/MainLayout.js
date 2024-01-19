@@ -19,6 +19,7 @@ const MainLayout = () => {
       type: commonState.typeNotify,
       description: <div>{commonState.msg}</div>,
       placement: 'top',
+      duration: 3,
     })
   }
   useEffect(() => {
@@ -30,6 +31,7 @@ const MainLayout = () => {
     }, 1000)
     return () => clearTimeout(time)
   }, [commonState.isNotify])
+
   return (
     <>
       {contextHolder}

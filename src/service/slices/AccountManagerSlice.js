@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { instance } from './configAPI'
+import { setNotify } from './CommonSlice'
 const initialState = {
   dataAccountInfo: [],
   dataRegister: [],
   dataAdress: [],
+  isChanged: false,
   isLoading: false,
   resetRequest: false,
   keyEdit: '',
@@ -13,7 +15,8 @@ const AccountManagerSlice = createSlice({
   initialState,
   reducers: {
     setIsEdit: (state, action) => {
-      state.keyEdit = action.payload
+      state.keyEdit = action.payload.keyEdit
+      state.isChanged = action.payload.isChanged
     },
   },
   extraReducers: (builder) => {
@@ -52,6 +55,19 @@ const AccountManagerSlice = createSlice({
         }
       })
       .addCase(getAdressManager.rejected, (state) => {
+        state.isNotify = false
+      })
+      // cập nhật thông tin cá nhân
+      .addCase(updateUserInfo.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        if (action.payload.status === 200 || action.payload.status === 1) {
+          state.isChanged = false
+          state.keyEdit = ''
+        }
+      })
+      .addCase(updateUserInfo.rejected, (state) => {
         state.isNotify = false
       })
   },
@@ -95,9 +111,18 @@ export const getAdressManager = createAsyncThunk(
 // request chỉnh sửa thông tin cá nhân
 export const updateUserInfo = createAsyncThunk(
   'account/updateUserInfo',
-  async (body) => {
+  async (body, thunkAPI) => {
     try {
       const res = await instance.post(`/v2/user/updateInfo`, body)
+      if (res.data.status) {
+        thunkAPI.dispatch(
+          setNotify({
+            isNotify: true,
+            msg: 'Cập nhật dữ liệu thành công',
+            type: 'success',
+          })
+        )
+      }
       return res.data
     } catch (error) {
       console.log(error)

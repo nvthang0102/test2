@@ -26,7 +26,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { accountSelector } from '../../service/selectors'
 
-const RegisterInfo = () => {
+const RegisterInfo = ({ setShowConfirmEdit }) => {
   const [data, setData] = useState({
     mail: 'test.gmail.com',
     isSetPassword: true,
@@ -35,7 +35,7 @@ const RegisterInfo = () => {
   })
   const dispatch = useDispatch()
   const accountState = useSelector(accountSelector)
-  const { keyEdit } = accountState
+  const { keyEdit, isChanged } = accountState
   useEffect(() => {
     if (accountState?.dataRegister) {
       setData(accountState.dataRegister)
@@ -45,10 +45,16 @@ const RegisterInfo = () => {
     dispatch(getRegisterInfo())
   }, [])
   const handleSetEdit = () => {
-    dispatch(setIsEdit('registerInfo'))
+    if (keyEdit !== 'registerInfo' && isChanged) {
+      setShowConfirmEdit(true)
+    } else dispatch(setIsEdit({ keyEdit: 'registerInfo', isChanged: false }))
   }
   const handleHiddenEdit = () => {
-    dispatch(setIsEdit(''))
+    if (isChanged) {
+      setShowConfirmEdit(true)
+    } else {
+      dispatch(setIsEdit({ keyEdit: '', isChanged: false }))
+    }
   }
 
   return (

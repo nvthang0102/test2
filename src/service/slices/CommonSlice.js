@@ -11,7 +11,7 @@ const CommonSlice = createSlice({
     setNotify: (state, action) => {
       state.isNotify = action.payload.isNotify
       state.msg = action.payload.msg
-      state.typeNotify = action.payload.typeNotify
+      state.typeNotify = action.payload.type
     },
   },
   extraReducers: (builder) => {},
