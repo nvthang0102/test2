@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AccoutItemLayout from '../../layouts/AccoutItemLayout'
 import {
   IconBarMenu,
@@ -11,7 +11,17 @@ import {
 import './ServiceManager.scss'
 import BaseButton from '../../components/button/BaseButton'
 import { Progress } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { getServicePackage } from '../../service/slices/ServiceManagerSlice'
+import { serviceSelector } from '../../service/selectors'
 const ServiceManager = () => {
+  const dispatch = useDispatch()
+  const serviceState = useSelector(serviceSelector)
+  const { dataServiceFeatures } = serviceState
+  console.log(dataServiceFeatures)
+  useEffect(() => {
+    dispatch(getServicePackage())
+  }, [])
   return (
     <div>
       <AccoutItemLayout
@@ -67,7 +77,9 @@ const ServiceManager = () => {
           <div className="contentPackage mt-[12px] mb-[6px]">
             <div className="itemContent flex items-center font-normal text-white">
               <div className="h-full flex flex-1 items-baseline ">
-                <span className="text-[24px] font-bold">2</span>
+                <span className="text-[24px] font-bold">
+                  {dataServiceFeatures?.cardNumber}
+                </span>
                 <span className="flex-1 leading-[18px] flex items-end ml-[8px] text-textSizeMb">
                   Thẻ đã tạo
                 </span>
@@ -78,7 +90,9 @@ const ServiceManager = () => {
             </div>
             <div className="itemContent flex items-center font-normal text-white">
               <div className="h-full flex flex-1 items-baseline ">
-                <span className="text-[24px] font-bold">1</span>
+                <span className="text-[24px] font-bold">
+                  {dataServiceFeatures?.onlineInformationNumber}
+                </span>
                 <span className="flex-1 leading-[18px] flex items-end ml-[8px] text-textSizeMb">
                   Thông tin trực tuyến
                 </span>
@@ -89,7 +103,9 @@ const ServiceManager = () => {
             </div>
             <div className="itemContent flex items-center font-normal text-white">
               <div className="h-full flex flex-1 items-baseline ">
-                <span className="text-[24px] font-bold">10</span>
+                <span className="text-[24px] font-bold">
+                  {dataServiceFeatures?.contactNumber}
+                </span>
                 <span className="flex-1 leading-[18px] flex items-end ml-[8px] text-textSizeMb">
                   Liên hệ và kết nối
                 </span>
@@ -100,7 +116,9 @@ const ServiceManager = () => {
             </div>
             <div className="itemContent flex items-center font-normal text-white">
               <div className="h-full flex flex-1 items-baseline ">
-                <span className="text-[24px] font-bold">1</span>
+                <span className="text-[24px] font-bold">
+                  {dataServiceFeatures?.profileNumber}
+                </span>
                 <span className="flex-1 leading-[18px] flex items-end ml-[8px] text-textSizeMb">
                   Hồ sơ tạo
                 </span>
@@ -144,11 +162,11 @@ const ServiceManager = () => {
 
           <div className="addCapacity">
             <div className="flex items-center font-normal text-white">
-              <Progress percent={70} showInfo={false} />
+              <Progress percent={90} strokeColor="#EB5757" showInfo={false} />
             </div>
             <div className="mt-[6px] flex justify-end">
               <span className="text-[12px] text-whiteText">
-                Đã sử dụng 3G/5G{' '}
+                Đã sử dụng 3G/5G
               </span>
             </div>
             <div className="detailCapacity  flex items-center">

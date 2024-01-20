@@ -31,6 +31,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
   const [idCity, setIdCity] = useState('')
   const [idDistrict, setIdDistrict] = useState('')
   const [data, setData] = useState([])
+  const [indexEdit, setIndexEdit] = useState('')
   const { keyEdit, isChanged } = accountState
   useEffect(() => {
     if (accountState?.dataAdress) {
@@ -110,16 +111,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
     }
   }
   return (
-    <AccoutItemLayout
-      title={'QUẢN LÝ ĐỊA CHỈ'}
-      icon={
-        keyEdit === 'AddressInfo' ? (
-          <IconArrowLeft onClick={handleHiddenEdit} />
-        ) : (
-          <IconEdit onClick={handleSetEdit} />
-        )
-      }
-    >
+    <AccoutItemLayout title={'QUẢN LÝ ĐỊA CHỈ'}>
       <div className="contentInfo ">
         {data.length ? (
           data.map((item, index) => {
@@ -131,7 +123,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
                     : null
                 }`}
               >
-                {keyEdit === 'AddressInfo' ? (
+                {keyEdit === 'AddressInfo' && index === indexEdit ? (
                   <>
                     <div className="mb-[12px] flex items-center">
                       <Input
@@ -225,16 +217,27 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
                         checked={item.isDefault}
                       />{' '}
                     </div>
+                    <div className="flex justify-end mt-[12px]">
+                      <BaseButton content={'Lưu thay đổi'} />
+                    </div>
                   </>
                 ) : (
                   <>
-                    <div className="h-[24px]  mb-[12px] text-textSizeMb">
-                      <span className="name text-whiteText">
-                        {item.addressName}
-                      </span>{' '}
-                      <span className="text-whiteText italic">
-                        {item.isDefault ? '(Mặc định)' : null}
-                      </span>
+                    <div className="flex">
+                      <div className="h-[24px] flex-1  mb-[12px] text-textSizeMb">
+                        <span className="name text-whiteText">
+                          {item.addressName}
+                        </span>{' '}
+                        <span className="text-whiteText italic">
+                          {item.isDefault ? '(Mặc định)' : null}
+                        </span>
+                      </div>
+                      <IconEdit
+                        onClick={() => {
+                          handleSetEdit()
+                          setIndexEdit(index)
+                        }}
+                      />
                     </div>
                     <div className="text-labelText px-[8px]">
                       <div className="h-[36px] flex items-center mb-[6px]">
@@ -264,16 +267,6 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
           </span>
         )}
       </div>
-      {keyEdit === 'AddressInfo' ? (
-        <div className="">
-          <IconAddAddress />
-        </div>
-      ) : null}
-      {keyEdit === 'AddressInfo' ? (
-        <div className="flex justify-end mt-[12px]">
-          <BaseButton content={'Lưu thay đổi'} />
-        </div>
-      ) : null}
     </AccoutItemLayout>
   )
 }
