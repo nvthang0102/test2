@@ -24,6 +24,7 @@ import {
 } from '../../service/slices/AccountManagerSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { accountSelector } from '../../service/selectors'
+import { validPhoneNumber } from '../../util'
 const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
   const [data, setData] = useState({
     fullName: '',
@@ -36,6 +37,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
   const accountState = useSelector(accountSelector)
   const { keyEdit, dataAccountInfo, isChanged, resetRequest } = accountState
   const [showMorePhones, setShowMorePhone] = useState(false)
+  const [checkValidPhoneNumber, setCheckValidPhoneNumber] = useState(true)
   const [isEmpty, setIsEmpty] = useState(false)
   //xử lý trạng thái chỉnh sửa
   const handleSetEdit = () => {
@@ -47,6 +49,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
     } else {
       setDataPhones(dataPhones.filter((item) => item !== 'Rỗng'))
       dispatch(setIsEdit({ keyEdit: '', isChanged: false }))
+      setIsEmpty(false)
     }
   }
 
@@ -125,7 +128,6 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
         (item) => !resultPhone.includes(item)
       )
     }
-
     if (
       differenceArray.length ||
       data.fullName !== dataAccountInfo.fullName ||
@@ -133,16 +135,22 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
         moment(accountState.dataAccountInfo.birthday).format('DD/MM/YYYY') ||
       data.avatarID !== dataAccountInfo.avatarID
     ) {
-      dispatch(updateUserInfo({ ...data, phones: resultPhone }))
-      setDataChange({
-        valueChange: [],
-        handle: '',
-      })
+      const checkValidPhone = resultPhone.map((phone) =>
+        validPhoneNumber(phone)
+      )
+      if (checkValidPhone.indexOf(false) !== -1) {
+        setCheckValidPhoneNumber(false)
+      } else {
+        dispatch(updateUserInfo({ ...data, phones: resultPhone }))
+        setDataChange({
+          valueChange: [],
+          handle: '',
+        })
+      }
     } else {
       handleHiddenEdit()
     }
   }
-  console.log(dataPhones[0])
   return (
     <>
       <AccoutItemLayout
@@ -202,7 +210,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                   </div>
                   <div
                     className={`leading-6 text-textSizeMb text-[#fff] textItem ${
-                      dataPhones?.length >= 1 && dataPhones[0] !== ''
+                      !dataPhones?.length >= 1 && dataPhones[0] === ''
                         ? 'italic text-labelText'
                         : null
                     } font-normal`}
@@ -277,7 +285,14 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                 ></Input>
               </div>
 
-              <div className="infoItem relative  ">
+              <div
+                className={`${
+                  isEmpty ||
+                  (!checkValidPhoneNumber && !validPhoneNumber(dataPhones[0]))
+                    ? 'emptyPhone invalidValue'
+                    : null
+                } infoItem relative`}
+              >
                 <div className="flex w-full items-center ">
                   <div className="iconItem">
                     <IconPhoneCall />
@@ -286,7 +301,10 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
                     placeholder="Số điện thoại"
                     value={dataPhones[0]}
-                    onChange={(e) => handleChangePhones(0, e.target.value)}
+                    onChange={(e) => {
+                      handleChangePhones(0, e.target.value)
+                      setCheckValidPhoneNumber(true)
+                    }}
                   ></Input>
                 </div>
                 {dataPhones.length > 1 && !keyEdit ? (
@@ -304,9 +322,16 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     if (indexPhone) {
                       return (
                         <div
+                          // className={`${
+                          //   isEmpty && !item ? 'emptyPhone' : null
+                          // } infoItem`}
                           className={`${
-                            isEmpty && !item ? 'emptyPhone' : null
-                          } infoItem`}
+                            isEmpty ||
+                            (!checkValidPhoneNumber &&
+                              !validPhoneNumber(dataPhones[indexPhone]))
+                              ? 'emptyPhone invalidValue'
+                              : null
+                          } infoItem `}
                           key={indexPhone}
                         >
                           <div className="flex  w-full items-center ">
@@ -319,14 +344,15 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                               key={indexPhone}
                               className={`
                               ${item === 'Rỗng' ? 'italic' : null}
-                              italic flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText`}
+                               flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText`}
                               placeholder={
                                 item !== 'Rỗng' ? 'Số điện thoại' : '(Trống)'
                               }
                               value={item !== 'Rỗng' ? item : ''}
-                              onChange={(e) =>
+                              onChange={(e) => {
                                 handleChangePhones(indexPhone, e.target.value)
-                              }
+                                setCheckValidPhoneNumber(true)
+                              }}
                             ></Input>
                             <IconDelete
                               onClick={() =>

@@ -27,7 +27,7 @@ const PopupLayout = ({
           <div onClick={handleCancel} className="mr-[12px]">
             {btnCanCel}
           </div>
-          <div onClick={() => setOpen(false)}>{btnOk}</div>
+          <div>{btnOk}</div>
         </div>
       }
       onCancel={handleCancel}

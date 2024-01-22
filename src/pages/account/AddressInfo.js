@@ -32,6 +32,7 @@ import {
 } from '../../service/slices/AccountManagerSlice'
 import AddressManagerPU from '../../components/popup/AddressManagerPU'
 import ConfirmDeletePU from '../../components/popup/ConfirmDeletePU'
+import { validPhoneNumber } from '../../util'
 const AddressInfo = ({ setShowConfirmEdit }) => {
   const dispatch = useDispatch()
   const provinceState = useSelector(provinceSelector)
@@ -45,6 +46,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
     isOpenPU: false,
     id: '',
   })
+  const [inValidValue, setInValidValue] = useState(true)
   const [dataAdd, setDataAdd] = useState({
     addressName: '',
     detail: '',
@@ -102,37 +104,68 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
   // end
   // xử lý khi thêm địa chỉ
   const handleAddAddress = () => {
-    dispatch(addAddress(dataAdd))
-    dispatch(resetState())
-    setDataAdd({
-      addressName: '',
-      detail: '',
-      wards: '',
-      district: '',
-      city: '',
-      phoneNumber: '',
-      isDefault: false,
-    })
+    if (
+      !dataAdd.addressName ||
+      !dataAdd.city ||
+      !dataAdd.detail ||
+      !dataAdd.district ||
+      !dataAdd.wards ||
+      !dataAdd.phoneNumber ||
+      validPhoneNumber(data.phoneNumber)
+    ) {
+      setInValidValue(false)
+    } else {
+      dispatch(addAddress(dataAdd))
+      dispatch(resetState())
+      setInValidValue(false)
+      setDataAdd({
+        addressName: '',
+        detail: '',
+        wards: '',
+        district: '',
+        city: '',
+        phoneNumber: '',
+        isDefault: false,
+      })
+      setIsAddAddress(false)
+    }
   }
 
   // xử lý khi sửa địa chỉ
   const handleEditAddress = () => {
-    dispatch(updateAddress(dataEdit))
-    dispatch(resetState())
-    setDataAdd({
-      addressName: '',
-      detail: '',
-      wards: '',
-      district: '',
-      city: '',
-      phoneNumber: '',
-      isDefault: false,
-    })
+    if (
+      !dataEdit.addressName ||
+      !dataEdit.city ||
+      !dataEdit.detail ||
+      !dataEdit.district ||
+      !dataEdit.wards ||
+      !dataEdit.phoneNumber ||
+      !validPhoneNumber(data.phoneNumber)
+    ) {
+      setInValidValue(false)
+    } else {
+      dispatch(updateAddress(dataEdit))
+      dispatch(resetState())
+      setDataAdd({
+        addressName: '',
+        detail: '',
+        wards: '',
+        district: '',
+        city: '',
+        phoneNumber: '',
+        isDefault: false,
+      })
+      setIsEditAddress(false)
+    }
   }
   // xử lý khi xóa địa chỉ
   const handleDeleteAddress = () => {
     if (valueDelete.id) {
       dispatch(deleteAddress(valueDelete.id))
+      setValueDelete({
+        id: '',
+        isOpenPU: false,
+      })
     }
   }
   return (
@@ -147,6 +180,8 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
       ) : null}
       {isAddAddress ? (
         <AddressManagerPU
+          checkValue={inValidValue}
+          setCheckValue={setInValidValue}
           data={dataAdd}
           setData={setDataAdd}
           open={isAddAddress}
@@ -157,6 +192,8 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
       ) : null}
       {isEditAddress ? (
         <AddressManagerPU
+          checkValue={inValidValue}
+          setCheckValue={setInValidValue}
           data={dataEdit}
           isEdit={true}
           setData={setDataEdit}

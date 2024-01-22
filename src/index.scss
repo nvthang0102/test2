@@ -217,3 +217,11 @@
       }
     }
   }
+  .invalidValue{
+    input,input::placeholder{
+      color: #EB5757 !important;
+    }
+    .ant-select-selection-placeholder{
+      color: #EB5757 !important;
+    }
+  }

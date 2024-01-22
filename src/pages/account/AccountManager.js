@@ -13,6 +13,7 @@ const AccountManager = () => {
   })
   const handleSaveChange = () => {
     dispatch(dataChange.handle(dataChange.valueChange))
+    setShowConfirmEdit(false)
   }
   return (
     <>

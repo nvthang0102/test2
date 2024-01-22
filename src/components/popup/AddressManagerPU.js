@@ -14,13 +14,16 @@ import {
   getWard,
   resetState,
 } from '../../service/slices/ProvinceSlice'
+import { validPhoneNumber } from '../../util'
 const AddressManagerPU = ({
+  checkValue,
   data,
   setData,
   open,
   setIsOpen,
   isEdit,
   handleSubmit,
+  setCheckValue,
 }) => {
   const provinceState = useSelector(provinceSelector)
   const dispatch = useDispatch()
@@ -30,7 +33,6 @@ const AddressManagerPU = ({
   )
   const [idDistrict, setIdDistrict] = useState()
   // lấy dữ liệu về tỉnh thành, quận huyện, xã phường
-  console.log(data, isEdit)
   useEffect(() => {
     if (isEdit) {
       setIdDistrict(
@@ -90,6 +92,9 @@ const AddressManagerPU = ({
     return result
   }, [dataWard])
   // end
+  useEffect(() => {
+    return () => setCheckValue(true)
+  }, [])
   return (
     <>
       <PopupLayout
@@ -100,7 +105,6 @@ const AddressManagerPU = ({
           <BaseButton
             handleClick={() => {
               handleSubmit()
-              setIsOpen(false)
             }}
             content={'Lưu thay đổi'}
           />
@@ -123,7 +127,11 @@ const AddressManagerPU = ({
             </span>
           </div>
           <div>
-            <div className="text-labelText ">
+            <div
+              className={`${
+                !checkValue && !data?.addressName ? 'invalidValue' : null
+              } text-labelText `}
+            >
               <div className=" mb-[6px] flex align-middle">
                 <InputForm
                   className={'inputBase text-textSizeMb'}
@@ -135,7 +143,14 @@ const AddressManagerPU = ({
                 />
               </div>
             </div>
-            <div className="text-labelText ">
+            <div
+              className={`${
+                !checkValue &&
+                (!data?.phoneNumber || !validPhoneNumber(data?.phoneNumber))
+                  ? 'invalidValue'
+                  : null
+              } text-labelText `}
+            >
               <div className=" mb-[6px] flex align-middle">
                 <InputForm
                   className={'inputBase text-textSizeMb'}
@@ -147,7 +162,11 @@ const AddressManagerPU = ({
                 />
               </div>
             </div>
-            <div className="text-labelText ">
+            <div
+              className={`${
+                !checkValue && !data?.detail ? 'invalidValue' : null
+              } text-labelText `}
+            >
               <div className=" mb-[6px] flex align-middle">
                 <InputForm
                   className={'inputBase text-textSizeMb'}
@@ -157,7 +176,11 @@ const AddressManagerPU = ({
                 />
               </div>
             </div>
-            <div className="text-labelText ">
+            <div
+              className={`${
+                !checkValue && !data?.city ? 'invalidValue' : null
+              } text-labelText `}
+            >
               <div className="h-[36px] mb-[6px] flex align-middle">
                 <SelectSearch
                   setID={setIdCity}
@@ -170,7 +193,11 @@ const AddressManagerPU = ({
                 />
               </div>
             </div>
-            <div className="text-labelText ">
+            <div
+              className={`${
+                !checkValue && !data?.district ? 'invalidValue' : null
+              } text-labelText `}
+            >
               <div className="h-[36px] mb-[6px] flex align-middle">
                 <SelectSearch
                   options={optionDistrict}
@@ -184,7 +211,11 @@ const AddressManagerPU = ({
                 />
               </div>
             </div>
-            <div className="text-labelText ">
+            <div
+              className={`${
+                !checkValue && !data?.wards ? 'invalidValue' : null
+              } text-labelText `}
+            >
               <div className="h-[36px] mb-[6px] flex align-middle">
                 <SelectSearch
                   options={optionWard}
