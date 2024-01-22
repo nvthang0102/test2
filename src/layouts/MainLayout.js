@@ -8,6 +8,7 @@ import { notification } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { commonSelector } from '../service/selectors'
 import { setNotify } from '../service/slices/CommonSlice'
+import { IconDanger, IconSuccessNotify } from '../assets/icons'
 
 const MainLayout = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -17,7 +18,22 @@ const MainLayout = () => {
   const openNotification = () => {
     api.open({
       type: commonState.typeNotify,
-      description: <div>{commonState.msg}</div>,
+      description: (
+        <>
+          <div className="flex  items-center">
+            {commonState.typeNotify === 'success' ? (
+              <IconSuccessNotify />
+            ) : commonState.typeNotify === 'erorr' ? (
+              <IconDanger />
+            ) : (
+              <IconDanger fill="#F2994A" />
+            )}
+            <div className="h-[24x] flex items-end ml-[8px]">
+              <span className="leading-[16px]">{commonState.msg}</span>
+            </div>
+          </div>
+        </>
+      ),
       placement: 'top',
       duration: 3,
     })

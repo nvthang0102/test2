@@ -9,6 +9,7 @@ const initialState = {
   isLoading: false,
   resetRequest: false,
   keyEdit: '',
+  isAddAddess: false,
 }
 const AccountManagerSlice = createSlice({
   name: 'account',
@@ -17,6 +18,9 @@ const AccountManagerSlice = createSlice({
     setIsEdit: (state, action) => {
       state.keyEdit = action.payload.keyEdit
       state.isChanged = action.payload.isChanged
+    },
+    setIsAddAddess: (state, action) => {
+      state.isAddAddess = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -28,6 +32,7 @@ const AccountManagerSlice = createSlice({
       .addCase(getUserInfo.fulfilled, (state, action) => {
         if (action.payload.status === 200 || action.payload.status === 1) {
           state.dataAccountInfo = action.payload.data
+          state.resetRequest = false
         }
       })
       .addCase(getUserInfo.rejected, (state) => {
@@ -40,6 +45,7 @@ const AccountManagerSlice = createSlice({
       .addCase(getRegisterInfo.fulfilled, (state, action) => {
         if (action.payload.status === 200 || action.payload.status === 1) {
           state.dataRegister = action.payload.data
+          state.resetRequest = false
         }
       })
       .addCase(getRegisterInfo.rejected, (state) => {
@@ -52,6 +58,7 @@ const AccountManagerSlice = createSlice({
       .addCase(getAdressManager.fulfilled, (state, action) => {
         if (action.payload.status === 200 || action.payload.status === 1) {
           state.dataAdress = action.payload.data
+          state.resetRequest = false
         }
       })
       .addCase(getAdressManager.rejected, (state) => {
@@ -65,9 +72,36 @@ const AccountManagerSlice = createSlice({
         if (action.payload.status === 200 || action.payload.status === 1) {
           state.isChanged = false
           state.keyEdit = ''
+          state.resetRequest = true
         }
       })
       .addCase(updateUserInfo.rejected, (state) => {
+        state.isNotify = false
+      })
+      //thêm mới địa chỉ
+      .addCase(addAddress.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addAddress.fulfilled, (state, action) => {
+        if (action.payload.status === 200 || action.payload.status === 1) {
+          state.resetRequest = true
+          state.isLoading = false
+        }
+      })
+      .addCase(addAddress.rejected, (state) => {
+        state.isNotify = false
+      })
+      //thêm mới địa chỉ
+      .addCase(updateAddress.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateAddress.fulfilled, (state, action) => {
+        if (action.payload.status === 200 || action.payload.status === 1) {
+          state.resetRequest = true
+          state.isLoading = false
+        }
+      })
+      .addCase(updateAddress.rejected, (state) => {
         state.isNotify = false
       })
       // xóa thông tin địa chỉ
@@ -76,7 +110,8 @@ const AccountManagerSlice = createSlice({
       })
       .addCase(deleteAddress.fulfilled, (state, action) => {
         if (action.payload.status === 200 || action.payload.status === 1) {
-          builder.dispatch(getAdressManager())
+          state.resetRequest = true
+          state.isLoading = false
         }
       })
       .addCase(deleteAddress.rejected, (state) => {
@@ -121,11 +156,43 @@ export const getAdressManager = createAsyncThunk(
   }
 )
 // request chỉnh sửa thông tin cá nhân
-export const updateUserInfo = createAsyncThunk(
-  'account/updateUserInfo',
+
+//request chỉnh sửa thông tin đăng ký
+export const updateAddress = createAsyncThunk(
+  'account/updateAddress',
   async (body, thunkAPI) => {
     try {
-      const res = await instance.post(`/v2/user/updateInfo`, body)
+      const res = await instance.post(`/v2/user/editAddress`, body)
+      if (res.data.status === 1 || res.data.status === 200) {
+        thunkAPI.dispatch(
+          setNotify({
+            isNotify: true,
+            msg: 'Cập nhật dữ liệu thành công',
+            type: 'success',
+          })
+        )
+      } else {
+        thunkAPI.dispatch(
+          setNotify({
+            isNotify: true,
+            msg: 'Lỗi server',
+            type: 'error',
+          })
+        )
+      }
+      return res.data
+    } catch (error) {
+      console.log(error)
+      return error.reponse.data
+    }
+  }
+)
+// request thêm mới địa chỉ
+export const addAddress = createAsyncThunk(
+  'account/addAddress',
+  async (body, thunkAPI) => {
+    try {
+      const res = await instance.post(`/v2/user/addAddress`, body)
       if (res.data.status) {
         thunkAPI.dispatch(
           setNotify({
@@ -142,15 +209,60 @@ export const updateUserInfo = createAsyncThunk(
     }
   }
 )
-//request chỉnh sửa thông tin đăng ký
-// request chỉnh sửa địa chỉ
 
+// request chỉnh sửa địa chỉ
+export const updateUserInfo = createAsyncThunk(
+  'account/updateUserInfo',
+  async (body, thunkAPI) => {
+    try {
+      const res = await instance.post(`/v2/user/updateInfo`, body)
+      if (res.data.status === 1 || res.data.status === 200) {
+        thunkAPI.dispatch(
+          setNotify({
+            isNotify: true,
+            msg: 'Cập nhật dữ liệu thành công',
+            type: 'success',
+          })
+        )
+      } else {
+        thunkAPI.dispatch(
+          setNotify({
+            isNotify: true,
+            msg: 'Lỗi server',
+            type: 'error',
+          })
+        )
+      }
+      return res.data
+    } catch (error) {
+      console.log(error)
+      return error.reponse.data
+    }
+  }
+)
 //request xóa địa chỉ
 export const deleteAddress = createAsyncThunk(
   'account/deleteAddress',
   async (id, thunkAPI) => {
     try {
       const res = await instance.delete(`v2/user/deleteAddress?addressID=${id}`)
+      if (res.data.status === 1 || res.data.status === 200) {
+        thunkAPI.dispatch(
+          setNotify({
+            isNotify: true,
+            msg: 'Xóa địa chỉ thành công',
+            type: 'success',
+          })
+        )
+      } else {
+        thunkAPI.dispatch(
+          setNotify({
+            isNotify: true,
+            msg: 'Lỗi server',
+            type: 'error',
+          })
+        )
+      }
       return res.data
     } catch (error) {
       console.log(error)

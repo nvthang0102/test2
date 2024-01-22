@@ -10,6 +10,7 @@ const SelectSearch = ({
   className,
   options = [],
   defaultValue,
+  setID = () => {},
   error,
   preFix,
   subFix,
@@ -18,7 +19,8 @@ const SelectSearch = ({
   const onChange = (value) => {
     setIsSearch(false)
     if (typeof setValueSelect === 'function') {
-      setValueSelect(value)
+      setID(value)
+      setValueSelect(options.find((item) => item.value === value).label)
     } else return
   }
 

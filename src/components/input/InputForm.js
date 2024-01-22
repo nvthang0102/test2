@@ -22,7 +22,7 @@ const InputForm = ({
         />
       ) : (
         <Input
-          //   onChange={(e) => setContent(e.target.value)}
+          onChange={(e) => setContent(e.target.value)}
           autoComplete={false}
           placeholder={placeholder}
           suffix={subFix}

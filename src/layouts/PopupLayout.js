@@ -10,12 +10,14 @@ const PopupLayout = ({
   height,
   setOpen,
   children,
+  maskClosable,
 }) => {
   const handleCancel = () => {
     setOpen(false)
   }
   return (
     <Modal
+      maskClosable={maskClosable}
       title={false}
       width={width}
       height={height}

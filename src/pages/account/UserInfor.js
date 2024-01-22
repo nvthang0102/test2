@@ -34,7 +34,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
   const [dataPhones, setDataPhones] = useState([])
   const dispatch = useDispatch()
   const accountState = useSelector(accountSelector)
-  const { keyEdit, dataAccountInfo, isChanged } = accountState
+  const { keyEdit, dataAccountInfo, isChanged, resetRequest } = accountState
   const [showMorePhones, setShowMorePhone] = useState(false)
   const [isEmpty, setIsEmpty] = useState(false)
   //xử lý trạng thái chỉnh sửa
@@ -45,6 +45,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
     if (isChanged) {
       setShowConfirmEdit(true)
     } else {
+      setDataPhones(dataPhones.filter((item) => item !== 'Rỗng'))
       dispatch(setIsEdit({ keyEdit: '', isChanged: false }))
     }
   }
@@ -54,6 +55,11 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
     dispatch(getUserInfo())
   }, [])
   useEffect(() => {
+    if (resetRequest) {
+      dispatch(getUserInfo())
+    }
+  }, [resetRequest])
+  useEffect(() => {
     if (dataAccountInfo.avatarID) {
       setData({
         fullName: dataAccountInfo.fullName,
@@ -62,7 +68,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
           'DD/MM/YYYY'
         ),
       })
-      setDataPhones([...dataAccountInfo?.phones, 'Rỗng'])
+      setDataPhones([...dataAccountInfo?.phones])
     }
   }, [dataAccountInfo])
 
@@ -79,7 +85,6 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
         (item) => !resultPhone.includes(item)
       )
     }
-
     if (data.avatarID) {
       if (
         differenceArray.length ||
@@ -94,7 +99,10 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
         })
         dispatch(setIsEdit({ keyEdit, isChanged: true }))
       } else {
-        setDataChange({})
+        setDataChange({
+          valueChange: [],
+          handle: '',
+        })
         dispatch(setIsEdit({ keyEdit, isChanged: false }))
       }
     }
@@ -117,6 +125,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
         (item) => !resultPhone.includes(item)
       )
     }
+
     if (
       differenceArray.length ||
       data.fullName !== dataAccountInfo.fullName ||
@@ -125,10 +134,15 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
       data.avatarID !== dataAccountInfo.avatarID
     ) {
       dispatch(updateUserInfo({ ...data, phones: resultPhone }))
+      setDataChange({
+        valueChange: [],
+        handle: '',
+      })
     } else {
-      return
+      handleHiddenEdit()
     }
   }
+  console.log(dataPhones[0])
   return (
     <>
       <AccoutItemLayout
@@ -186,13 +200,16 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                   <div className="iconItem">
                     <IconPhoneCall />
                   </div>
-
                   <div
                     className={`leading-6 text-textSizeMb text-[#fff] textItem ${
-                      !dataPhones ? 'italic text-labelText' : null
+                      dataPhones?.length >= 1 && dataPhones[0] !== ''
+                        ? 'italic text-labelText'
+                        : null
                     } font-normal`}
                   >
-                    {dataPhones?.length ? dataPhones[0] : '(trống)'}
+                    {dataPhones?.length >= 1 && dataPhones[0] !== ''
+                      ? dataPhones[0]
+                      : '(trống)'}
                   </div>
                 </div>
                 {dataPhones?.length > 1 && !keyEdit ? (
@@ -272,7 +289,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     onChange={(e) => handleChangePhones(0, e.target.value)}
                   ></Input>
                 </div>
-                {dataPhones?.length > 1 && !keyEdit ? (
+                {dataPhones.length > 1 && !keyEdit ? (
                   <span
                     className="absolute iconSmooth cursor-pointer top-[50%] opacity-50 translate-y-[-50%] right-0"
                     onClick={() => setShowMorePhone(!showMorePhones)}
@@ -288,9 +305,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                       return (
                         <div
                           className={`${
-                            isEmpty && (item === 'Rỗng' || !item)
-                              ? 'emptyPhone'
-                              : null
+                            isEmpty && !item ? 'emptyPhone' : null
                           } infoItem`}
                           key={indexPhone}
                         >
@@ -302,9 +317,9 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                             ></div>
                             <Input
                               key={indexPhone}
-                              className={`${
-                                item === 'Rỗng' ? 'italic' : null
-                              } flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText`}
+                              className={`
+                              ${item === 'Rỗng' ? 'italic' : null}
+                              italic flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText`}
                               placeholder={
                                 item !== 'Rỗng' ? 'Số điện thoại' : '(Trống)'
                               }

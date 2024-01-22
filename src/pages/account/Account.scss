@@ -1,3 +1,4 @@
+@import '../../assets/styles/validate.scss';
 .contentInfo {
   margin-top: 1.2rem;
   .imgUser {
@@ -75,4 +76,10 @@
  input::placeholder{
   color: #EB5757 !important;
  }
+}
+.wrapperKeybabMenu{
+  .ant-dropdown-menu{
+    background:$--glass-grad-1;
+    backdrop-filter: blur(10px);
+  } 
 }

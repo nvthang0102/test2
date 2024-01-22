@@ -11,7 +11,15 @@ const initialState = {
 const ProvinceSlice = createSlice({
   name: 'province',
   initialState,
-  reducers: {},
+  reducers: {
+    resetState: (state) => {
+      state.dataCity = []
+      state.dataDistrict = []
+      state.dataWard = []
+      state.isLoading = false
+      state.resetRequest = false
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCity.pending, (state) => {
@@ -86,4 +94,4 @@ export const getWard = createAsyncThunk('province/getWard', async (id) => {
 })
 
 export default ProvinceSlice
-export const {} = ProvinceSlice.actions
+export const { resetState } = ProvinceSlice.actions
