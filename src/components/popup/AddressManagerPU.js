@@ -24,10 +24,12 @@ const AddressManagerPU = ({
   isEdit,
   handleSubmit,
   setCheckValue,
+  handleClose,
 }) => {
   const provinceState = useSelector(provinceSelector)
   const dispatch = useDispatch()
   const { dataCity, dataDistrict, dataWard } = provinceState
+
   const [idCity, setIdCity] = useState(
     isEdit ? dataCity.find((city) => city.name === data.city)?.code : ''
   )
@@ -95,12 +97,24 @@ const AddressManagerPU = ({
   useEffect(() => {
     return () => setCheckValue(true)
   }, [])
+  // const handleClose = () => {
+  //   setData({
+  //     addressName: '',
+  //     detail: '',
+  //     wards: '',
+  //     district: '',
+  //     city: '',
+  //     phoneNumber: '',
+  //     isDefault: false,
+  //   })
+  //   setIsOpen(false)
+  // }
   return (
     <>
       <PopupLayout
         open={open}
-        setOpen={setIsOpen}
         maskClosable={false}
+        handleClose={handleClose}
         btnOk={
           <BaseButton
             handleClick={() => {

@@ -6,6 +6,7 @@ import ConfirmEditPU from '../../components/popup/ConfirmEditPU'
 import { useDispatch } from 'react-redux'
 const AccountManager = () => {
   const [showConfirmEdit, setShowConfirmEdit] = useState(false)
+  const [isEditAddress, setIsEditAddress] = useState(false)
   const dispatch = useDispatch()
   const [dataChange, setDataChange] = useState({
     valueChange: [],
@@ -14,6 +15,7 @@ const AccountManager = () => {
   const handleSaveChange = () => {
     dispatch(dataChange.handle(dataChange.valueChange))
     setShowConfirmEdit(false)
+    setIsEditAddress(false)
   }
   return (
     <>
@@ -39,6 +41,8 @@ const AccountManager = () => {
       </div>
       <div className="mb-[12px]">
         <AddressInfo
+          isEditAddress={isEditAddress}
+          setIsEditAddress={setIsEditAddress}
           setShowConfirmEdit={setShowConfirmEdit}
           setDataChange={setDataChange}
         />
