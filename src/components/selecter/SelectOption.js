@@ -1,17 +1,19 @@
 import { Select } from 'antd'
 import React from 'react'
-import { IconAccount, IconCloud, IconDown } from '../../assets/icons'
+import { IconDown } from '../../assets/icons'
 
 const SelectOption = ({
   preFix = true,
   options,
   placeholder = 'Dung lượng lưu trữ',
+  className,
+  setValue,
 }) => {
   const handleChange = (value) => {
     console.log(`selected ${value}`)
   }
   return (
-    <div className="flex items-center wrapperSeleterOption">
+    <div className={`${className} flex items-center wrapperSeleterOption`}>
       {preFix}
       <Select
         placeholder={placeholder}

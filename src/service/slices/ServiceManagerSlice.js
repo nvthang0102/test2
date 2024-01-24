@@ -3,6 +3,7 @@ import { instance } from './configAPI'
 const initialState = {
   dataServiceFeatures: {},
   dataInfo: [],
+  dataStogage: [],
   isChanged: false,
   isLoading: false,
   resetRequest: false,
@@ -38,6 +39,18 @@ const ServiceManagerSlice = createSlice({
       .addCase(getPackageInfo.rejected, (state) => {
         state.isNotify = false
       })
+      //lấy giá trị dung lượng lưu trữ gói dịch vụ
+      .addCase(getCongifStorage.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getCongifStorage.fulfilled, (state, action) => {
+        if (action.payload.status === 200 || action.payload.status === 1) {
+          state.dataStogage = action.payload.data
+        }
+      })
+      .addCase(getCongifStorage.rejected, (state) => {
+        state.isNotify = false
+      })
   },
 })
 //request lấy thông tin tính năng gói dịch vụ
@@ -59,6 +72,19 @@ export const getPackageInfo = createAsyncThunk(
   async () => {
     try {
       const res = await instance.get(`/v2/package/Using`)
+      return res.data
+    } catch (error) {
+      console.log(error)
+      return error.reponse.data
+    }
+  }
+)
+//request lấy giá trị dung lượng lưu trữ gói dịch vụ
+export const getCongifStorage = createAsyncThunk(
+  'service/getCongifStorage',
+  async () => {
+    try {
+      const res = await instance.get(`/v2/package/storage`)
       return res.data
     } catch (error) {
       console.log(error)

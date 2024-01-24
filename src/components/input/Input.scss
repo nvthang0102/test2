@@ -65,6 +65,12 @@
         }
       }
 }
+.inputForm.inputBase.inputGray{
+  .ant-input {
+
+    background: $--glass-grad-2 !important;
+  }
+}
 .ant-input {
   font-size: 15px;
 }

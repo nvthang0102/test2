@@ -148,7 +148,7 @@ const AddressManagerPU = ({
             >
               <div className=" mb-[6px] flex align-middle">
                 <InputForm
-                  className={'inputBase text-textSizeMb'}
+                  className={'inputBase inputGray text-textSizeMb'}
                   content={data?.addressName}
                   placeholder={'Họ và tên'}
                   setContent={(value) =>
@@ -167,7 +167,7 @@ const AddressManagerPU = ({
             >
               <div className=" mb-[6px] flex align-middle">
                 <InputForm
-                  className={'inputBase text-textSizeMb'}
+                  className={'inputBase inputGray text-textSizeMb'}
                   content={data?.phoneNumber}
                   setContent={(value) =>
                     setData({ ...data, phoneNumber: value })
@@ -183,7 +183,7 @@ const AddressManagerPU = ({
             >
               <div className=" mb-[6px] flex align-middle">
                 <InputForm
-                  className={'inputBase text-textSizeMb'}
+                  className={'inputBase inputGray text-textSizeMb'}
                   content={data?.detail}
                   setContent={(value) => setData({ ...data, detail: value })}
                   placeholder={'Số nhà, Tên đường'}
@@ -197,6 +197,7 @@ const AddressManagerPU = ({
             >
               <div className="h-[36px] mb-[6px] flex align-middle">
                 <SelectSearch
+                  className={'selecterSearchGray'}
                   setID={setIdCity}
                   setValueSelect={(value) => setData({ ...data, city: value })}
                   options={optionCity}
@@ -214,6 +215,7 @@ const AddressManagerPU = ({
             >
               <div className="h-[36px] mb-[6px] flex align-middle">
                 <SelectSearch
+                  className={'selecterSearchGray'}
                   options={optionDistrict}
                   setID={setIdDistrict}
                   setValueSelect={(value) =>
@@ -232,6 +234,7 @@ const AddressManagerPU = ({
             >
               <div className="h-[36px] mb-[6px] flex align-middle">
                 <SelectSearch
+                  className={'selecterSearchGray'}
                   options={optionWard}
                   placeholder="Phường/ Xã"
                   error={'Vui lòng chọn Quận/ Huyện trước'}

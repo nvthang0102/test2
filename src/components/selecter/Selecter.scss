@@ -38,6 +38,13 @@
         color: $--color-text !important;
     }
 }
+.selecterSearchGray{
+    .ant-select-selector{
+        background:$--glass-grad-2 !important;
+        border: none !important;
+        padding: 6px 8px !important;   
+    }
+}
 .ant-select-dropdown{
     background:$--glass-grad-1 !important;
     backdrop-filter: blur(10px);
@@ -74,6 +81,7 @@
 .inputPopup{
     background: var(--glass-grad-1, linear-gradient(180deg, rgba(17, 17, 17, 0.64) 0%, rgba(17, 17, 17, 0.48) 100%))
 }
+
 .wrapperSeleterOption{
     height: 100%;
     width: 100% !important;
@@ -123,6 +131,9 @@
     .ant-select-open .ant-select-selection-item,.ant-select-selection-item{
         color: $--color-text !important;
     }
+}
+.graySelecte.wrapperSeleterOption {
+    background:$--glass-grad-2 !important;
 }
 .selectPopIcon{
 //     width: 289px !important;

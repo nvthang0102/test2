@@ -228,7 +228,7 @@ const AddressInfo = ({
           setIsOpen={setIsAddAddress}
           handleSubmit={handleAddAddress}
           isEdit={false}
-          handleClose={handleHiddenEdit}
+          handleClose={() => setIsAddAddress(false)}
         />
       ) : null}
       {isEditAddress ? (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AccoutItemLayout from '../../layouts/AccoutItemLayout'
 import {
   IconBarMenu,
@@ -19,16 +19,29 @@ import {
   getServicePackage,
 } from '../../service/slices/ServiceManagerSlice'
 import { serviceSelector } from '../../service/selectors'
+import UpgradePopup from '../../components/popup/UpgradePopup'
+import ModalFeatureRequire from '../../components/popup/ModalFeatureRequire'
 const ServiceManager = () => {
   const dispatch = useDispatch()
   const serviceState = useSelector(serviceSelector)
   const { dataServiceFeatures, dataInfo } = serviceState
+  const [showModalUpgrade, setShowModalUpgrade] = useState(false)
+  const [showFeatureRequire, setShowFeatureRequire] = useState(false)
   useEffect(() => {
     dispatch(getPackageInfo())
     dispatch(getServicePackage())
   }, [])
   return (
     <div>
+      {showModalUpgrade ? (
+        <UpgradePopup open={showModalUpgrade} setOpen={setShowModalUpgrade} />
+      ) : null}
+      {showFeatureRequire ? (
+        <ModalFeatureRequire
+          open={showFeatureRequire}
+          setOpen={setShowFeatureRequire}
+        />
+      ) : null}
       <AccoutItemLayout
         className={'wrapperPackageInfo'}
         title={'THÔNG TIN GÓI'}
@@ -39,7 +52,7 @@ const ServiceManager = () => {
             {dataInfo?.PackageName}
           </p>
           <div className="contentPackage py-[12px]">
-            {dataInfo?.features.map((item) => {
+            {dataInfo?.features?.map((item) => {
               if (item.state === 'using') {
                 return (
                   <div className="itemContent flex items-center font-normal text-white">
@@ -58,7 +71,10 @@ const ServiceManager = () => {
                         {item.name}
                       </span>
                     </div>
-                    <span className="cursor-pointer">
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => setShowModalUpgrade(true)}
+                    >
                       <IconUpLevel />
                     </span>
                   </div>
@@ -68,6 +84,7 @@ const ServiceManager = () => {
           </div>
           <div className="flex justify-end">
             <BaseButton
+              handleClick={() => setShowFeatureRequire(true)}
               className={'btnGray'}
               preFix={<IconPlus />}
               content={'Yêu cầu tính năng'}
