@@ -111,7 +111,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
       !dataAdd.district ||
       !dataAdd.wards ||
       !dataAdd.phoneNumber ||
-      validPhoneNumber(data.phoneNumber)
+      !validPhoneNumber(dataAdd.phoneNumber)
     ) {
       setInValidValue(false)
     } else {
@@ -140,7 +140,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
       !dataEdit.district ||
       !dataEdit.wards ||
       !dataEdit.phoneNumber ||
-      !validPhoneNumber(data.phoneNumber)
+      !validPhoneNumber(dataEdit.phoneNumber)
     ) {
       setInValidValue(false)
     } else {

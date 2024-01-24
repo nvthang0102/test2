@@ -3,23 +3,28 @@ import AccoutItemLayout from '../../layouts/AccoutItemLayout'
 import {
   IconBarMenu,
   IconCalenda,
+  IconDanger,
   IconPlus,
   IconRight,
   IconRoundChecked,
   IconTarget,
+  IconUpLevel,
 } from '../../assets/icons'
 import './ServiceManager.scss'
 import BaseButton from '../../components/button/BaseButton'
 import { Progress } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getServicePackage } from '../../service/slices/ServiceManagerSlice'
+import {
+  getPackageInfo,
+  getServicePackage,
+} from '../../service/slices/ServiceManagerSlice'
 import { serviceSelector } from '../../service/selectors'
 const ServiceManager = () => {
   const dispatch = useDispatch()
   const serviceState = useSelector(serviceSelector)
-  const { dataServiceFeatures } = serviceState
-  console.log(dataServiceFeatures)
+  const { dataServiceFeatures, dataInfo } = serviceState
   useEffect(() => {
+    dispatch(getPackageInfo())
     dispatch(getServicePackage())
   }, [])
   return (
@@ -30,32 +35,36 @@ const ServiceManager = () => {
         icon={<IconBarMenu />}
       >
         <div>
-          <p className="title text-[24px] font-bold ">STANDARD</p>
+          <p className="title text-[24px] font-bold ">
+            {dataInfo?.PackageName}
+          </p>
           <div className="contentPackage py-[12px]">
-            <div className="itemContent flex items-center font-normal text-white">
-              <IconRoundChecked />
-              <span className="ml-[8px] text-textSizeMb">Thẻ cá nhân hoá</span>
-            </div>
-            <div className="itemContent flex items-center font-normal text-white">
-              <IconRoundChecked />
-              <span className="ml-[8px] text-textSizeMb">
-                Thông tin trực tuyến
-              </span>
-            </div>
-            <div className="itemContent flex items-center font-normal text-white">
-              <IconRoundChecked />
-              <span className="ml-[8px] text-textSizeMb">
-                Liên hệ và kết nối
-              </span>
-            </div>
-            <div className="itemContent flex items-center font-normal text-white">
-              <IconRoundChecked />
-              <span className="ml-[8px] text-textSizeMb">Hồ sơ trực tuyến</span>
-            </div>
-            <div className="itemContent flex items-center font-normal text-white">
-              <IconRoundChecked />
-              <span className="ml-[8px] text-textSizeMb">Dịch vụ lưu trữ</span>
-            </div>
+            {dataInfo?.features.map((item) => {
+              if (item.state === 'using') {
+                return (
+                  <div className="itemContent flex items-center font-normal text-white">
+                    <IconRoundChecked />
+                    <span className="ml-[8px] text-textSizeMb">
+                      {item.name}
+                    </span>
+                  </div>
+                )
+              } else {
+                return (
+                  <div className="flex">
+                    <div className="itemContent flex-1 flex items-center font-normal text-white">
+                      <IconDanger />
+                      <span className="ml-[8px] text-textSizeMb">
+                        {item.name}
+                      </span>
+                    </div>
+                    <span className="cursor-pointer">
+                      <IconUpLevel />
+                    </span>
+                  </div>
+                )
+              }
+            })}
           </div>
           <div className="flex justify-end">
             <BaseButton
