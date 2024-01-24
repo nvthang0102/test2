@@ -24,7 +24,7 @@ export function removeAccents(str) {
 }
 
 export function validPhoneNumber(number) {
-  const regexPhoneNumber = /(0[3|5|7|8|9])+([0-9]{8})\b/g
-
-  return number.match(regexPhoneNumber) ? true : false
+  const phoneNumberRegex = /^(0[1-9]|11|12|13|14|15|16|17|18|19)[0-9]{8}$/
+  const isValidPhoneNumber = phoneNumberRegex.test(number)
+  return isValidPhoneNumber
 }

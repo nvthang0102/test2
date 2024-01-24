@@ -9,6 +9,7 @@ const ConfirmEditPU = ({ open, setOpen, handleSave }) => {
       btnOk={<BaseButton handleClick={handleSave} content={'Lưu thay đổi'} />}
       btnCanCel={<BaseButton className={'btnCancel'} content={'Trở lại'} />}
       width={311}
+      type={'notify'}
       open={open}
       setOpen={setOpen}
     >

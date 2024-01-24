@@ -9,6 +9,7 @@ const ConfirmDeletePU = ({ open, setOpen, handleDelete, content }) => {
       btnOk={<BaseButton handleClick={handleDelete} content={'Xác nhận'} />}
       btnCanCel={<BaseButton className={'btnCancel'} content={'Trở lại'} />}
       width={311}
+      type={'notify'}
       open={open}
       setOpen={(value) =>
         setOpen({

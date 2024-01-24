@@ -11,6 +11,8 @@ const PopupLayout = ({
   setOpen,
   children,
   maskClosable,
+  type,
+  handleClose,
 }) => {
   const handleCancel = () => {
     setOpen(false)
@@ -23,14 +25,21 @@ const PopupLayout = ({
       height={height}
       open={open}
       footer={
-        <div className="mt-[24px] footerModal flex justify-end">
-          <div onClick={handleCancel} className="mr-[12px]">
+        <div
+          className={`mt-[24px] footerModal flex ${
+            type === 'notify' ? 'justify-center' : 'justify-end'
+          }`}
+        >
+          <div
+            onClick={handleClose ? handleClose : handleCancel}
+            className="mr-[12px]"
+          >
             {btnCanCel}
           </div>
           <div>{btnOk}</div>
         </div>
       }
-      onCancel={handleCancel}
+      onCancel={handleClose ? handleClose : handleCancel}
       centered
       closeIcon={<IconClose />}
       className="wrapperModalLayout borderGradient"

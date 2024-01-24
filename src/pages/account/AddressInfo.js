@@ -1,28 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AccoutItemLayout from '../../layouts/AccoutItemLayout'
-import {
-  IconAddAddress,
-  IconArrowLeft,
-  IconBar,
-  IconDelete,
-  IconEdit,
-  IconKeMenu,
-  IconPlus,
-} from '../../assets/icons'
+import { IconDelete, IconEdit, IconKeMenu, IconPlus } from '../../assets/icons'
 import './Account.scss'
-import InputForm from '../../components/input/InputForm'
-import { Dropdown, Input } from 'antd'
-import InputTypeRadio from '../../components/input/InputTypeRadio'
-import BaseButton from '../../components/button/BaseButton'
-import SelectSearch from './../../components/selecter/selectSearch'
+import { Dropdown } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  getCity,
-  getDistrict,
-  getWard,
-  resetState,
-} from '../../service/slices/ProvinceSlice'
-import { accountSelector, provinceSelector } from '../../service/selectors'
+import { getCity, resetState } from '../../service/slices/ProvinceSlice'
+import { accountSelector } from '../../service/selectors'
 import {
   addAddress,
   deleteAddress,
@@ -33,15 +16,18 @@ import {
 import AddressManagerPU from '../../components/popup/AddressManagerPU'
 import ConfirmDeletePU from '../../components/popup/ConfirmDeletePU'
 import { validPhoneNumber } from '../../util'
-const AddressInfo = ({ setShowConfirmEdit }) => {
+const AddressInfo = ({
+  setShowConfirmEdit,
+  setDataChange,
+  setIsEditAddress,
+  isEditAddress,
+}) => {
   const dispatch = useDispatch()
-  const provinceState = useSelector(provinceSelector)
   const accountState = useSelector(accountSelector)
-  const { dataCity, dataDistrict, dataWard } = provinceState
 
   const [data, setData] = useState([])
   const [isAddAddress, setIsAddAddress] = useState(false)
-  const [isEditAddress, setIsEditAddress] = useState(false)
+
   const [valueDelete, setValueDelete] = useState({
     isOpenPU: false,
     id: '',
@@ -57,6 +43,15 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
     isDefault: false,
   })
   const [dataEdit, setDataEdit] = useState({
+    addressName: '',
+    detail: '',
+    wards: '',
+    district: '',
+    city: '',
+    phoneNumber: '',
+    isDefault: false,
+  })
+  const [dataBackUpEdit, setDataBackUpEdit] = useState({
     addressName: '',
     detail: '',
     wards: '',
@@ -98,6 +93,9 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
     if (isChanged) {
       setShowConfirmEdit(true)
     } else {
+      setDataEdit({})
+      setDataBackUpEdit({})
+      setIsEditAddress(false)
       dispatch(setIsEdit({ keyEdit: '', isChanged: false }))
     }
   }
@@ -127,6 +125,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
         phoneNumber: '',
         isDefault: false,
       })
+
       setIsAddAddress(false)
     }
   }
@@ -146,6 +145,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
     } else {
       dispatch(updateAddress(dataEdit))
       dispatch(resetState())
+      setIsEditAddress(false)
       setDataAdd({
         addressName: '',
         detail: '',
@@ -155,7 +155,6 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
         phoneNumber: '',
         isDefault: false,
       })
-      setIsEditAddress(false)
     }
   }
   // xử lý khi xóa địa chỉ
@@ -168,6 +167,47 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
       })
     }
   }
+  //kiểm tra sự thay đổi khi chỉnh sửa
+  useEffect(() => {
+    if (
+      dataEdit.addressName !== dataBackUpEdit.addressName ||
+      dataEdit.district !== dataBackUpEdit.district ||
+      dataEdit.detail !== dataBackUpEdit.detail ||
+      dataEdit.isDefault !== dataBackUpEdit.isDefault ||
+      dataEdit.phoneNumber !== dataBackUpEdit.phoneNumber ||
+      dataEdit.wards !== dataBackUpEdit.wards ||
+      dataEdit.city !== dataBackUpEdit.city
+    ) {
+      dispatch(setIsEdit({ keyEdit: 'AddressInfo', isChanged: true }))
+      setDataChange({
+        valueChange: dataEdit,
+        handle: updateAddress,
+      })
+    } else {
+      dispatch(setIsEdit({ keyEdit, isChanged: false }))
+      setDataChange({
+        valueChange: [],
+        handle: '',
+      })
+    }
+  }, [
+    dataBackUpEdit.addressName,
+    dataBackUpEdit.city,
+    dataBackUpEdit.detail,
+    dataBackUpEdit.district,
+    dataBackUpEdit.isDefault,
+    dataBackUpEdit.phoneNumber,
+    dataBackUpEdit.wards,
+    dataEdit.addressName,
+    dataEdit.city,
+    dataEdit.detail,
+    dataEdit.district,
+    dataEdit.isDefault,
+    dataEdit.phoneNumber,
+    dataEdit.wards,
+    dispatch,
+    keyEdit,
+  ])
   return (
     <>
       {valueDelete.isOpenPU ? (
@@ -188,6 +228,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
           setIsOpen={setIsAddAddress}
           handleSubmit={handleAddAddress}
           isEdit={false}
+          handleClose={handleHiddenEdit}
         />
       ) : null}
       {isEditAddress ? (
@@ -200,6 +241,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
           open={isEditAddress}
           setIsOpen={setIsEditAddress}
           handleSubmit={handleEditAddress}
+          handleClose={handleHiddenEdit}
         />
       ) : null}
       <AccoutItemLayout
@@ -213,7 +255,7 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
               return (
                 <div
                   className={`text-textSizeMb pt-[12px] ${
-                    data.length !== index + 1 || keyEdit === 'AddressInfo'
+                    data.length !== index + 1
                       ? 'borderDashed  pb-[12px] mb-[12px]  py-[12px] '
                       : null
                   }`}
@@ -235,12 +277,12 @@ const AddressInfo = ({ setShowConfirmEdit }) => {
                               label: (
                                 <div
                                   onClick={() => {
-                                    setDataEdit(
-                                      data.find(
-                                        (element) =>
-                                          element.addressID === item.addressID
-                                      )
+                                    const dataEdit = data.find(
+                                      (element) =>
+                                        element.addressID === item.addressID
                                     )
+                                    setDataBackUpEdit(dataEdit)
+                                    setDataEdit(dataEdit)
                                     handleSetEdit()
                                   }}
                                   className="flex items-center cursor-pointer"
