@@ -38,14 +38,14 @@ const UpgradePopup = ({ open, setOpen }) => {
             Nâng cấp dịch vụ
           </span>
         </div>
-        <div className=" mt-[12px] text-whiteText">
+        <div className=" mt-[24px] text-whiteText">
           <SelectOption
             className={'graySelecte'}
             preFix={<IconCloud fill="#1B94D2" />}
             options={optionsCapacity}
           />
         </div>
-        <div className=" mt-[12px] text-whiteText">
+        <div className=" mt-[12px] mb-[24px] text-whiteText">
           <SelectOption
             className={'graySelecte'}
             preFix={<IconCalenda fill="#1B94D2" />}

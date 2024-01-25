@@ -110,7 +110,7 @@ const ServiceManager = () => {
                   Thẻ đã tạo
                 </span>
               </div>
-              <span>
+              <span className="cursor-pointer">
                 <IconRight />
               </span>
             </div>
@@ -123,7 +123,7 @@ const ServiceManager = () => {
                   Thông tin trực tuyến
                 </span>
               </div>
-              <span>
+              <span className="cursor-pointer">
                 <IconRight />
               </span>
             </div>
@@ -136,7 +136,7 @@ const ServiceManager = () => {
                   Liên hệ và kết nối
                 </span>
               </div>
-              <span>
+              <span className="cursor-pointer">
                 <IconRight />
               </span>
             </div>
@@ -149,7 +149,7 @@ const ServiceManager = () => {
                   Hồ sơ tạo
                 </span>
               </div>
-              <span>
+              <span className="cursor-pointer">
                 <IconRight />
               </span>
             </div>

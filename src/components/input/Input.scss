@@ -4,8 +4,8 @@
 
   .ant-input-affix-wrapper{
     box-shadow: unset !important;
-    background: $--glass-grad-1 !important;
     border: none;
+    background: $--glass-grad-1 !important;
     padding: 6px 8px;
     width: 100%;
     border-radius: 8px;
@@ -25,6 +25,47 @@
     }
 }
 }
+.baseInput{
+  width: 100%;
+  .ant-input-affix-wrapper{
+    box-shadow: unset !important;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 8px !important;
+    background: $--glass-grad-2 !important;
+  }
+  .ant-input {
+    background: transparent;
+    font-size: 15px;
+    color: white;
+    background: transparent !important;
+    &::placeholder {
+      color: $--color-text-label;
+    }
+    &:focus{
+      box-shadow:  unset;
+    }
+  }
+  }
+  .baseTextArea{
+    
+    .ant-input {
+      box-shadow: unset !important;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 8px !important;
+      background: transparent;
+      font-size: 15px;
+      color: white;
+      background: $--glass-grad-2 !important;
+      &::placeholder {
+        color: $--color-text-label;
+      }
+      &:focus{
+        box-shadow:  unset;
+      }
+    }
+  }
 .noPrefix{
     .ant-input-affix-wrapper {        
         .ant-input {
