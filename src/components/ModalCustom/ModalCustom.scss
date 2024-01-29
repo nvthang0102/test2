@@ -1,0 +1,11 @@
+.backdound-modal {
+    .ant-modal-content {
+        position: relative;
+        background-color: rgba(0, 0, 0, 0);
+        padding: 20px 10px 10px 10px !important;
+    }
+
+    .ant-modal-close {
+        inset-inline-end: 0px;
+    }
+}

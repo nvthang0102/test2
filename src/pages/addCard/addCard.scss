@@ -1,0 +1,37 @@
+.background-upload .ant-upload-list,
+.logo-upload .ant-upload-list {
+    display: none;
+}
+
+.card-flip.swiper-slide img {
+    display: block;
+    width: initial;
+    height: initial;
+}
+
+.body-config {
+    @media (max-width: 575px) {
+        margin-top: calc(60vw + 50px);
+    }
+
+    @media (min-width: 576px) and (max-width: 992px) {
+        margin-top: calc(30vw + 50px)
+    }
+
+    @media (min-width: 992px) {
+        margin-top: calc(20vw + 50px)
+    }
+
+
+}
+
+.card-config {
+    top: 60px;
+    padding: 0px 20px 0px 20px;
+    margin-right: 5px;
+    border-radius: 0px;
+    background: rgba(17, 17, 17, 0.48);
+    backdrop-filter: blur(10px);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
