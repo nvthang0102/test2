@@ -35,7 +35,7 @@ const MainLayout = () => {
         </>
       ),
       placement: 'top',
-      duration: 3,
+      duration: 4,
     })
   }
   useEffect(() => {

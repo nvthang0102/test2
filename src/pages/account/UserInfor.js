@@ -14,7 +14,7 @@ import {
 } from '../../assets/icons'
 import imgDefault from '../../assets/images/Img_AccDefault.png'
 import './Account.scss'
-import { Input } from 'antd'
+import { DatePicker, Input } from 'antd'
 import moment from 'moment'
 import BaseButton from './../../components/button/BaseButton'
 import {
@@ -67,9 +67,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
       setData({
         fullName: dataAccountInfo.fullName,
         avatarID: dataAccountInfo.avatarID,
-        birthday: moment(accountState.dataAccountInfo.birthday).format(
-          'DD/MM/YYYY'
-        ),
+        birthday: accountState.dataAccountInfo.birthday,
       })
       setDataPhones([...dataAccountInfo?.phones])
     }
@@ -141,7 +139,13 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
       if (checkValidPhone.indexOf(false) !== -1) {
         setCheckValidPhoneNumber(false)
       } else {
-        dispatch(updateUserInfo({ ...data, phones: resultPhone }))
+        dispatch(
+          updateUserInfo({
+            ...data,
+            birthday: moment(data.birthday).format('YYYY-MM-DD'),
+            phones: resultPhone,
+          })
+        )
         setDataChange({
           valueChange: [],
           handle: '',
@@ -199,7 +203,9 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     !data.birthday ? 'italic text-labelText' : null
                   } font-normal`}
                 >
-                  {data.birthday ? data.birthday : 'DD/MM/YYYY'}
+                  {data.birthday
+                    ? moment(data.birthday).format('DD/MM/YYYY')
+                    : 'DD/MM/YYYY'}
                 </div>
               </div>
 
@@ -215,9 +221,11 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                         : null
                     } font-normal`}
                   >
-                    {dataPhones?.length >= 1 && dataPhones[0] !== ''
-                      ? dataPhones[0]
-                      : '(trống)'}
+                    {dataPhones?.length >= 1 && dataPhones[0] !== '' ? (
+                      dataPhones[0]
+                    ) : (
+                      <span className="italic text-labelText">(trống)</span>
+                    )}
                   </div>
                 </div>
                 {dataPhones?.length > 1 && !keyEdit ? (
@@ -262,7 +270,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                   <IconAccount />
                 </div>
                 <Input
-                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
+                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText h-[24px] placeholder:italic borderBottom  text-whiteText"
                   placeholder="Họ và tên"
                   value={data.fullName}
                   onChange={(e) =>
@@ -275,14 +283,27 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                   <IconCalenda />
                 </div>
 
-                <Input
-                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
+                {/* <Input
+                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText placeholder:italic h-[24px] borderBottom  text-whiteText"
                   placeholder="DD/MM/YYYY"
                   value={data.birthday}
                   onChange={(e) => {
                     setData({ ...data, birthday: e.target.value })
                   }}
-                ></Input>
+                ></Input> */}
+                <DatePicker
+                  format={'DD/MM/YYYY'}
+                  placeholder="DD/MM/YYYY"
+                  // value={
+                  //   data.birthday ? moment(data.birthday, 'DD/MM/YYYY') : null
+                  // }
+                  // onChange={(value) => {
+                  //   setData({
+                  //     ...data,
+                  //     birthday: value,
+                  //   })
+                  // }}
+                />
               </div>
 
               <div
@@ -298,7 +319,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     <IconPhoneCall />
                   </div>
                   <Input
-                    className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText"
+                    className="flex-1 text-textSizeMb placeholder:italic bg-transparent border-none placeholder:text-labelText h-[24px] borderBottom  text-whiteText"
                     placeholder="Số điện thoại"
                     value={dataPhones[0]}
                     onChange={(e) => {
@@ -344,7 +365,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                               key={indexPhone}
                               className={`
                               ${item === 'Rỗng' ? 'italic' : null}
-                               flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-white h-[24px] borderBottom  text-whiteText`}
+                               flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-labelText h-[24px] borderBottom  text-whiteText`}
                               placeholder={
                                 item !== 'Rỗng' ? 'Số điện thoại' : '(Trống)'
                               }

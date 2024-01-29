@@ -83,16 +83,22 @@
 }
 .ant-notification{  
     .ant-notification-notice{
-    padding: 8px 12px !important;
+    padding: 9px 12px !important;
 
     }
-    .ant-notification-notice-close,.ant-notification-notice-icon{
+    .ant-notification-notice-close{
+        top: 8px !important;
+        inset-inline-end: 8px !important
+    }
+    .ant-notification-notice-icon{
         display: none !important;
     }
     .ant-notification-notice-description{
         margin-left: unset !important;
      
         font-size: 12px !important;
+        font-weight: 700;
+        line-height: 18px !important;
     }
 }
 

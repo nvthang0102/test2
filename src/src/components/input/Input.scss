@@ -1,0 +1,117 @@
+@import '../../assets/styles/validate.scss';
+.inputForm {
+  width: 100%;
+
+  .ant-input-affix-wrapper{
+    box-shadow: unset !important;
+    border: none;
+    background: $--glass-grad-1 !important;
+    padding: 6px 8px;
+    width: 100%;
+    border-radius: 8px;
+    .ant-input {
+      padding-left: 8px;
+      // height: 24px;
+      font-size: 15px;
+      color: white;
+      background: transparent !important;
+      &::placeholder {
+        color: $--color-text-label;
+        font-style: italic;
+      }
+      &:focus{
+        box-shadow:  unset;
+      }
+    }
+}
+}
+.baseInput{
+  width: 100%;
+  .ant-input-affix-wrapper{
+    box-shadow: unset !important;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 8px !important;
+    background: $--glass-grad-2 !important;
+  }
+  .ant-input {
+    background: transparent;
+    font-size: 15px;
+    color: white;
+    background: transparent !important;
+    &::placeholder {
+      color: $--color-text-label;
+    }
+    &:focus{
+      box-shadow:  unset;
+    }
+  }
+  }
+  .baseTextArea{
+    
+    .ant-input {
+      box-shadow: unset !important;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 8px !important;
+      background: transparent;
+      font-size: 15px;
+      color: white;
+      background: $--glass-grad-2 !important;
+      &::placeholder {
+        color: $--color-text-label;
+      }
+      &:focus{
+        box-shadow:  unset;
+      }
+    }
+  }
+.noPrefix{
+    .ant-input-affix-wrapper {        
+        .ant-input {
+          padding-left: 0px;
+          color: white;
+          background: transparent !important;
+          &::placeholder {
+            color: $--color-text-label;
+            font-style: italic;
+            font-weight: 400;
+          }
+        }
+      }
+}
+.inputPass {
+  .ant-input-suffix {
+    width: 24px;
+    height: 24px;
+    svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+      opacity: 0.6;
+    }
+  }
+}
+.inputForm.inputBase{
+    .ant-input {
+        border-radius: 8px !important;
+        padding:6px 8px;
+        color: white;
+        background: $--glass-grad-1 !important;
+        border: none;
+        &::placeholder {
+          color: $--color-text-label;
+          font-weight: 400 ;
+          font-style: italic;
+        }
+      }
+}
+.inputForm.inputBase.inputGray{
+  .ant-input {
+
+    background: $--glass-grad-2 !important;
+  }
+}
+.ant-input {
+  font-size: 15px;
+}

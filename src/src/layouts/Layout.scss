@@ -1,0 +1,98 @@
+@import "../assets/styles/validate.scss";
+
+.wrapperMainLayout {
+    position: relative;
+    // padding-top: ;
+    background-color: $--main-bg;
+    width: 100vw;
+    max-height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    min-width: 280px;
+
+    .contentMain {
+        padding: calc($--height-header + 12px) 2rem 4.5rem 2rem;
+        height: 100vh;
+        overflow-y: scroll;
+    }
+}
+
+// background: linear-gradient(130deg,#1a638b 3%,hsla(0,0%,100%,0) 10%),linear-gradient(310deg,#707378 2%,$--main-bg 10%);
+.wrapperAccountItem {
+    padding: 18px 12px;
+    border-radius: 15px;
+    position: relative;
+    z-index: 2;
+    // background: linear-gradient(130deg,#1a638b 3%,hsla(0,0%,100%,0) 10%),linear-gradient(310deg,#707378 2%,$--main-bg 15%);
+    background: linear-gradient(180deg, rgba(11, 18, 28, 0.64) 0%, rgba(4, 14, 29, 0.48) 100%);
+
+    &::after {
+        content: "";
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        border-radius: 18px;
+        padding: 1px;
+        background: linear-gradient(300deg, rgba(255, 255, 255, 0.20) 0%, rgba(17, 17, 17, 0.00) 27.26%), linear-gradient(140deg, rgba(27, 148, 210, 0.60) 0%, rgba(17, 17, 17, 0.00) 24.6%);
+
+        backdrop-filter: blur(7.59999942779541px);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+
+    }
+
+    .headerAccountItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .titleItem {
+            color: rgba($color: #fff, $alpha: 0.5);
+            font-size: 1.8rem;
+            line-height: 22px;
+            font-weight: 600 !important;
+        }
+    }
+}
+
+.wrapperModalLayout {
+    padding: unset;
+    background: linear-gradient(204deg, rgba(0, 0, 0, 0.64) -0.94%, rgba(0, 0, 0, 0.64) 100%) !important;
+    .ant-modal-content {
+        // width: calc(100vw - 72px) !important;
+        background: transparent;
+        padding: 18px 12px !important;
+    }
+    
+}
+
+.ant-modal-mask {
+    background-color: unset !important;
+    background:linear-gradient(204deg, rgba(0, 0, 0, 0.64) -0.94%, rgba(0, 0, 0, 0.64) 100%);
+    /* mini footer glass */
+    backdrop-filter: blur(9px);
+    // background: rgba($color: #000, $alpha: 0.5)!important;
+    // backdrop-filter: blur(80px);
+}
+.ant-notification{  
+    .ant-notification-notice{
+    padding: 8px 12px !important;
+
+    }
+    .ant-notification-notice-close,.ant-notification-notice-icon{
+        display: none !important;
+    }
+    .ant-notification-notice-description{
+        margin-left: unset !important;
+     
+        font-size: 12px !important;
+    }
+}
+
