@@ -1,0 +1,13 @@
+@import "../../assets/styles/validate.scss";
+.wrapperHeaderManager{
+    padding:1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    background: $--glass-grad-1;
+    backdrop-filter: blur(9px);
+    position: fixed;
+    width: calc(100vw - 5px );
+    top: 0;
+    z-index: 99;    
+}

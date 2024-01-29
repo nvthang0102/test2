@@ -14,25 +14,29 @@ import {
   IconSuccess,
   IconUnLink,
 } from '../../assets/icons'
-import imgDefault from '../../assets/images/Img_AccDefault.png'
 import './Account.scss'
 import BaseButton from '../../components/button/BaseButton'
 import { Tooltip } from 'antd'
 import InputForm from './../../components/input/InputForm'
-import { getRegisterInfo } from '../../service/slices/AccountManagerSlice'
+import {
+  getRegisterInfo,
+  setIsEdit,
+} from '../../service/slices/AccountManagerSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { accountSelector } from '../../service/selectors'
-
-const RegisterInfo = () => {
+import { useGoogleLogin } from '@react-oauth/google'
+import axios from 'axios'
+const RegisterInfo = ({ setShowConfirmEdit }) => {
+  const [email, setEmail] = useState('')
   const [data, setData] = useState({
     mail: 'test.gmail.com',
     isSetPassword: true,
     isMailVerify: true,
     isLinked: true,
   })
-  const [isEdit, setIsEdit] = useState(false)
   const dispatch = useDispatch()
   const accountState = useSelector(accountSelector)
+  const { keyEdit, isChanged } = accountState
   useEffect(() => {
     if (accountState?.dataRegister) {
       setData(accountState.dataRegister)
@@ -40,36 +44,46 @@ const RegisterInfo = () => {
   }, [accountState.dataRegister])
   useEffect(() => {
     dispatch(getRegisterInfo())
-  }, [])
-  const handleShareClick = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: 'Shared Image',
-          text: 'Check out this image!',
-          url: { imgDefault },
-        })
-      } else {
-        console.log('Web Share API not supported in this browser.')
-        // Handle fallback mechanism (e.g., show a modal with sharing options).
-      }
-    } catch (error) {
-      console.error('Error sharing:', error)
+  }, [dispatch])
+  const handleSetEdit = () => {
+    if (keyEdit !== 'registerInfo' && isChanged) {
+      setShowConfirmEdit(true)
+    } else dispatch(setIsEdit({ keyEdit: 'registerInfo', isChanged: false }))
+  }
+  const handleHiddenEdit = () => {
+    if (isChanged) {
+      setShowConfirmEdit(true)
+    } else {
+      dispatch(setIsEdit({ keyEdit: '', isChanged: false }))
     }
   }
-  const handleClick = () => {
-    setIsEdit(!isEdit)
-  }
 
+  const handleLoginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      // fetching userinfo can be done on the client or the server
+      const result = await axios
+        .get('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+        })
+        .then((res) => {
+          setEmail(res.data.email)
+        })
+    },
+  })
   return (
     <AccoutItemLayout
       className={'wrapperRegisInfo'}
       title={'THÔNG TIN ĐĂNG KÝ'}
-      handleClick={handleClick}
-      icon={isEdit ? <IconArrowLeft /> : <IconEdit />}
+      icon={
+        keyEdit === 'registerInfo' ? (
+          <IconArrowLeft onClick={handleHiddenEdit} />
+        ) : (
+          <IconEdit onClick={handleSetEdit} />
+        )
+      }
     >
       <div className="contentInfo flex ">
-        {isEdit ? (
+        {keyEdit === 'registerInfo' ? (
           <div className=" flex-1 flex flex-col justify-between">
             <div className="infoItem flex align-middle">
               <InputForm
@@ -169,7 +183,7 @@ const RegisterInfo = () => {
           </div>
         )}
       </div>
-      {isEdit ? (
+      {keyEdit === 'registerInfo' ? (
         <div className="flex mt-[24px] items-center justify-between font-semibold text-[12px] text-labelText ">
           <span className="italic">Quên mật khẩu</span>
           <BaseButton content={'Lưu thay đổi'} />
@@ -187,19 +201,26 @@ const RegisterInfo = () => {
             <IconInformation className="pointer" />
           </Tooltip>
         </div>
-        <div className="flex pr-[8px]">
-          <div className="flex flex-1 rounded-[8px]  overflow-hidden">
+        <div className="flex pr-[8px] ">
+          <div
+            onClick={handleLoginWithGoogle}
+            className="flex flex-1 rounded-[8px] cursor-pointer overflow-hidden"
+          >
             <div className="bg-white w-[36px] flex justify-center align-middle">
               <IconGoogle />
             </div>
             <div className=" flex-1 flex pl-[6px] items-center  bg-[#4285F4]">
               <span className="text-whiteText text-[14ptexttext-textSizeMb">
-                {data.mail ? data.mail : 'Google'}
+                {email ? email : 'Google'}
               </span>
             </div>
           </div>
           <div className="cursor-pointer flex items-center justify-center ml-[8px]">
-            {!data.isLinked ? <IconLink /> : <IconUnLink />}
+            {!email ? (
+              <IconLink onClick={() => handleLoginWithGoogle()} />
+            ) : (
+              <IconUnLink onClick={() => setEmail('')} />
+            )}
           </div>
         </div>
       </div>

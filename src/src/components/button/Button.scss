@@ -1,0 +1,36 @@
+@import "../../assets/styles/validate.scss";
+.btnBase{
+    background: linear-gradient(180deg, #00D4FC 0%, #1955B6 100%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18px;
+    font-style: normal;
+    width: fit-content;
+    padding: 6px 0;
+    min-height: 3rem;
+    border-radius: 8px;
+    .contentBtn{
+        font-weight: 600;
+    }
+    .preFix{
+        margin-right: 0.6rem;
+    }
+    .subFix{
+        margin-left: 0.6rem;
+    }
+}
+.btnBase.btnGray{
+    backdrop-filter: blur(9px);
+    border: 1px solid white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 100%);
+}
+.btnBase.btnCancel{
+    background: #1E2530 !important;
+    color: #1B94D2;
+}

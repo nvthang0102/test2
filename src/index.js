@@ -8,20 +8,23 @@ import './index.scss'
 import AccountManager from './pages/account/AccountManager'
 import store from './service/store'
 import ServiceManager from './pages/serviceManager/ServiceManager'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <Provider store={store}>
-    <Router>
-      <Routes>
-        <Route path="/" element={<ProtectedRoute />}>
-          <Route index path="/account_manager" element={<AccountManager />} />
-          <Route index path="/service_manager" element={<ServiceManager />} />
-        </Route>
-        <Route index path="/login" element={<Authentication />} />
-        <Route index path="/register" element={<Authentication />} />
-      </Routes>
-    </Router>
-  </Provider>
+  <GoogleOAuthProvider clientId={`${window.GOOGLE_ID_CLIENT}`}>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<ProtectedRoute />}>
+            <Route index path="/account_manager" element={<AccountManager />} />
+            <Route index path="/service_manager" element={<ServiceManager />} />
+          </Route>
+          <Route index path="/login" element={<Authentication />} />
+          <Route index path="/register" element={<Authentication />} />
+        </Routes>
+      </Router>
+    </Provider>
+  </GoogleOAuthProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function
