@@ -43,9 +43,8 @@ const SideBar = ({ showMenu, setShowMenu }) => {
       <div onClick={() => setShowMenu(false)} className="overlayMenu"></div>
 
       <Menu
-        className={`wrapperSideBar flex flex-col ${
-          showMenu ? 'slide-in' : 'slide-out'
-        }`}
+        className={`wrapperSideBar flex flex-col ${showMenu ? 'slide-in' : 'slide-out'
+          }`}
         defaultSelectedKeys={['/']}
         mode="inline"
         openKeys={openKeys}
@@ -95,9 +94,9 @@ const SideBar = ({ showMenu, setShowMenu }) => {
             </Menu.Item>
             <Menu.Item
               // icon={<IconAccount />}
-              key={'acount'}
+              key={'card-manager'}
               onClick={() => {
-                handleChangePage('')
+                handleChangePage('card-manager')
               }}
             >
               <Row>
