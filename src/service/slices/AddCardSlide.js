@@ -63,7 +63,7 @@ export const addCard = createAsyncThunk('AddCardSlide/add-card', async (params, 
             formData.append('logoFile', blob, uuidString);
         }
 
-        const res = await instance.post('/v1/card/add-card', formData, {
+        const res = await instance.post('/v2/card/add-card', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
