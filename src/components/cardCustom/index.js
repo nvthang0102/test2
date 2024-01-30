@@ -29,7 +29,7 @@ const CardCustom = (props) => {
 
   const cardProps = {
     _id,
-    logo: { value: logo ? `${window.URL_SERVER}/api/v1${logo}` : logo },
+    logo: { value: logo ? `${window.URL_SERVER}/api/v2${logo}` : logo },
     nameCard: frontText,
     textColor: fontColor,
     isOff: false,
@@ -39,7 +39,7 @@ const CardCustom = (props) => {
     alignMent: alignment,
     colorPicker: {
       key: backgroundImage ? 'image' : 'color',
-      value: backgroundImage ? `${window.URL_SERVER}/api/v1${backgroundImage}` : backgroundColor,
+      value: backgroundImage ? `${window.URL_SERVER}/api/v2${backgroundImage}` : backgroundColor,
     },
     nameCardBack: backText,
     onShowInfo,

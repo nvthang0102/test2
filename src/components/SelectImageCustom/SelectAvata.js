@@ -3,9 +3,9 @@ import { useState } from "react";
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import ImgCrop from "antd-img-crop";
 import "./SelectImageCustom.scss"
-const SelectImageCustom = ({ onSelectColor, Content, note, aspectRate, modalTitle,selectImage }) => {
+const SelectAvata = ({ onSelectColor, Content, note, aspectRate, modalTitle,selectLogo }) => {
     const [loading, setLoading] = useState(false);
-    const [imageUrl, setImageUrl] = useState(selectImage?.value.search("#")>-1?null:selectImage?.value);
+    const [imageUrl, setImageUrl] = useState(selectLogo?.value);
 
     const getBlob = (file, callback) => {
         const reader = new FileReader();
@@ -64,6 +64,7 @@ const SelectImageCustom = ({ onSelectColor, Content, note, aspectRate, modalTitl
     return (
         <div>
             <ImgCrop
+                cropShape="round"
                 showGrid
                 rotationSlider
                 modalTitle={modalTitle}
@@ -83,7 +84,7 @@ const SelectImageCustom = ({ onSelectColor, Content, note, aspectRate, modalTitl
                         <img
                             src={imageUrl}
                             alt="avatar"
-                            style={{ height: '100%', borderRadius: 10 }}
+                            style={{ height: '100%', borderRadius: '50%' }}
                         />
                     ) : (
                         uploadButton
@@ -95,4 +96,4 @@ const SelectImageCustom = ({ onSelectColor, Content, note, aspectRate, modalTitl
     );
 }
 
-export default SelectImageCustom
+export default SelectAvata

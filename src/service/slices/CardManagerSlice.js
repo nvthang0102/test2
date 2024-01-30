@@ -45,7 +45,7 @@ const CardManagerSlice = createSlice({
 
 export const getListCard = createAsyncThunk('CardManagerSlice/getListCard', async (params, thinkAPI) => {
     try {
-        const res = await instance.get(`/v1/card/get-card`)
+        const res = await instance.get(`/v2/card/get-card`)
         return res.data
     } catch (error) {
         console.log(error)
@@ -55,7 +55,7 @@ export const getListCard = createAsyncThunk('CardManagerSlice/getListCard', asyn
 
 export const deleteCard = createAsyncThunk('CardManagerSlice/deleteCard', async (params, thinkAPI) => {
     try {
-        const res = await instance.post(`/v1/card/delete-card`, params)
+        const res = await instance.post(`/v2/card/delete-card`, params)
         return res.data
     } catch (error) {
         console.log(error)

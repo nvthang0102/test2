@@ -4,13 +4,13 @@ import { IconCard, IconDeleteCard, IconReload } from '../../assets/icons'
 const AlingMent = (e) => {
   switch (e) {
     case 'left':
-      return "translate(-90%, -50%)"
+      return "translate(-60%, -50%)"
     case 'center':
       return "translate(-50%, -50%)"
     case 'right':
-      return "translate(-10%, -50%)"
+      return "translate(-40%, -50%)"
     default:
-      return "translate(-90%, -50%)"
+      return "translate(-60%, -50%)"
   }
 }
 const CardFront = ({
@@ -39,7 +39,7 @@ const CardFront = ({
         </div>
       }
 
-      <div className="cardItem" onClick={onShowInfo} style={{ transform: AlingMent(alignMent) }}>
+      <div className="cardItem" onClick={onShowInfo} style={{ transform: AlingMent(alignMent),textAlign:alignMent }}>
         {
           isEnableLogo && <div style={{ display: 'inline-block' }}>
             {logo?.value ? <img src={logo.value} style={{ borderRadius: 200 }} className='cardIcon' /> : <IconCard className='cardIcon' />}

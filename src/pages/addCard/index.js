@@ -22,8 +22,9 @@ const AddCard = () => {
     const [nameCardBack, setNameCardBack] = useState("Your name here")
     const [FontColor, setFontColor] = useState("#FFFFFF")
     const [FontFamily, setFontFamily] = useState("Montserrat")
-    const [selectLogo, setSelectLogo] = useState(null)
-    const [avata, setAvata] = useState(null)
+    const [selectLogo, setSelectLogo] = useState("logo")
+    const [selectAvata,setSelectAvata] = useState("avata")
+    const [keyFlip, setKeyFlip] = useState(null)
 
     //boolen
     const [EnableFront, setEnableFront] = useState(true)
@@ -60,8 +61,8 @@ const AddCard = () => {
             setSelectLogo(e)
             return
         }
-        if (e.key === "image") {
-            setAvata(e)
+        if (e.key === "avata") {
+            setSelectAvata(e)
             return
         }
     }
@@ -71,21 +72,22 @@ const AddCard = () => {
             <IconBackLeft style={{ marginBottom: 12 }} onClick={() => navigate("/card-manager")} />
             <Row gutter={12}>
                 <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} >
-                    <CreateCard nameCardBack={nameCardBack} logo={selectLogo} nameCard={nameCard} textColor={FontColor} isOff={true} colorPicker={colorPicker} FontFamily={FontFamily} isEnableFront={EnableFront} isEnableLogo={EnableLogo} alignMent={alignMent} />
+                    <CreateCard onHandleIndexSlide={(e)=>setKeyFlip(e)} numberSlide={keyFlip} nameCardBack={nameCardBack} logo={selectLogo} nameCard={nameCard} textColor={FontColor} isOff={true} colorPicker={colorPicker} FontFamily={FontFamily} isEnableFront={EnableFront} isEnableLogo={EnableLogo} alignMent={alignMent} />
                 </Col>
             </Row>
         </div>
         <div className="body-config">
             <AlignMent handleChangeAlignment={setAlignMent} />
-            <ColorPicker onChangeSelect={onChangeSelect} />
-            <Logo onChangeSelect={onChangeLogo} onEnableLogo={(e) => setEnableLogo(e)} selectLogo={selectLogo} />
+            <ColorPicker onChangeSelect={onChangeSelect} selectImage={colorPicker}/>
+            <Logo onEnableLogo={(e) => setEnableLogo(e)} selectLogo={selectLogo} selectAvata={selectAvata}/>
             <FrontText
+                onSlide={()=>setKeyFlip(0)}
                 onFontFamily={(e) => setFontFamily(e)}
                 onEnableFront={(e) => setEnableFront(e)}
                 onSelectColor={(e) => setFontColor(e)}
                 onChaneName={(e) => setNameCard(e)}
             />
-            <BackName onBackText={(e) => setNameCardBack(e)} />
+            <BackName onBackText={(e) => setNameCardBack(e)} onSlide={()=>setKeyFlip(1)}/>
             <div class="d-flex flex-row-reverse">
                 <IconSaveCard style={{ marginTop: 12, marginBottom: 12 }} onClick={onSave} />
             </div>

@@ -6,14 +6,14 @@
         box-shadow: 4px 4px 8px 0px rgba(0, 47, 81, 0.8) inset, -4px -4px 8px 0px rgba(125, 229, 255, 0.4) inset;
     }
 
-    :where(.css-dev-only-do-not-override-pr0fja).ant-radio-button-wrapper {
+    .ant-radio-button-wrapper {
         color: #FFFFFF80;
         background: rgba(0, 0, 0, 0);
         border: 0px solid #d9d9d9;
         margin-left: 5px;
     }
 
-    :where(.css-dev-only-do-not-override-pr0fja).ant-radio-button-wrapper:not(:first-child)::before {
+    .ant-radio-button-wrapper:not(:first-child)::before {
         width: 0px !important;
     }
 }
