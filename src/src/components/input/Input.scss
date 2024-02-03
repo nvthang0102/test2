@@ -17,7 +17,7 @@
       background: transparent !important;
       &::placeholder {
         color: $--color-text-label;
-        font-style: italic;
+        // font-style: italic;
       }
       &:focus{
         box-shadow:  unset;

@@ -183,7 +183,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
 
                 <div
                   className={`leading-6 text-textSizeMb text-[#fff] textItem ${
-                    !data.fullName ? 'italic text-labelText' : null
+                    !data.fullName ? ' text-labelText' : null
                   } font-normal`}
                 >
                   {data.fullName ? data.fullName : '(Họ và tên)'}
@@ -196,7 +196,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
 
                 <div
                   className={`leading-6 text-textSizeMb text-[#fff] textItem ${
-                    !data.birthday ? 'italic text-labelText' : null
+                    !data.birthday ? ' text-labelText' : null
                   } font-normal`}
                 >
                   {data.birthday ? data.birthday : 'DD/MM/YYYY'}
@@ -211,14 +211,14 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                   <div
                     className={`leading-6 text-textSizeMb text-[#fff] textItem ${
                       !dataPhones?.length >= 1 && dataPhones[0] === ''
-                        ? 'italic text-labelText'
+                        ? ' text-labelText'
                         : null
                     } font-normal`}
                   >
                     {dataPhones?.length >= 1 && dataPhones[0] !== '' ? (
                       dataPhones[0]
                     ) : (
-                      <span className="italic text-labelText">(trống)</span>
+                      <span className=" text-labelText">(trống)</span>
                     )}
                   </div>
                 </div>
@@ -264,7 +264,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                   <IconAccount />
                 </div>
                 <Input
-                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText h-[24px] placeholder:italic borderBottom  text-whiteText"
+                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText h-[24px]  borderBottom  text-whiteText"
                   placeholder="Họ và tên"
                   value={data.fullName}
                   onChange={(e) =>
@@ -278,7 +278,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                 </div>
 
                 <Input
-                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText placeholder:italic h-[24px] borderBottom  text-whiteText"
+                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText  h-[24px] borderBottom  text-whiteText"
                   placeholder="DD/MM/YYYY"
                   value={data.birthday}
                   onChange={(e) => {
@@ -300,7 +300,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     <IconPhoneCall />
                   </div>
                   <Input
-                    className="flex-1 text-textSizeMb placeholder:italic bg-transparent border-none placeholder:text-labelText h-[24px] borderBottom  text-whiteText"
+                    className="flex-1 text-textSizeMb  bg-transparent border-none placeholder:text-labelText h-[24px] borderBottom  text-whiteText"
                     placeholder="Số điện thoại"
                     value={dataPhones[0]}
                     onChange={(e) => {
@@ -345,7 +345,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                             <Input
                               key={indexPhone}
                               className={`
-                              ${item === 'Rỗng' ? 'italic' : null}
+                              
                                flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-labelText h-[24px] borderBottom  text-whiteText`}
                               placeholder={
                                 item !== 'Rỗng' ? 'Số điện thoại' : '(Trống)'

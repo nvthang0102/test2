@@ -15,12 +15,12 @@
     }
 }
 
-:where(.css-dev-only-do-not-override-pr0fja).ant-modal .ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
+.ant-modal .ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
     margin-bottom: 0;
     margin-inline-start: 8px;
     background: #4096ff;
 }
 
-:where(.css-dev-only-do-not-override-pr0fja).ant-modal-root .ant-modal-wrap {
+ .ant-modal-wrap{
     z-index: 2050 !important;
 }

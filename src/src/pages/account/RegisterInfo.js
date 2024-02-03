@@ -122,7 +122,7 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
               </span>
               <span
                 className={`leading-[18px] flex-1 text-textSizeMb text-[#fff] textItem ${
-                  !data.mail ? 'italic text-labelText' : null
+                  !data.mail ? ' text-labelText' : null
                 } font-normal`}
               >
                 {data.mail ? data.mail : '(trống)'}
