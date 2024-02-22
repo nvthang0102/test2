@@ -54,4 +54,4 @@ export { ReactComponent as IconRibbonTwo } from './IconRibbonTwo.svg'
 export { ReactComponent as IconLogoHeader } from './IconLogoHeader.svg'
 export { ReactComponent as IconShoppingBag } from './IconShoppingBag.svg'
 export { ReactComponent as IconLogoGoogle } from './IconLogoGoogle.svg'
-
+export { ReactComponent as IconConstructBig } from './IconConstructBig.svg'

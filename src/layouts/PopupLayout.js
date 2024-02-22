@@ -12,6 +12,7 @@ const PopupLayout = ({
   children,
   maskClosable,
   type,
+  className,
 }) => {
   const handleCancel = () => {
     setOpen(false)
@@ -36,7 +37,7 @@ const PopupLayout = ({
       onCancel={handleCancel}
       centered
       closeIcon={<IconClose />}
-      className="wrapperModalLayout borderGradient"
+      className={`wrapperModalLayout borderGradient ${className}`}
     >
       {children}
     </Modal>

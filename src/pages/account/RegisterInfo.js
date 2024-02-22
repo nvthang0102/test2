@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { accountSelector } from '../../service/selectors'
 import { useGoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
+import { setNotify } from '../../service/slices/CommonSlice'
 const RegisterInfo = ({ setShowConfirmEdit }) => {
   const [email, setEmail] = useState('')
   const [data, setData] = useState({
@@ -67,6 +68,13 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
         })
         .then((res) => {
           setEmail(res.data.email)
+          dispatch(
+            setNotify({
+              isNotify: true,
+              msg: 'Liên kết thành công',
+              type: 'success',
+            })
+          )
         })
     },
   })
@@ -122,7 +130,7 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
                   !data.mail ? ' text-labelText' : null
                 } font-normal`}
               >
-                {data.mail ? data.mail : '(trống)'}
+                {data.mail ? data.mail : 'Email'}
               </span>
               <span>
                 {data.isMailVerify ? (
@@ -174,7 +182,7 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
               </span>
               <span
                 className={`leading-[18px] text-textSizeMb text-[#fff] textItem 
-                  italic text-labelText
+                   text-labelText
                 textItem  font-normal`}
               >
                 {data.isSetPassword ? 'Thay đổi mật khẩu' : 'Thêm mật khẩu'}
@@ -185,7 +193,7 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
       </div>
       {keyEdit === 'registerInfo' ? (
         <div className="flex mt-[24px] items-center justify-between font-semibold text-[12px] text-labelText ">
-          <span className="italic">Quên mật khẩu</span>
+          <span className="">Quên mật khẩu</span>
           <BaseButton content={'Lưu thay đổi'} />
         </div>
       ) : null}
@@ -219,7 +227,18 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
             {!email ? (
               <IconLink onClick={() => handleLoginWithGoogle()} />
             ) : (
-              <IconUnLink onClick={() => setEmail('')} />
+              <IconUnLink
+                onClick={() => {
+                  setEmail('')
+                  dispatch(
+                    setNotify({
+                      isNotify: true,
+                      msg: 'Hủy liên kết thành công',
+                      type: 'success',
+                    })
+                  )
+                }}
+              />
             )}
           </div>
         </div>

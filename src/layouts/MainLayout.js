@@ -15,6 +15,7 @@ const MainLayout = () => {
   const commonState = useSelector(commonSelector)
   const [api, contextHolder] = notification.useNotification()
   const dispatch = useDispatch()
+  console.log(commonState)
   const openNotification = () => {
     api.open({
       type: commonState.typeNotify,
@@ -28,7 +29,7 @@ const MainLayout = () => {
             ) : (
               <IconDanger fill="#F2994A" />
             )}
-            <div className="h-[24x] flex items-end ml-[8px]">
+            <div className="w-fit h-[24x] flex items-end ml-[8px]">
               <span className="leading-[16px]">{commonState.msg}</span>
             </div>
           </div>
@@ -52,7 +53,7 @@ const MainLayout = () => {
     <>
       {contextHolder}
       <div
-        className={`wrapperMainLayout md-mb:bg-bloginMB sm-tl:bg-bgloginTL bg-bgloginPC `}
+        className={` wrapperMainLayout md-mb:bg-bloginMB sm-tl:bg-bgloginTL bg-bgloginPC `}
       >
         {showMenu ? (
           <Menu setShowMenu={setShowMenu} showMenu={showMenu} />

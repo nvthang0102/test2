@@ -53,6 +53,28 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
     }
   }
 
+  const convertBirthday = (input) => {
+    // Đảm bảo rằng input là một chuỗi hợp lệ để xử lý
+    if (typeof input !== 'string') {
+      return ''
+    }
+
+    // Lấy rid of các ký tự không phải số
+    const cleanedInput = input.replace(/[^0-9]/g, '')
+
+    // Kiểm tra chiều dài để tránh lỗi khi truy cập các phần tử không tồn tại
+    if (cleanedInput.length < 8) {
+      return cleanedInput
+    }
+
+    // Định dạng thành chuỗi "DD/MM/YYYY"
+    const formattedDate = `${cleanedInput.slice(0, 2)}/${cleanedInput.slice(
+      2,
+      4
+    )}/${cleanedInput.slice(4)}`
+
+    return formattedDate
+  }
   // lấy dữ liệu và set state
   useEffect(() => {
     dispatch(getUserInfo())
@@ -126,34 +148,41 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
         (item) => !resultPhone.includes(item)
       )
     }
-    if (
-      differenceArray.length ||
-      data.fullName !== dataAccountInfo.fullName ||
-      data.birthday !==
-        moment(accountState.dataAccountInfo.birthday).format('DD/MM/YYYY') ||
-      data.avatarID !== dataAccountInfo.avatarID
-    ) {
-      const checkValidPhone = resultPhone.map((phone) =>
-        validPhoneNumber(phone)
-      )
-      if (checkValidPhone.indexOf(false) !== -1) {
-        setCheckValidPhoneNumber(false)
-      } else {
-        dispatch(
-          updateUserInfo({
-            ...data,
-            birthday: moment(data.birthday).format('YYYY-MM-DD'),
-            phones: resultPhone,
-          })
-        )
-        setDataChange({
-          valueChange: [],
-          handle: '',
-        })
-      }
-    } else {
-      handleHiddenEdit()
-    }
+    // if (
+    //   differenceArray?.length ||
+    //   data.fullName !== dataAccountInfo.fullName ||
+    //   data.birthday ||
+    //   data.avatarID !== dataAccountInfo.avatarID
+    // ) {
+    //   const checkValidPhone = resultPhone.map((phone) =>
+    //     validPhoneNumber(phone)
+    //   )
+    //   if (checkValidPhone.indexOf(false) !== -1) {
+    //     setCheckValidPhoneNumber(false)
+    //   } else {
+    //     dispatch(
+    //       updateUserInfo({
+    //         ...data,
+    //         birthday: moment(data.birthday).format('YYYY-MM-DD'),
+    //         phones: resultPhone,
+    //       })
+    //     )
+    //     setDataChange({
+    //       valueChange: [],
+    //       handle: '',
+    //     })
+    //   }
+    // } else {
+    //   handleHiddenEdit()
+    // }
+    dispatch(
+      updateUserInfo({
+        ...data,
+        birthday: moment(data.birthday).format('YYYY-MM-DD'),
+        phones: resultPhone,
+      })
+    )
+    handleHiddenEdit()
   }
   return (
     <>
@@ -190,7 +219,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     !data.fullName ? ' text-labelText' : null
                   } font-normal`}
                 >
-                  {data.fullName ? data.fullName : '(Họ và tên)'}
+                  {data.fullName ? data.fullName : 'Họ và tên'}
                 </div>
               </div>
               <div className="infoItem flex">
@@ -203,9 +232,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     !data.birthday ? ' text-labelText' : null
                   } font-normal`}
                 >
-                  {data.birthday
-                    ? moment(data.birthday).format('DD/MM/YYYY')
-                    : 'DD/MM/YYYY'}
+                  {data.birthday ? data.birthday : 'Ngày sinh'}
                 </div>
               </div>
 
@@ -224,7 +251,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     {dataPhones?.length >= 1 && dataPhones[0] !== '' ? (
                       dataPhones[0]
                     ) : (
-                      <span className=" text-labelText">(trống)</span>
+                      <span className=" text-labelText">Số điện thoại</span>
                     )}
                   </div>
                 </div>
@@ -270,7 +297,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                   <IconAccount />
                 </div>
                 <Input
-                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText h-[24px] placeholder:italic borderBottom  text-whiteText"
+                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText h-[24px]  borderBottom  text-whiteText"
                   placeholder="Họ và tên"
                   value={data.fullName}
                   onChange={(e) =>
@@ -283,15 +310,18 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                   <IconCalenda />
                 </div>
 
-                {/* <Input
-                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText placeholder:italic h-[24px] borderBottom  text-whiteText"
-                  placeholder="DD/MM/YYYY"
+                <Input
+                  className="flex-1 text-textSizeMb bg-transparent border-none placeholder:text-labelText  h-[24px] borderBottom  text-whiteText"
+                  placeholder="Ngày sinh"
                   value={data.birthday}
                   onChange={(e) => {
-                    setData({ ...data, birthday: e.target.value })
+                    setData({
+                      ...data,
+                      birthday: convertBirthday(e.target.value),
+                    })
                   }}
-                ></Input> */}
-                <DatePicker
+                ></Input>
+                {/* <DatePicker
                   format={'DD/MM/YYYY'}
                   placeholder="DD/MM/YYYY"
                   // value={
@@ -303,7 +333,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                   //     birthday: value,
                   //   })
                   // }}
-                />
+                /> */}
               </div>
 
               <div
@@ -367,7 +397,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                              
                                flex-1 mr-[8px] text-textSizeMb bg-transparent border-none placeholder:text-labelText h-[24px] borderBottom  text-whiteText`}
                               placeholder={
-                                item !== 'Rỗng' ? 'Số điện thoại' : '(Trống)'
+                                item !== 'Rỗng' ? 'Số điện thoại' : 'Trống'
                               }
                               value={item !== 'Rỗng' ? item : ''}
                               onChange={(e) => {

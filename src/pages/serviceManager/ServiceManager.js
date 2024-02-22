@@ -21,18 +21,26 @@ import {
 import { serviceSelector } from '../../service/selectors'
 import UpgradePopup from '../../components/popup/UpgradePopup'
 import ModalFeatureRequire from '../../components/popup/ModalFeatureRequire'
+import ModalNotifyImproving from '../../components/popup/ModalNotifyImproving'
 const ServiceManager = () => {
   const dispatch = useDispatch()
   const serviceState = useSelector(serviceSelector)
   const { dataServiceFeatures, dataInfo } = serviceState
   const [showModalUpgrade, setShowModalUpgrade] = useState(false)
   const [showFeatureRequire, setShowFeatureRequire] = useState(false)
+  const [showModalNotify, setShowModalNotify] = useState(true)
   useEffect(() => {
     dispatch(getPackageInfo())
     dispatch(getServicePackage())
   }, [])
   return (
     <div>
+      {showModalNotify ? (
+        <ModalNotifyImproving
+          open={showModalNotify}
+          setOpen={setShowModalNotify}
+        />
+      ) : null}
       {showModalUpgrade ? (
         <UpgradePopup open={showModalUpgrade} setOpen={setShowModalUpgrade} />
       ) : null}
@@ -42,7 +50,7 @@ const ServiceManager = () => {
           setOpen={setShowFeatureRequire}
         />
       ) : null}
-      <AccoutItemLayout
+      {/* <AccoutItemLayout
         className={'wrapperPackageInfo'}
         title={'THÔNG TIN GÓI'}
         icon={<IconBarMenu />}
@@ -91,10 +99,10 @@ const ServiceManager = () => {
             />
           </div>
         </div>
-      </AccoutItemLayout>
+      </AccoutItemLayout> */}
 
       {/* Tính năng dịch vụ */}
-      <AccoutItemLayout
+      {/* <AccoutItemLayout
         className={'wrapperPackageInfo mt-[12px]'}
         title={'TÍNH NĂNG DỊCH VỤ'}
         // icon={<IconBarMenu />}
@@ -155,10 +163,10 @@ const ServiceManager = () => {
             </div>
           </div>
         </div>
-      </AccoutItemLayout>
+      </AccoutItemLayout> */}
 
       {/* Dịch vụ lưu trữ */}
-      <AccoutItemLayout
+      {/* <AccoutItemLayout
         className={'wrapperPackageInfo my-[12px]'}
         title={'DỊCH VỤ LƯU TRỮ'}
         // icon={<IconBarMenu />}
@@ -218,7 +226,7 @@ const ServiceManager = () => {
             />
           </div>
         </div>
-      </AccoutItemLayout>
+      </AccoutItemLayout> */}
     </div>
   )
 }
