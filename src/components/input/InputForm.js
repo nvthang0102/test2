@@ -7,7 +7,7 @@ const InputForm = ({
   content,
   className,
   placeholder,
-  setContent,
+  setContent=()=>{},
   type = 'text',
 }) => {
   return (

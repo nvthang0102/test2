@@ -5,7 +5,7 @@ import FlatColor from "./FlatColor";
 import GradientColor from "./GradientColor";
 import ImageBackground from "./ImageBackground";
 import SelectImageCustom from "../../../../components/SelectImageCustom";
-function ColorPicker({ onChangeSelect }) {
+function ColorPicker({ onChangeSelect,selectImage }) {
     const [selectkey, setSelectKey] = useState("flat")
 
     return (
@@ -49,9 +49,10 @@ function ColorPicker({ onChangeSelect }) {
             {
                 selectkey === "image" &&
                 <SelectImageCustom
+                selectImage= {selectImage}
                     Content="Tải ảnh lên"
                     aspectRate={1.5}
-                    modalTitle={"Chỉnh sửa ảnh"}
+                    modalTitle={"Chọn ảnh làm hình nền"}
                     note="(khuyên dùng: 1024 x 639 px)"
                     onSelectColor={onChangeSelect} />
             }

@@ -3,10 +3,12 @@ import { Radio, Switch, Upload, UploadProps, message } from "antd";
 // import { uploadImagesCard } from "api";
 import React, { useEffect, useState } from "react";
 import SelectImageCustom from "../../../../components/SelectImageCustom";
+import SelectLogo from "../../../../components/SelectImageCustom/SelectLogo";
+import SelectAvata from "../../../../components/SelectImageCustom/SelectAvata";
 
-const Logo = ({ onChangeSelect, onEnableLogo,selectLogo }) => {
+const Logo = ({ onChangeSelect, onEnableLogo,selectLogo,selectAvata }) => {
 
-    const [logoType, setLogoType] = useState("image");
+    const [logoType, setLogoType] = useState("avata");
     const [EnableLogo, setEnableLogo] = useState(true)
 
     const handleChangeLogoType = (e) => {
@@ -43,7 +45,7 @@ const Logo = ({ onChangeSelect, onEnableLogo,selectLogo }) => {
 
                             value={logoType}
                             className="flex h-full w-full overflow-x-auto !shadow-none !px-0 justify-start checked-select"
-                            defaultValue="image"
+                            defaultValue="avata"
                             buttonStyle="solid"
                             onChange={(e) => {
                                 handleChangeLogoType(e);
@@ -51,7 +53,7 @@ const Logo = ({ onChangeSelect, onEnableLogo,selectLogo }) => {
                         >
                             <Radio.Button
                                 className=""
-                                value="image"
+                                value="avata"
                             >
                                 Hình đại diện
                             </Radio.Button>
@@ -64,20 +66,22 @@ const Logo = ({ onChangeSelect, onEnableLogo,selectLogo }) => {
                         </Radio.Group>
                     </div>
                     {
-                        logoType === "image" && <SelectImageCustom
-                            selectLogo={selectLogo}
+                        logoType === "avata" && <SelectLogo
+                            logoType={logoType}
+                            selectLogo={selectAvata}
                             Content="Tải ảnh lên"
                             aspectRate={1}
-                            modalTitle={"Chỉnh sửa ảnh"}
+                            modalTitle={"Chọn hình đại diện"}
                             note="(khuyên dùng: 512 x 512 px)"
                             onSelectColor={onSelect} />
                     }
                     {
-                        logoType === "logo" && <SelectImageCustom
-                        selectLogo={selectLogo}
+                        logoType === "logo" && <SelectLogo
+                            logoType={logoType}
+                            selectLogo={selectLogo}
                             Content="Tải ảnh lên"
                             aspectRate={1}
-                            modalTitle={"Chỉnh sửa ảnh"}
+                            modalTitle={"Chọn Logo"}
                             note="(khuyên dùng: 512 x 512 px tách nền)"
                             onSelectColor={onSelect} />
                     }

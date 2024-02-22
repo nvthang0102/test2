@@ -3,14 +3,14 @@ import React, { useState } from 'react'
 import FontFamily from './FontFamily'
 import "./FrontText.scss"
 import FlatColor from '../ColorPicker/FlatColor'
-const FrontText = ({ onEnableFront, onChaneName ,onSelectColor,onFontFamily}) => {
+const FrontText = ({ onEnableFront, onChaneName ,onSelectColor,onFontFamily,onSlide}) => {
   const [EnableFront, setEnableFront] = useState(true)
   const handleChangeEnableFrontText = (e) => {
     setEnableFront(e)
     onEnableFront(e)
   }
   return (
-    <div style={{ marginTop: 12 }}>
+    <div style={{ marginTop: 12 }} onClick={onSlide}>
       <div className=" rounded-2xl bg-primary-blue-dark-max px-3 py-[10px]">
         <div className="flex justify-between">
           <div className="text-[12px] font-semibold text-white">

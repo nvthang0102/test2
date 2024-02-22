@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { deleteCard, getListCard } from "../../service/slices/CardManagerSlice"
 import { useNavigate } from 'react-router-dom'
 import { notifyCustom } from '../../components/notifyCustom'
+import CardFront from '../../components/cardCustom/CardFront'
 const CardManager = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -22,8 +23,8 @@ const CardManager = () => {
     const [listCard, setListCard] = useState([])
     const handleAddCard = async () => {
         try {
-            // const result = await dispatch(getListCard())
-            // setListCard(result.payload.data);
+            const result = await dispatch(getListCard())
+            setListCard(result.payload.data);
         } catch (error) {
             console.error(error);
         }
@@ -32,6 +33,38 @@ const CardManager = () => {
         handleAddCard()
     }, [])
 
+    const onCardInfo =(e)=>{
+        const {
+            _id,
+            alignment,
+            logo,
+            enableLogo,
+            frontText,
+            enableFrontText,
+            backText,
+            backgroundColor,
+            backgroundImage,
+            fontFamily,
+            fontColor,
+          } = e;
+        const cardProps = {
+            _id,
+            logo: { value: logo ? `${window.URL_SERVER}/api/v2${logo}` : logo },
+            nameCard: frontText,
+            textColor: fontColor,
+            isOff: false,
+            FontFamily: fontFamily,
+            isEnableFront: enableFrontText,
+            isEnableLogo: enableLogo,
+            alignMent: alignment,
+            colorPicker: {
+              key: backgroundImage ? 'image' : 'color',
+              value: backgroundImage ? `${window.URL_SERVER}/api/v2${backgroundImage}` : backgroundColor,
+            },
+            nameCardBack: backText,
+          };
+          setCardInfo(cardProps)
+    }
     const onSaveDelete = async () => {
         const response = await dispatch(deleteCard({ cardID: cardInfo._id }))
         if (response.payload?.status) {
@@ -76,8 +109,8 @@ const CardManager = () => {
                                 {listCard.map((value) => (
                                     <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} >
                                         <CardCustom {...value}
-                                            onShowInfo={() => { setOpenInfoCard(true); setCardInfo(value) }}
-                                            onDelete={() => { setShowDelete(true); setCardInfo(value) }}
+                                            onShowInfo={() => { setOpenInfoCard(true); onCardInfo(value) }}
+                                            onDelete={() => { setShowDelete(true); onCardInfo(value) }}
                                         />
                                     </Col>
                                 ))}
@@ -106,7 +139,7 @@ const CardManager = () => {
                 elements={(
                     <div className='cardBodyModal'>
                         <Col className="cardItemModal" xs={24} sm={12} md={12} lg={8}>
-                            <CardCustom {...cardInfo} isOff={true} />
+                            <CardFront {...cardInfo} isOff={true} />
                             <CardBack {...cardInfo} isOff={true} />
                             <div class="d-flex justify-content-between mt-5">
                                 <div class="d-flex">

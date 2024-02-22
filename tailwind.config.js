@@ -14,9 +14,9 @@ module.exports = {
         'lg-pc': { max: '1920px' },
       },
       backgroundImage: {
-        bgloginMB: `url('assets/images/bg_accountMB.jpg')`,
-        bgloginTL: `url('assets/images/bg_accountMB.jpg')`,
-        bgloginPC: `url('assets/images/bg_accountMB.jpg')`,
+        bgloginMB: `url('assets/images/bg_accountMB.png')`,
+        bgloginTL: `url('assets/images/bg_accountTL.png')`,
+        bgloginPC: `url('assets/images/bg_accountTL.png')`,
       },
       textColor: {
         labelText: 'rgba(255,255,255,0.6)', // Thêm một màu tùy chỉnh với tên 'custom-color'

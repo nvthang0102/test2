@@ -17,7 +17,6 @@
       background: transparent !important;
       &::placeholder {
         color: $--color-text-label;
-        font-style: italic;
       }
       &:focus{
         box-shadow:  unset;
@@ -74,7 +73,6 @@
           background: transparent !important;
           &::placeholder {
             color: $--color-text-label;
-            font-style: italic;
             font-weight: 400;
           }
         }
@@ -102,7 +100,6 @@
         &::placeholder {
           color: $--color-text-label;
           font-weight: 400 ;
-          font-style: italic;
         }
       }
 }

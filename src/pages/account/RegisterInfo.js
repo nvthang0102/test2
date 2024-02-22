@@ -101,7 +101,7 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
                 preFix={<IconLock fill="#1B94D2" />}
               />
             </div>
-            <div className="infoItem  flex align-middle">
+            <div className="infoItem flex align-middle">
               <InputForm
                 className={'inputPass'}
                 type="password"
@@ -119,7 +119,7 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
               </span>
               <span
                 className={`leading-[18px] flex-1 text-textSizeMb text-[#fff] textItem ${
-                  !data.mail ? 'italic text-labelText' : null
+                  !data.mail ? ' text-labelText' : null
                 } font-normal`}
               >
                 {data.mail ? data.mail : '(trống)'}

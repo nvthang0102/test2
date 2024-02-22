@@ -1,4 +1,4 @@
-.ant-upload-select {
+.ant-upload-select-image {
     @media (max-width: 575px) {
         height: 58vw !important;
         width: 100% !important;
@@ -14,9 +14,14 @@
         width: 33vw !important;
     }
 }
-
-:where(.css-dev-only-do-not-override-pr0fja).ant-modal .ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
-    margin-bottom: 0;
-    margin-inline-start: 8px;
-    background: #4096ff;
+.select-image{
+    .ant-modal .ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
+        margin-bottom: 0;
+        margin-inline-start: 8px;
+        background: #4096ff;
+    }
+    
+     .ant-modal-wrap{
+        z-index: 2050 !important;
+    }
 }
