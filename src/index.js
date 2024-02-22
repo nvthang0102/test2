@@ -22,6 +22,7 @@ root.render(
         <Routes>
           <Route path="/" element={<ProtectedRoute />}>
             <Route index path="/account_manager" element={<AccountManager />} />
+            <Route index path="/" element={<AccountManager />} />
             <Route index path="/service_manager" element={<ServiceManager />} />
             <Route index path="/card-manager" element={<CardManager />} />
             <Route index path="/add-card" element={<AddCard />} />

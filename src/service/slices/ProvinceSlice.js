@@ -26,9 +26,9 @@ const ProvinceSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getCity.fulfilled, (state, action) => {
-        if (action.payload.status === 200) {
-          state.dataCity = action.payload.data
-        }
+        
+          state.dataCity =action.payload.results
+        
       })
       .addCase(getCity.rejected, (state) => {
         state.isNotify = false
@@ -37,10 +37,8 @@ const ProvinceSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getDistrict.fulfilled, (state, action) => {
-        if (action.payload.status === 200) {
-          state.dataDistrict = action.payload.data.districts
+          state.dataDistrict = action.payload.results
           state.dataWard = []
-        }
       })
       .addCase(getDistrict.rejected, (state) => {
         state.isNotify = false
@@ -49,9 +47,7 @@ const ProvinceSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getWard.fulfilled, (state, action) => {
-        if (action.payload.status === 200) {
-          state.dataWard = action.payload.data.wards
-        }
+          state.dataWard = action.payload.results
       })
       .addCase(getWard.rejected, (state) => {
         state.isNotify = false
@@ -60,8 +56,8 @@ const ProvinceSlice = createSlice({
 })
 export const getCity = createAsyncThunk('province/getCity', async (data) => {
   try {
-    const res = await axios.get(`https://provinces.open-api.vn/api/?depth=1`)
-    return res
+    const res = await axios.get(`https://vnprovinces.pythonanywhere.com/api/provinces/?basic=true&limit=100`)
+    return res.data
   } catch (error) {
     console.log(error)
     return error.reponse.data
@@ -72,9 +68,9 @@ export const getDistrict = createAsyncThunk(
   async (id) => {
     try {
       const res = await axios.get(
-        `https://provinces.open-api.vn/api/p/${id}?depth=2`
-      )
-      return res
+        `https://vnprovinces.pythonanywhere.com/api/districts/?province_id=${id}&basic=true&limit=100`
+        )
+        return res.data
     } catch (error) {
       console.log(error)
       return error.reponse.data
@@ -84,9 +80,10 @@ export const getDistrict = createAsyncThunk(
 export const getWard = createAsyncThunk('province/getWard', async (id) => {
   try {
     const res = await axios.get(
-      `https://provinces.open-api.vn/api/d/${id}?depth=2`
+      `https://vnprovinces.pythonanywhere.com/api/wards/?district_id=${id}&basic=true&limit=100`
+      
     )
-    return res
+    return res.data
   } catch (error) {
     console.log(error)
     return error.reponse.data

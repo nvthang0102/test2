@@ -204,7 +204,6 @@
   }
   .ant-notification-notice-message{
     display: none;
-    
   }
   .ant-notification-notice{
     background: linear-gradient(204deg, rgba(0, 0, 0, 0.64) -0.94%, rgba(0, 0, 0, 0.64) 100%) !important;
@@ -228,3 +227,7 @@
       color: #EB5757 !important;
     }
   }
+
+.ant-input,.ant-input::placeholder {
+  font-family: 'Montserrat', sans-serif;
+}

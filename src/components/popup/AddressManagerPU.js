@@ -31,14 +31,14 @@ const AddressManagerPU = ({
   const { dataCity, dataDistrict, dataWard } = provinceState
 
   const [idCity, setIdCity] = useState(
-    isEdit ? dataCity.find((city) => city.name === data.city)?.code : ''
+    isEdit ? dataCity.find((city) => city.full_name === data.city)?.id : ''
   )
   const [idDistrict, setIdDistrict] = useState()
   // lấy dữ liệu về tỉnh thành, quận huyện, xã phường
   useEffect(() => {
     if (isEdit) {
       setIdDistrict(
-        dataDistrict.find((item) => item.name === data.district)?.code
+        dataDistrict.find((item) => item.full_name === data.district)?.id
       )
     }
   }, [isEdit])
@@ -62,8 +62,8 @@ const AddressManagerPU = ({
     if (dataCity.length) {
       dataCity.map((item) => {
         result.push({
-          value: item.code,
-          label: item.name,
+          value: item.id,
+          label: item.full_name,
         })
       })
     }
@@ -74,8 +74,8 @@ const AddressManagerPU = ({
     if (dataDistrict?.length) {
       dataDistrict.map((item) => {
         result.push({
-          value: item.code,
-          label: item.name,
+          value: item.id,
+          label: item.full_name,
         })
       })
     }
@@ -86,8 +86,8 @@ const AddressManagerPU = ({
     if (dataWard?.length) {
       dataWard.map((item) => {
         result.push({
-          value: item.code,
-          label: item.name,
+          value: item.id,
+          label: item.full_name,
         })
       })
     }
@@ -203,7 +203,7 @@ const AddressManagerPU = ({
                   setValueSelect={(value) => setData({ ...data, city: value })}
                   options={optionCity}
                   placeholder="Tỉnh/ Thành"
-                  defaultValue={
+                  value={
                     optionCity.find((item) => item.label === data.city)?.label
                   }
                 />
@@ -222,7 +222,7 @@ const AddressManagerPU = ({
                   setValueSelect={(value) =>
                     setData({ ...data, district: value })
                   }
-                  defaultValue={data?.district ? data?.district : undefined}
+                  value={data?.district ? data?.district : undefined}
                   placeholder="Quận/ Huyện"
                   error={'Vui lòng chọn Tỉnh/ Thành trước'}
                 />
@@ -239,7 +239,7 @@ const AddressManagerPU = ({
                   options={optionWard}
                   placeholder="Phường/ Xã"
                   error={'Vui lòng chọn Quận/ Huyện trước'}
-                  defaultValue={data?.wards ? data.wards : undefined}
+                  value={data?.wards ? data.wards : undefined}
                   setValueSelect={(value) => setData({ ...data, wards: value })}
                 />
               </div>

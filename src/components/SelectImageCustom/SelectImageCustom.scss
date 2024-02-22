@@ -14,13 +14,14 @@
         width: 33vw !important;
     }
 }
-
-.ant-modal .ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
-    margin-bottom: 0;
-    margin-inline-start: 8px;
-    background: #4096ff;
-}
-
- .ant-modal-wrap{
-    z-index: 2050 !important;
+.select-image{
+    .ant-modal .ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
+        margin-bottom: 0;
+        margin-inline-start: 8px;
+        background: #4096ff;
+    }
+    
+     .ant-modal-wrap{
+        z-index: 2050 !important;
+    }
 }

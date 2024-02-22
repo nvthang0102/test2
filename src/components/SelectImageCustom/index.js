@@ -78,6 +78,7 @@ const SelectImageCustom = ({
   return (
     <div className="wrapperSelectAvatar">
       <ImgCrop
+        className="select-image"
         showGrid
         rotationSlider
         modalTitle={modalTitle}

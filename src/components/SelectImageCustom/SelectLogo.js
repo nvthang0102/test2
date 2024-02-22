@@ -66,6 +66,7 @@ const SelectLogo = ({ onSelectColor, Content, note, aspectRate, modalTitle,selec
     return (
         <div>
             <ImgCrop
+                className="select-image"
                 cropShape="round"
                 showGrid
                 rotationSlider
