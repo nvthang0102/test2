@@ -12,9 +12,15 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import CardManager from './pages/cardManager'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AddCard from './pages/addCard'
-import Landing from './pages/Landing'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
+// function slideTitle() {
+//   var titleElement = document.title; // Lưu giữ tiêu đề ban đầu
+
+//   // Thay đổi title thành span với class kích hoạt hiệu ứng CSS
+//   document.title = '<span class="title-slide">' + titleElement + '</span>';
+// }
+// slideTitle()
 root.render(
   <GoogleOAuthProvider clientId={`${window.GOOGLE_ID_CLIENT}`}>
     <Provider store={store}>

@@ -9,13 +9,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { commonSelector } from '../service/selectors'
 import { setNotify } from '../service/slices/CommonSlice'
 import { IconDanger, IconSuccessNotify } from '../assets/icons'
+import ModalNotifyImproving from '../components/popup/ModalNotifyImproving'
 
 const MainLayout = () => {
   const [showMenu, setShowMenu] = useState(false)
+  const [showModalNotify, setShowModalNotify] = useState(false)
   const commonState = useSelector(commonSelector)
   const [api, contextHolder] = notification.useNotification()
   const dispatch = useDispatch()
-  console.log(commonState)
   const openNotification = () => {
     api.open({
       type: commonState.typeNotify,
@@ -24,13 +25,13 @@ const MainLayout = () => {
           <div className="flex  items-center">
             {commonState.typeNotify === 'success' ? (
               <IconSuccessNotify />
-            ) : commonState.typeNotify === 'erorr' ? (
+            ) : commonState.typeNotify === 'error' ? (
               <IconDanger />
             ) : (
               <IconDanger fill="#F2994A" />
             )}
-            <div className="w-fit h-[24x] flex items-end ml-[8px]">
-              <span className="leading-[16px]">{commonState.msg}</span>
+            <div className="text-nowrap h-[24x] leading-[16px]  flex items-end flex-nowrap ml-[8px]">
+              {commonState.msg}
             </div>
           </div>
         </>
@@ -56,7 +57,11 @@ const MainLayout = () => {
         className={` wrapperMainLayout md-mb:bg-bloginMB sm-tl:bg-bgloginTL bg-bgloginPC `}
       >
         {showMenu ? (
-          <Menu setShowMenu={setShowMenu} showMenu={showMenu} />
+          <Menu
+            setShowMenu={setShowMenu}
+            showMenu={showMenu}
+            setShowModalNotify={setShowModalNotify}
+          />
         ) : null}
         <HeaderManger setShowMenu={setShowMenu} />
         <div className="contentMain">

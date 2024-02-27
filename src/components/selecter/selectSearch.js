@@ -14,6 +14,8 @@ const SelectSearch = ({
   error,
   preFix,
   subFix,
+  Focus,
+  openSelect
 }) => {
   const [isSearch, setIsSearch] = useState(false)
   const onChange = (value) => {
@@ -54,17 +56,7 @@ const SelectSearch = ({
       onBlur={() => setIsSearch(false)}
       prefixIcon={<IconArrowLeft />}
       suffixIcon={
-        !isSearch ? (
-          <IconDown
-            onClick={() => setIsSearch(true)}
-            className="z-999 cursor-pointer"
-          />
-        ) : (
-          <IconSearch
-            onClick={() => setIsSearch(false)}
-            className="z-999 cursor-pointer"
-          />
-        )
+       <></>
       }
     />
   )

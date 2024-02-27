@@ -11,11 +11,14 @@ const PopupLayout = ({
   setOpen,
   children,
   maskClosable,
+  clickOk,
   type,
   className,
+  handleClose=()=>{}
 }) => {
   const handleCancel = () => {
     setOpen(false)
+    handleClose()
   }
   return (
     <Modal
@@ -31,7 +34,7 @@ const PopupLayout = ({
           }`}
         >
           <div className="mr-[12px]">{btnCanCel}</div>
-          <div>{btnOk}</div>
+          <div onClick={clickOk}>{btnOk}</div>
         </div>
       }
       onCancel={handleCancel}

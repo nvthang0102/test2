@@ -3,8 +3,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9999;
-  width: 220px;
+  z-index: 999;
+  width: 229px;
   height: 100vh;
   background: $--glass-grad-1;
   backdrop-filter: blur(9px);
@@ -29,7 +29,7 @@
   }
   .nameItemMenu {
     flex: 1;
-    font-size: 12px ;
+    font-size: 15px;
     display: flex;
     // padding-left: 12px;
     justify-content: space-between;
@@ -97,4 +97,10 @@
 }
 .ant-menu-submenu-title:active{
   background-color: unset !important;
+}
+.ant-menu-item-selected{
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), radial-gradient(89.49% 100% at 50.82% 100%, rgba(50, 173, 230, 0.48) 0%, rgba(57, 57, 57, 0.00) 59.9%, rgba(57, 57, 57, 0.23) 100%), linear-gradient(180deg, rgba(17, 17, 17, 0.60) 0%, rgba(17, 17, 17, 0.80) 100%);
+  // background:linear-gradients(rgba(50, 173, 230, 0.48)
+  // rgba(57, 57, 57, 0)
+  // rgba(57, 57, 57, 0.234)) !important;
 }

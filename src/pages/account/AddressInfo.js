@@ -333,13 +333,13 @@ const AddressInfo = ({
                         {item.detail}
                       </div>
                       <div className="h-[36px] flex items-center mb-[6px]">
-                        {item.city}
+                        {item.wards}
                       </div>
                       <div className="h-[36px] flex items-center mb-[6px]">
                         {item.district}
                       </div>
                       <div className="h-[36px] flex items-center mb-[6px]">
-                        {item.wards}
+                        {item.city}
                       </div>
                     </div>
                   </>

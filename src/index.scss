@@ -231,3 +231,17 @@
 .ant-input,.ant-input::placeholder {
   font-family: 'Montserrat', sans-serif;
 }
+@keyframes titleSlide {
+  0% {
+      transform: translateX(-100%);
+  }
+  100% {
+      transform: translateX(100%);
+  }
+}
+
+.title-slide {
+  white-space: nowrap;
+  overflow: hidden;
+  animation: titleSlide 5s linear infinite;
+}

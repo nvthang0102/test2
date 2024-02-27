@@ -74,19 +74,22 @@
 }
 
 .ant-modal-mask {
-    background-color: unset !important;
-    background:linear-gradient(204deg, rgba(0, 0, 0, 0.64) -0.94%, rgba(0, 0, 0, 0.64) 100%);
+    background-color: rgba(0, 0, 0, 0.5) !important;
     /* mini footer glass */
-    backdrop-filter: blur(9px);
+    backdrop-filter: blur(30px);
     // background: rgba($color: #000, $alpha: 0.5)!important;
     // backdrop-filter: blur(80px);
 }
 .ant-notification{  
+    // min-width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     .ant-notification-notice{
-    padding: 9px 42px 9px 12px !important;
+    padding: 9px 32px 9px 12px !important;
     width: fit-content;
-
-
+    // width:100%;
+    margin-left: 0;
     }
     .ant-notification-notice-close{
         top: 8px !important;
@@ -97,7 +100,6 @@
     }
     .ant-notification-notice-description{
         margin-left: unset !important;
-     
         font-size: 12px !important;
         font-weight: 700;
         line-height: 18px !important;

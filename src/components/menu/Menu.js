@@ -10,9 +10,11 @@ import {
 import { Col, Row } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { Button, Menu } from 'antd'
+import ModalNotifyImproving from '../popup/ModalNotifyImproving'
 
 const SideBar = ({ showMenu, setShowMenu }) => {
   const navigate = useNavigate()
+  const [showModalNotify, setShowModalNotify] = useState(false)
   const getItem = (label, key, icon, children, type) => {
     return {
       key,
@@ -22,8 +24,8 @@ const SideBar = ({ showMenu, setShowMenu }) => {
       type,
     }
   }
-  const rootSubmenuKeys = ['sub1', 'sub2', 'sub4']
-  const [openKeys, setOpenKeys] = useState([localStorage.getItem('keyMenu')])
+  const rootSubmenuKeys = ['accout', 'info', 'order']
+  const [openKeys, setOpenKeys] = useState(['account'])
 
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
@@ -34,17 +36,24 @@ const SideBar = ({ showMenu, setShowMenu }) => {
     }
   }
   const handleChangePage = (value) => {
-    localStorage.setItem('keyMenu', value)
+    localStorage.setItem('acount', value)
     navigate(`/${value}`, {})
     setShowMenu(false)
   }
   return (
     <>
       <div onClick={() => setShowMenu(false)} className="overlayMenu"></div>
-
+      {showModalNotify ? (
+        <ModalNotifyImproving
+          open={showModalNotify}
+          setOpen={setShowModalNotify}
+        />
+      ) : null}
       <Menu
-        className={`wrapperSideBar flex flex-col ${showMenu ? 'slide-in' : 'slide-out'
-          }`}
+        defaultOpenKeys={['account']}
+        className={`wrapperSideBar flex flex-col ${
+          showMenu ? 'slide-in' : 'slide-out'
+        }`}
         defaultSelectedKeys={['/']}
         mode="inline"
         openKeys={openKeys}
@@ -53,9 +62,12 @@ const SideBar = ({ showMenu, setShowMenu }) => {
       >
         <div className="headeMenu">
           <IconXmark onClick={() => setShowMenu(false)} />
-        </div>
-        <div className="flex-1">
+          {/* <div className='h-[48px] my-[12px] flex '>
+                <span className="text-labelText">Về trang chủ</span>
+              </div> */}
+          <div className="flex-1"></div>
           <Menu.SubMenu
+            key={'account'}
             title={
               <div className="nameItemMenu ">
                 <span className="text-labelText">Tài Khoản</span>
@@ -66,7 +78,7 @@ const SideBar = ({ showMenu, setShowMenu }) => {
             <Menu.Item
               // icon={<IconAccount />}
               className="flex justify-end "
-              key={'acount'}
+              key={'account_manager'}
               onClick={() => {
                 handleChangePage('account_manager')
               }}
@@ -82,7 +94,9 @@ const SideBar = ({ showMenu, setShowMenu }) => {
               // icon={<IconAccount />}
               key={'service'}
               onClick={() => {
-                handleChangePage('service_manager')
+                setShowModalNotify(true)
+                // handleChangePage('account_manager')
+                // handleChangePage('service_manager')
               }}
             >
               <Row>
@@ -108,9 +122,10 @@ const SideBar = ({ showMenu, setShowMenu }) => {
             </Menu.Item>
             <Menu.Item
               // icon={<IconAccount />}
-              key={'acount'}
+              key={'info'}
               onClick={() => {
-                handleChangePage('')
+                setShowModalNotify(true)
+                // handleChangePage('account_manager')
               }}
             >
               <Row>
@@ -123,9 +138,11 @@ const SideBar = ({ showMenu, setShowMenu }) => {
           </Menu.SubMenu>
           <Menu.Item
             icon={<IconAnalytics />}
-            key={'acount'}
+            key={'statistics'}
             onClick={() => {
-              handleChangePage('')
+              setShowModalNotify(true)
+              // handleChangePage('account_manager')
+              // handleChangePage('')
             }}
             className="w-full"
           >
@@ -138,9 +155,10 @@ const SideBar = ({ showMenu, setShowMenu }) => {
           </Menu.Item>
           <Menu.Item
             icon={<IconCart />}
-            key={'acount'}
+            key={'order'}
             onClick={() => {
-              handleChangePage('')
+              setShowModalNotify(true)
+              // handleChangePage('account_manager')
             }}
             className="w-full"
           >

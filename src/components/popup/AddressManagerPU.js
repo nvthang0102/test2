@@ -34,6 +34,7 @@ const AddressManagerPU = ({
     isEdit ? dataCity.find((city) => city.full_name === data.city)?.id : ''
   )
   const [idDistrict, setIdDistrict] = useState()
+  console.log('dataDistrict',dataDistrict);
   // lấy dữ liệu về tỉnh thành, quận huyện, xã phường
   useEffect(() => {
     if (isEdit) {
@@ -115,6 +116,7 @@ const AddressManagerPU = ({
         open={open}
         maskClosable={false}
         setOpen={setIsOpen}
+        handleClose={()=>{dispatch(resetState())}}
         btnOk={
           <BaseButton
             handleClick={() => {
@@ -127,6 +129,8 @@ const AddressManagerPU = ({
           <BaseButton
             handleClick={() => {
               dispatch(resetState())
+              setIdCity("")
+              setIdDistrict('')
               setIsOpen(false)
             }}
             className={'btnCancel'}
@@ -177,20 +181,7 @@ const AddressManagerPU = ({
                 />
               </div>
             </div>
-            <div
-              className={`${
-                !checkValue && !data?.detail ? 'invalidValue' : null
-              } text-labelText `}
-            >
-              <div className=" mb-[6px] flex align-middle">
-                <InputForm
-                  className={'inputBase inputGray text-textSizeMb'}
-                  content={data?.detail}
-                  setContent={(value) => setData({ ...data, detail: value })}
-                  placeholder={'Số nhà, Tên đường'}
-                />
-              </div>
-            </div>
+            
             <div
               className={`${
                 !checkValue && !data?.city ? 'invalidValue' : null
@@ -241,6 +232,20 @@ const AddressManagerPU = ({
                   error={'Vui lòng chọn Quận/ Huyện trước'}
                   value={data?.wards ? data.wards : undefined}
                   setValueSelect={(value) => setData({ ...data, wards: value })}
+                />
+              </div>
+            </div>
+            <div
+              className={`${
+                !checkValue && !data?.detail ? 'invalidValue' : null
+              } text-labelText `}
+            >
+              <div className=" mb-[6px] flex align-middle">
+                <InputForm
+                  className={'inputBase inputGray text-textSizeMb'}
+                  content={data?.detail}
+                  setContent={(value) => setData({ ...data, detail: value })}
+                  placeholder={'Số nhà, Tên đường'}
                 />
               </div>
             </div>

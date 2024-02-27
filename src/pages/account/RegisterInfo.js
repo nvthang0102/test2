@@ -133,7 +133,8 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
                 {data.mail ? data.mail : 'Email'}
               </span>
               <span>
-                {data.isMailVerify ? (
+                {/* {data.isMailVerify ? ( */}
+                {data.mail ? (
                   <Tooltip
                     trigger="click"
                     arrow={false}
@@ -219,25 +220,29 @@ const RegisterInfo = ({ setShowConfirmEdit }) => {
             </div>
             <div className=" flex-1 flex pl-[6px] items-center  bg-[#4285F4]">
               <span className="text-whiteText text-[14ptexttext-textSizeMb">
-                {email ? email : 'Google'}
+                {data.mail ? data.mail : 'Google'}
+                {/* {email ? email : 'Google'} */}
               </span>
             </div>
           </div>
           <div className="cursor-pointer flex items-center justify-center ml-[8px]">
-            {!email ? (
-              <IconLink onClick={() => handleLoginWithGoogle()} />
+            {/* {!email ? ( */}
+            {data.mail ? (
+              <IconLink
+              // onClick={() => handleLoginWithGoogle()}
+              />
             ) : (
               <IconUnLink
-                onClick={() => {
-                  setEmail('')
-                  dispatch(
-                    setNotify({
-                      isNotify: true,
-                      msg: 'Hủy liên kết thành công',
-                      type: 'success',
-                    })
-                  )
-                }}
+              // onClick={() => {
+              //   setEmail('')
+              //   dispatch(
+              //     setNotify({
+              //       isNotify: true,
+              //       msg: 'Hủy liên kết thành công',
+              //       type: 'success',
+              //     })
+              //   )
+              // }}
               />
             )}
           </div>
