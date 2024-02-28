@@ -10,17 +10,10 @@ import store from './service/store'
 import ServiceManager from './pages/serviceManager/ServiceManager'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import CardManager from './pages/cardManager'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import AddCard from './pages/addCard'
+import Landing from './pages/Landing'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
-// function slideTitle() {
-//   var titleElement = document.title; // Lưu giữ tiêu đề ban đầu
-
-//   // Thay đổi title thành span với class kích hoạt hiệu ứng CSS
-//   document.title = '<span class="title-slide">' + titleElement + '</span>';
-// }
-// slideTitle()
 root.render(
   <GoogleOAuthProvider clientId={`${window.GOOGLE_ID_CLIENT}`}>
     <Provider store={store}>
@@ -31,7 +24,7 @@ root.render(
             <Route index path="/" element={<AccountManager />} />
             <Route index path="/service_manager" element={<ServiceManager />} />
             <Route index path="/card-manager" element={<CardManager />} />
-            <Route index path="/add-card" element={<AddCard />} />
+            {/* <Route index path="/add-card" element={<AddCard />} /> */}
           </Route>
           <Route index path="/login" element={<Authentication />} />
           <Route index path="/register" element={<Authentication />} />

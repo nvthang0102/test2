@@ -1,72 +1,69 @@
-import { Upload, message } from "antd";
-import { useEffect, useState } from "react";
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import ImgCrop from "antd-img-crop";
-import "./SelectImageCustom.scss"
-const SelectLogo = ({ onSelectColor, Content, note, aspectRate, modalTitle,selectLogo,logoType }) => {
-    const [loading, setLoading] = useState(false);
-    const [imageUrl, setImageUrl] = useState(selectLogo?.value);
-    const [imageUrlAvata, setImageUrlAvata] = useState("");
-    useEffect(()=>{
-    },[])
+import { Upload, message } from 'antd'
+import { useEffect, useState } from 'react'
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import ImgCrop from 'antd-img-crop'
+import './SelectImageCustom.scss'
+const SelectLogo = ({
+    onSelectColor,
+    Content,
+    note,
+    aspectRate,
+    modalTitle,
+    selectLogo,
+    logoType,
+}) => {
+    const [loading, setLoading] = useState(false)
+    const [imageUrl, setImageUrl] = useState(selectLogo?.value)
+    const [imageUrlAvata, setImageUrlAvata] = useState('')
+    const [fileName, setFileName] = useState('')
+    useEffect(() => { }, [])
     const getBlob = (file, callback) => {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(new Blob([reader.result])));
-        reader.readAsArrayBuffer(file);
-    };
-
-    const beforeUpload = (file) => {
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
-        }
-        return isLt2M;
-    };
+        const reader = new FileReader()
+        reader.addEventListener('load', () => callback(new Blob([reader.result])))
+        reader.readAsArrayBuffer(file)
+    }
 
     const handleChange = (info) => {
-        if (info.file.status === 'uploading') {
-            setLoading(true);
-            return;
-        }
-        if (info.file.status === 'done') {
-            getBlob(info.file.originFileObj, (blob) => {
-                setLoading(false);
-                onSelectColor({ key: 'image', value: URL.createObjectURL(blob),fileName:info.file.name.split('.').pop()});
-                setImageUrl(URL.createObjectURL(blob));
-            });
-        }
-    };
+        getBlob(info.file, (blob) => {
+            setLoading(false)
+            onSelectColor({
+                key: 'image',
+                value: URL.createObjectURL(blob),
+                fileName: info.file.name.split('.').pop(),
+            })
+            setFileName(info.file.name)
+            setImageUrl(URL.createObjectURL(blob))
+        })
+    }
 
     const uploadButton = (
         <button
-            style={{
-                border: 0,
-                background: 'none',
-            }}
-            type="button"
+          style={{
+            border: 0,
+            background: 'none',
+            width:'100%'
+          }}
+          type="button"
         >
-            {loading ? <LoadingOutlined style={{ color: "#FFFFFF" }} /> :
-                <span style={{ color: "#FFFFFF", fontSize: 15, fontWeight: 600 }}>
-                    <PlusOutlined style={{ color: "#FFFFFF", marginRight: 10 }} />
-                    {`   ${Content}`}
-                </span>
-            }
-            <div
-                style={{
-                    color: "#FFFFFF",
-                    marginTop: 8,
-                }}
-            >
-                {note}
-            </div>
+           <p className='text-[#1B94D2] font-bold truncate ...'>{fileName}</p>
+          {loading ? (
+            <LoadingOutlined style={{ color: '#FFFFFF' }} />
+          ) : (
+            <span className='text-white text-[15px] font-bold'>
+              <PlusOutlined className='text-white mr-[6px]' />
+              {`   ${Content}`}
+            </span>
+          )}
+          <div className='text-white mt-1'>
+            {note}
+          </div>
+         
         </button>
-    );
-    
-   
+      )
+
     return (
         <div>
             <ImgCrop
-                className="select-image"
                 cropShape="round"
                 showGrid
                 rotationSlider
@@ -78,25 +75,16 @@ const SelectLogo = ({ onSelectColor, Content, note, aspectRate, modalTitle,selec
                     name="avatar"
                     listType="picture-card"
                     className="avatar-uploader ant-upload-select-image"
-                    action={`${window.URL_SERVER}`}
+                    beforeUpload={() => false}
+                    appendActionVisible={true}
                     showUploadList={false}
-                    beforeUpload={beforeUpload}
                     onChange={handleChange}
                 >
-                    {imageUrl ? (
-                        <img
-                            src={imageUrl}
-                            alt="avatar"
-                            style={{ height: '100%', borderRadius: '50%' }}
-                        />
-                    ) : (
-                        uploadButton
-                    )}
+                    {uploadButton}
                 </Upload>
             </ImgCrop>
-
-        </div >
-    );
+        </div>
+    )
 }
 
 export default SelectLogo

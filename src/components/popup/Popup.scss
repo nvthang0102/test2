@@ -1,8 +1,34 @@
 @import '../../assets/styles/validate.scss';
-.wrapperContentAddressManagerPU{
+
+.wrapperContentAddressManagerPU {
     margin-top: 3.9rem;
 }
 .puNotifyImproving{
     background-image: url('../../assets//images/constructPopupBG.png') !important;
     background-repeat: no-repeat;
+}
+
+.wrapperModalLayoutContact {
+    padding: unset;
+    background: #0C0D0D !important;
+    //background: linear-gradient(105.95deg, rgba(8, 8, 8, 0.64) 0%, rgba(17, 17, 17, 0.72) 100%, rgba(8, 8, 8, 0.48) 100%) !important;
+
+
+
+    .ant-modal-content {
+        background: transparent;
+        padding: 18px 12px !important;
+
+        // &::before {
+        //     content: "";
+        //     backdrop-filter: blur(90px) !important;
+        // }
+    }
+
+}
+
+.card-dowload {
+    .ant-modal-close-x{
+        display: none !important;
+    }
 }

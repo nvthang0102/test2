@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './index.scss';
 import CardFront from './CardFront';
 import CardBack from './CardBack';
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { EffectFlip, Pagination, Navigation,handleNextButtonClick } from "swiper/modules";
 
 import "swiper/css";
@@ -12,30 +12,21 @@ import "swiper/css/navigation";
 
 const CreateCard = (props) => {
     const [isFlipped, setIsFlipped] = useState(false);
-
-    // useEffect(()=>{
-    //     // swiperRef.current?.swiper.slideTo(props?.numberSlide||0);
-    // },[props?.numberSlide])
-
     const swiperRef = useRef(null);
+    
+    useEffect(()=>{
+
+    },[swiperRef])
 
     const handleClick = () => {
-        setIsFlipped(!isFlipped);
+        if(swiperRef.current)
+        {
+            swiperRef.current.swiper.slideNext();
+        }
     };
-    const handleSwipeLeft = () => {
-        setIsFlipped(true);
-    };
-
-    const handleSwipeRight = () => {
-        setIsFlipped(false);
-    };
-    // const handleSlideChange = (swiper) => {
-    //     props.onHandleIndexSlide(swiper.activeIndex);
-    //   };
 
     return (
             <Swiper
-            // onSlideChange={(swiper) => handleSlideChange(swiper)}
             ref={swiperRef}
             effect={"flip"}
             grabCursor={true}
@@ -44,12 +35,12 @@ const CreateCard = (props) => {
             loop={true}
             modules={[EffectFlip]}
             className="mySwiper"
-        >
+        >   
             <SwiperSlide>
-                <CardFront {...props} onBack={handleClick} handleSwipeLeft={handleSwipeLeft} />
+                <CardFront {...props} handleSwipeLeft={handleClick} />
             </SwiperSlide>
             <SwiperSlide>
-                <CardBack {...props} onBack={handleClick} handleSwipeRight={handleSwipeRight} />
+                <CardBack {...props} handleSwipeRight={handleClick} />
             </SwiperSlide>
         </Swiper>
 

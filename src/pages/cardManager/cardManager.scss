@@ -1,6 +1,6 @@
 .wrapperNumberCard {
     padding: 18px 12px;
-    border-radius: 15px;
+    border-radius: 18px;
     position: relative;
     z-index: 2;
     // background: linear-gradient(130deg,#1a638b 3%,hsla(0,0%,100%,0) 10%),linear-gradient(310deg,#707378 2%,$--main-bg 15%);
@@ -26,12 +26,14 @@
         z-index: -1;
 
     }
-    .itemNumber{
+
+    .itemNumber {
         font-size: 24px;
         font-weight: 700;
         color: #FFFFFF;
     }
-    .titleNumberCard{
+
+    .titleNumberCard {
         font-size: 18px;
         font-weight: 600;
         color: #FFFFFF80;
@@ -41,33 +43,35 @@
     }
 }
 
-.disable-scroll{
-    overflow: unset !important;
-    height: 100%;
-    padding-top: 12px;
-}
-.cardEmpty{
-   padding: 12px;
-    div{
+// .disable-scroll{
+//     overflow: unset !important;
+//     height: 100%;
+//     padding-top: 12px;
+// }
+.cardEmpty {
+    padding: 12px;
+
+    div {
         border-bottom: 1px dashed #1B94D2;
         height: 12px;
     }
 }
-.set-title-empty{
-    margin:24px 0px 0px 0px !important;
+
+.set-title-empty {
+    margin: 24px 0px 0px 0px !important;
     font-style: italic;
     font-size: 15px;
     color: #FFFFFF99;
 }
 
 
-.cardBodyModal{
+.cardBodyModal {
     padding: 12px;
-    width: 100%;
+    width: 280px;
     position: relative;
 }
 
-.cardItemModal{
+.cardItemModal {
     width: 100%;
     position: absolute;
     top: 0%;
@@ -75,16 +79,181 @@
     transform: translate(-50%, 10%);
     text-align: center;
 }
-.button-back{
-    color:#1B94D2;
+
+.button-back {
+    color: #1B94D2;
     font-size: 15px;
     background: #1E2530;
     border: 0px;
 }
 
-.button-submit{
-    color:#FFFFFF;
+.button-submit {
+    color: #FFFFFF;
     font-size: 15px;
     background-image: linear-gradient(#00D4FC, #1955B6);
     border: 0px;
+}
+
+.modal-info {
+    .ant-modal-content {
+        width: 100%;
+        margin: 0;
+        top: -100px;
+        background-color: rgba(0, 0, 0, 0);
+        padding-left: 0px;
+        padding-right: 0px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .ant-modal-close-x {
+        color: #FFFFFF;
+    }
+
+    .ant-modal-close {
+        inset-inline-end: 0px;
+        z-index: 1400;
+        position: fixed;
+        right: 10px;
+    }
+}
+
+.modal-full {
+    .ant-modal-mask{
+        background-color: rgba(0, 0, 0, 0.5) !important;
+        /* mini footer glass */
+        backdrop-filter: blur(30px) !important;
+        // background: rgba($color: #000, $alpha: 0.5)!important;
+        // backdrop-filter: blur(80px);
+    }
+
+    .ant-modal-content {
+        background: rgba(0, 0, 0, 0) !important;
+        box-shadow: none !important;
+        // position: relative;
+        // background-clip: padding-box;
+        // border: 0;
+        // border-radius: 8px;
+        // pointer-events: auto;
+        padding: 0px !important;
+    }
+
+    .ant-modal-close-x {
+        color: #FFFFFF;
+    }
+
+    .ant-modal-close {
+        inset-inline-end: 0px;
+        z-index: 1400;
+        position: fixed;
+        right: 18px;
+    }
+}
+
+
+.modal-picker-color {
+    .ant-modal-content {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        top: -90px;
+        padding-left: 0px;
+        padding-right: 0px;
+        border-radius: 18px;
+        background: linear-gradient(286.1deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 24.85%), linear-gradient(106.1deg, rgba(33, 144, 245, 0.6) 0%, rgba(17, 17, 17, 0) 34.84%);
+        &::after {
+            content: "";
+            width: calc(100% + 2px);
+            height: calc(100% + 2px);
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            background: linear-gradient(300deg, rgba(255, 255, 255, 0.20) 0%, rgba(17, 17, 17, 0.00) 27.26%), linear-gradient(140deg, rgba(27, 148, 210, 0.60) 0%, rgba(17, 17, 17, 0.00) 24.6%);
+            border-radius: 18px;
+            padding: 1px;
+            backdrop-filter: blur(8px);
+            z-index: -1;
+
+        }
+    }
+
+    .ant-modal-close-x {
+        color: #FFFFFF;
+    }
+
+    .ant-modal-close {
+        inset-inline-end: 0px;
+        z-index: 1400;
+        position: fixed;
+        right: 18px;
+    }
+}
+
+
+.convert-scroll-add-card {
+    &::-webkit-scrollbar {
+        height: 1px !important;
+    }
+}
+
+
+.wrapperBoderPackake {
+    border-radius: 18px;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 100%);
+
+
+    &::after {
+        content: "";
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        border-radius: 18px;
+        padding: 1px;
+
+        background: linear-gradient(286.1deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 24.85%), linear-gradient(106.1deg, rgba(33, 144, 245, 0.6) 0%, rgba(17, 17, 17, 0) 34.84%);
+
+        backdrop-filter: blur(7.59999942779541px);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+
+    }
+}
+
+
+.wrapperBoderPackakeBusiness {
+    border-radius: 18px;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 100%);
+
+
+    &::after {
+        content: "";
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        border-radius: 18px;
+        padding: 1px;
+
+        background: linear-gradient(286.1deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 24.85%), linear-gradient(106.1deg, rgba(33, 144, 245, 0.6) 0%, rgba(17, 17, 17, 0) 34.84%);
+
+        backdrop-filter: blur(7.59999942779541px);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+
+    }
 }

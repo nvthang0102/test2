@@ -1,0 +1,16 @@
+.background-user {
+    background-image: url("../../../../assets/images/backgoundAccount.png");
+    background-color: aqua;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 300px;
+    margin-left: -10px;
+    margin-right: -10px;
+    z-index: -1;
+
+    &::before {
+        content: '';
+        position: absolute;
+
+    }
+}

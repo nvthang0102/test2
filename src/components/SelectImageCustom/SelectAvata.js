@@ -6,6 +6,7 @@ import "./SelectImageCustom.scss"
 const SelectAvata = ({ onSelectColor, Content, note, aspectRate, modalTitle,selectLogo }) => {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(selectLogo?.value);
+    const [fileName, setFileName] = useState('')
 
     const getBlob = (file, callback) => {
         const reader = new FileReader();
@@ -13,51 +14,44 @@ const SelectAvata = ({ onSelectColor, Content, note, aspectRate, modalTitle,sele
         reader.readAsArrayBuffer(file);
     };
 
-    const beforeUpload = (file) => {
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
-        }
-        return isLt2M;
-    };
+
 
     const handleChange = (info) => {
-        if (info.file.status === 'uploading') {
-            setLoading(true);
-            return;
-        }
-        if (info.file.status === 'done') {
-            getBlob(info.file.originFileObj, (blob) => {
-                setLoading(false);
-                onSelectColor({ key: 'image', value: URL.createObjectURL(blob),fileName:info.file.name.split('.').pop()});
-                setImageUrl(URL.createObjectURL(blob));
-            });
-        }
-    };
+        getBlob(info.file, (blob) => {
+            setLoading(false)
+            onSelectColor({
+                key: 'image',
+                value: URL.createObjectURL(blob),
+                fileName: info.file.name.split('.').pop(),
+            })
+            setFileName(info.file.name)
+            setImageUrl(URL.createObjectURL(blob))
+        })
+    }
 
     const uploadButton = (
         <button
-            style={{
-                border: 0,
-                background: 'none',
-            }}
-            type="button"
-        >
-            {loading ? <LoadingOutlined style={{ color: "#FFFFFF" }} /> :
-                <span style={{ color: "#FFFFFF", fontSize: 15, fontWeight: 600 }}>
-                    <PlusOutlined style={{ color: "#FFFFFF", marginRight: 10 }} />
-                    {`   ${Content}`}
-                </span>
-            }
-            <div
-                style={{
-                    color: "#FFFFFF",
-                    marginTop: 8,
-                }}
-            >
-                {note}
-            </div>
-        </button>
+        style={{
+          border: 0,
+          background: 'none',
+          width:'100%'
+        }}
+        type="button"
+      >
+         <p className='text-[#1B94D2] font-bold truncate ...'>{fileName}</p>
+        {loading ? (
+          <LoadingOutlined style={{ color: '#FFFFFF' }} />
+        ) : (
+          <span className='text-white text-[15px] font-bold'>
+            <PlusOutlined className='text-white mr-[6px]' />
+            {`   ${Content}`}
+          </span>
+        )}
+        <div className='text-white mt-1'>
+          {note}
+        </div>
+       
+      </button>
     );
     
    
@@ -75,20 +69,14 @@ const SelectAvata = ({ onSelectColor, Content, note, aspectRate, modalTitle,sele
                     name="avatar"
                     listType="picture-card"
                     className="avatar-uploader ant-upload-select-image"
-                    action={`${window.URL_SERVER}`}
+                    beforeUpload={() => false}
+                    appendActionVisible={true}
                     showUploadList={false}
-                    beforeUpload={beforeUpload}
                     onChange={handleChange}
                 >
-                    {imageUrl ? (
-                        <img
-                            src={imageUrl}
-                            alt="avatar"
-                            style={{ height: '100%', borderRadius: '50%' }}
-                        />
-                    ) : (
+                    {
                         uploadButton
-                    )}
+                    }
                 </Upload>
             </ImgCrop>
 

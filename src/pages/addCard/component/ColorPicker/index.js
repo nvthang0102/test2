@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ColorPicker.scss"
 import { Radio, Switch } from "antd";
 import FlatColor from "./FlatColor";
@@ -7,14 +7,17 @@ import ImageBackground from "./ImageBackground";
 import SelectImageCustom from "../../../../components/SelectImageCustom";
 function ColorPicker({ onChangeSelect,selectImage }) {
     const [selectkey, setSelectKey] = useState("flat")
-
+    useEffect(()=>{
+        console.log("selectImage",selectImage)
+        setSelectKey(selectImage.key)
+    },[selectImage])
     return (
-        <div className="px-3 py-[10px] rounded-2xl bg-primary-blue-dark-max" style={{ marginTop: 12 }}>
+        <div className="px-3 py-[10px] rounded-2xl bg-primary-blue-dark-max wrapperBoder" style={{ marginTop: 12 }}>
             <div className="font-semibold text-[12px] text-white">Nền</div>
             <div className="mt-3">
                 <Radio.Group
                     className="flex h-full w-full overflow-x-auto !shadow-none !px-0 justify-start checked-select"
-                    defaultValue="flat"
+                    value={selectkey}
                     buttonStyle="solid"
                     onChange={(e) => {
                         setSelectKey(e.target.value);

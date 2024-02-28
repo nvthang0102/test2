@@ -11,7 +11,7 @@ const FrontText = ({ onEnableFront, onChaneName ,onSelectColor,onFontFamily,onSl
   }
   return (
     <div style={{ marginTop: 12 }} onClick={onSlide}>
-      <div className=" rounded-2xl bg-primary-blue-dark-max px-3 py-[10px]">
+      <div className=" rounded-2xl bg-primary-blue-dark-max px-3 py-[10px] wrapperBoder">
         <div className="flex justify-between">
           <div className="text-[12px] font-semibold text-white">
             Tên (mặt trước)

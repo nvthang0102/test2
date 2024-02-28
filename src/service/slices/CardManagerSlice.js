@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { instance } from './configAPI'
+import { setNotify } from './CommonSlice'
 
 const initialState = {
     dataListCard: [],
@@ -56,9 +57,22 @@ export const getListCard = createAsyncThunk('CardManagerSlice/getListCard', asyn
 export const deleteCard = createAsyncThunk('CardManagerSlice/deleteCard', async (params, thinkAPI) => {
     try {
         const res = await instance.post(`/v2/card/delete-card`, params)
+        thinkAPI.dispatch(
+            setNotify({
+              isNotify: true,
+              msg: 'Xóa card thành công',
+              type: 'success',
+            })
+          )
         return res.data
     } catch (error) {
-        console.log(error)
+        thinkAPI.dispatch(
+            setNotify({
+              isNotify: true,
+              msg: 'Xóa card thất bại',
+              type: 'error',
+            })
+          )
         return error.reponse.data
     }
 })
