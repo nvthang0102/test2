@@ -31,18 +31,15 @@ const AddressManagerPU = ({
   const { dataCity, dataDistrict, dataWard } = provinceState
 
   const [idCity, setIdCity] = useState(
-    isEdit ? dataCity.find((city) => city.full_name === data.city)?.id : ''
+    dataCity.find((city) => city.full_name === data.city)?.id
   )
   const [idDistrict, setIdDistrict] = useState()
-  console.log('dataDistrict',dataDistrict);
   // lấy dữ liệu về tỉnh thành, quận huyện, xã phường
   useEffect(() => {
-    if (isEdit) {
-      setIdDistrict(
-        dataDistrict.find((item) => item.full_name === data.district)?.id
-      )
-    }
-  }, [isEdit])
+    setIdDistrict(
+      dataDistrict.find((item) => item.full_name === data.district)?.id
+    )
+  }, [idCity])
   useEffect(() => {
     dispatch(getCity())
   }, [])
@@ -116,7 +113,9 @@ const AddressManagerPU = ({
         open={open}
         maskClosable={false}
         setOpen={setIsOpen}
-        handleClose={()=>{dispatch(resetState())}}
+        handleClose={() => {
+          dispatch(resetState())
+        }}
         btnOk={
           <BaseButton
             handleClick={() => {
@@ -129,7 +128,7 @@ const AddressManagerPU = ({
           <BaseButton
             handleClick={() => {
               dispatch(resetState())
-              setIdCity("")
+              setIdCity('')
               setIdDistrict('')
               setIsOpen(false)
             }}
@@ -181,7 +180,7 @@ const AddressManagerPU = ({
                 />
               </div>
             </div>
-            
+
             <div
               className={`${
                 !checkValue && !data?.city ? 'invalidValue' : null

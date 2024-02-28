@@ -3,7 +3,13 @@ import './Menu.scss'
 import {
   IconAccount,
   IconAnalytics,
+  IconAvatarMenu,
+  IconCard,
+  IconCardMenu,
   IconCart,
+  IconContact,
+  IconInformation,
+  IconLogout,
   IconUpLevel,
   IconXmark,
 } from '../../assets/icons'
@@ -11,6 +17,8 @@ import { Col, Row } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { Button, Menu } from 'antd'
 import ModalNotifyImproving from '../popup/ModalNotifyImproving'
+import BaseButton from '../button/BaseButton'
+import { useCookies } from 'react-cookie'
 
 const SideBar = ({ showMenu, setShowMenu }) => {
   const navigate = useNavigate()
@@ -24,9 +32,20 @@ const SideBar = ({ showMenu, setShowMenu }) => {
       type,
     }
   }
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'auth-token',
+    'auth-id',
+    'current-user-avatar',
+    'current-user-shortcut',
+    'auth-token-2',
+  ])
   const rootSubmenuKeys = ['accout', 'info', 'order']
-  const [openKeys, setOpenKeys] = useState(['account'])
-
+  const [openKeys, setOpenKeys] = useState(['account', undefined])
+  const [selectedKey, setSelectedKey] = useState(
+    window.location.pathname === '/'
+      ? '/account_manager'
+      : window.location.pathname
+  )
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -35,8 +54,10 @@ const SideBar = ({ showMenu, setShowMenu }) => {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : [])
     }
   }
+  useEffect(() => {
+    setSelectedKey(window.location.pathname)
+  }, [window.location.pathname])
   const handleChangePage = (value) => {
-    localStorage.setItem('acount', value)
     navigate(`/${value}`, {})
     setShowMenu(false)
   }
@@ -50,50 +71,60 @@ const SideBar = ({ showMenu, setShowMenu }) => {
         />
       ) : null}
       <Menu
-        defaultOpenKeys={['account']}
         className={`wrapperSideBar flex flex-col ${
           showMenu ? 'slide-in' : 'slide-out'
         }`}
-        defaultSelectedKeys={['/']}
+        // defaultSelectedKeys={['account_manager']}
         mode="inline"
         openKeys={openKeys}
-        // selectedKeys={defaultMenu ? defaultMenu : "chat"}
+        defaultOpenKeys={['sub1']}
+        selectedKeys={selectedKey}
         onOpenChange={onOpenChange}
       >
         <div className="headeMenu">
           <IconXmark onClick={() => setShowMenu(false)} />
-          {/* <div className='h-[48px] my-[12px] flex '>
-                <span className="text-labelText">Về trang chủ</span>
-              </div> */}
-          <div className="flex-1"></div>
+          <div
+            onClick={() => {
+              window.location.href = `https://onthedesk.vn/${cookies['current-user-shortcut']}`
+            }}
+            className="backMenu cursor-pointer  text-labelText"
+          >
+            <div className="avatarMenu">
+              <IconAvatarMenu />
+            </div>
+            <span>Hoàng Lê</span>
+          </div>
           <Menu.SubMenu
-            key={'account'}
             title={
               <div className="nameItemMenu ">
                 <span className="text-labelText">Tài Khoản</span>
               </div>
             }
             icon={<IconAccount />}
+            key={'sub1'}
           >
             <Menu.Item
               // icon={<IconAccount />}
               className="flex justify-end "
-              key={'account_manager'}
+              key={'/account_manager'}
               onClick={() => {
+                setSelectedKey('/account_manager')
                 handleChangePage('account_manager')
               }}
             >
               <Row>
                 <Col span={5}></Col>
-                <div className="nameItemMenu pl-[8px]">
+                <div className="nameItemMenu subItem pl-[8px]">
                   <div className="  text-labelText">Quản lý tài khoản</div>
                 </div>
               </Row>
             </Menu.Item>
             <Menu.Item
               // icon={<IconAccount />}
-              key={'service'}
+              key={'/service_manager'}
               onClick={() => {
+                // setSelectedKey('/service_manager')
+                setSelectedKey('/account_manager')
                 setShowModalNotify(true)
                 // handleChangePage('account_manager')
                 // handleChangePage('service_manager')
@@ -101,36 +132,39 @@ const SideBar = ({ showMenu, setShowMenu }) => {
             >
               <Row>
                 <Col span={5}></Col>
-                <div className="pl-[8px] nameItemMenu">
+                <div className="pl-[8px] subItem nameItemMenu">
                   <span className="text-labelText">Quản lý dịch vụ</span>
                 </div>
               </Row>
             </Menu.Item>
             <Menu.Item
               // icon={<IconAccount />}
-              key={'card-manager'}
+              key={'/card-manager'}
               onClick={() => {
+                setSelectedKey('/card-manager')
                 handleChangePage('card-manager')
               }}
             >
               <Row>
                 <Col span={5}></Col>
-                <div className="pl-[8px] nameItemMenu">
+                <div className="pl-[8px] subItem nameItemMenu">
                   <span className="text-labelText">Quản lý thẻ</span>
                 </div>
               </Row>
             </Menu.Item>
             <Menu.Item
               // icon={<IconAccount />}
-              key={'info'}
+              key={'/info_manager'}
               onClick={() => {
+                // setSelectedKey('/info_manager')
+                // setSelectedKey('/account_manager')
                 setShowModalNotify(true)
                 // handleChangePage('account_manager')
               }}
             >
               <Row>
                 <Col span={5}></Col>
-                <div className="pl-[8px] nameItemMenu">
+                <div className="pl-[8px] subItem nameItemMenu">
                   <span className="text-labelText">Quản lý hồ sơ</span>
                 </div>
               </Row>
@@ -138,8 +172,10 @@ const SideBar = ({ showMenu, setShowMenu }) => {
           </Menu.SubMenu>
           <Menu.Item
             icon={<IconAnalytics />}
-            key={'statistics'}
+            key={'/statistics_manager'}
             onClick={() => {
+              // setSelectedKey('/account_manager')
+              // setSelectedKey('/statistics_manager')
               setShowModalNotify(true)
               // handleChangePage('account_manager')
               // handleChangePage('')
@@ -155,8 +191,10 @@ const SideBar = ({ showMenu, setShowMenu }) => {
           </Menu.Item>
           <Menu.Item
             icon={<IconCart />}
-            key={'order'}
+            key={'/order'}
             onClick={() => {
+              // setSelectedKey('/order')
+              // setSelectedKey('/account_manager')
               setShowModalNotify(true)
               // handleChangePage('account_manager')
             }}
@@ -168,7 +206,49 @@ const SideBar = ({ showMenu, setShowMenu }) => {
           </Menu.Item>
         </div>
         <div className="footerSideBar">
-          <hr />
+          <BaseButton
+            handleClick={() => handleChangePage('card-manager')}
+            className={'text-[12px] w-full'}
+            content={
+              <div className="flex items-center">
+                <IconCardMenu className="mr-[6px]" /> Thêm thẻ
+              </div>
+            }
+          />
+          <hr className="bg-[white] opacity-1 h-[2px]" />
+          <div className="itemMenuFooter cursor-pointer flex items-center px-[8px] py-[6px]">
+            <IconContact opacity={0.6} />{' '}
+            <span className="ml-3 text-[15px] text-labelText">Liên hệ</span>
+          </div>
+          <div
+            onClick={() => {
+              setCookie('auth-id', '', {
+                maxAge: 0,
+                domain: '.onthedesk.vn',
+              })
+              setCookie('auth-id', '', {
+                maxAge: 0,
+                domain: '.onthedesk.vn',
+              })
+              setCookie('auth-token', 'fjaslkdjflksd', {
+                maxAge: 0,
+                domain: '.onthedesk.vn',
+              })
+              setCookie('current-user-avatar', 'jkfkasdjfk', {
+                maxAge: 0,
+                domain: '.onthedesk.vn',
+              })
+              setCookie('current-user-shortcut', 'fjlkasjdlkf', {
+                maxAge: 0,
+                domain: '.onthedesk.vn',
+              })
+              window.location.href = 'https://login.onthedesk.vn/'
+            }}
+            className="itemMenuFooter cursor-pointer flex items-center px-[8px] py-[6px]"
+          >
+            <IconLogout opacity={0.6} />{' '}
+            <span className="ml-3 text-[15px] text-labelText">Đăng xuất</span>
+          </div>
         </div>
       </Menu>
     </>

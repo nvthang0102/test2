@@ -19,7 +19,7 @@ instance.interceptors.response.use(
       (error.response && error.response.status === 401) ||
       error.response.status === 403
     ) {
-      // window.location.href = 'https://login.onthedesk.vn/'
+      window.location.href = 'https://login.onthedesk.vn/'
     }
     return Promise.reject(error)
   }
