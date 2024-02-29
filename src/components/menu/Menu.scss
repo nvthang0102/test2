@@ -62,6 +62,9 @@
     height: 157px;
     padding: 1.8rem 0;
   }
+  .ant-menu-submenu-arrow{
+    display: none !important;
+  }
 }
 .overlayMenu {
   position: fixed;

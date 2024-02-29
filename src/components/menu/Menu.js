@@ -3,13 +3,16 @@ import './Menu.scss'
 import {
   IconAccount,
   IconAnalytics,
+  IconArrowRight,
   IconAvatarMenu,
+  IconBottom,
   IconCard,
   IconCardMenu,
   IconCart,
   IconContact,
   IconInformation,
   IconLogout,
+  IconRight,
   IconUpLevel,
   IconXmark,
 } from '../../assets/icons'
@@ -40,7 +43,7 @@ const SideBar = ({ showMenu, setShowMenu }) => {
     'auth-token-2',
   ])
   const rootSubmenuKeys = ['accout', 'info', 'order']
-  const [openKeys, setOpenKeys] = useState(['account', undefined])
+  const [openKeys, setOpenKeys] = useState([undefined])
   const [selectedKey, setSelectedKey] = useState(
     window.location.pathname === '/'
       ? '/account_manager'
@@ -54,6 +57,7 @@ const SideBar = ({ showMenu, setShowMenu }) => {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : [])
     }
   }
+  console.log(openKeys)
   useEffect(() => {
     setSelectedKey(window.location.pathname)
   }, [window.location.pathname])
@@ -96,8 +100,13 @@ const SideBar = ({ showMenu, setShowMenu }) => {
           </div>
           <Menu.SubMenu
             title={
-              <div className="nameItemMenu ">
+              <div className="flex items-center nameItemMenu ">
                 <span className="text-labelText">Tài Khoản</span>
+                {openKeys.indexOf(undefined) === -1 ? (
+                  <IconRight />
+                ) : (
+                  <IconBottom />
+                )}
               </div>
             }
             icon={<IconAccount />}
@@ -207,7 +216,7 @@ const SideBar = ({ showMenu, setShowMenu }) => {
         </div>
         <div className="footerSideBar">
           <BaseButton
-            handleClick={() => handleChangePage('card-manager')}
+            handleClick={() => handleChangePage('add-card')}
             className={'text-[12px] w-full'}
             content={
               <div className="flex items-center">

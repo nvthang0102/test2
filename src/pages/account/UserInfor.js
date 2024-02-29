@@ -45,7 +45,6 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
     dispatch(setIsEdit({ keyEdit: 'userInfo', isChanged: false }))
   }
   const handleHiddenEdit = () => {
-    console.log('isChanged', isChanged)
     if (isChanged) {
       setShowConfirmEdit(true)
     } else {
@@ -78,9 +77,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
     return formattedDate
   }
   // lấy dữ liệu và set state
-  useEffect(() => {
-    dispatch(getUserInfo())
-  }, [])
+
   useEffect(() => {
     if (resetRequest) {
       dispatch(getUserInfo())
@@ -91,7 +88,9 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
       setData({
         fullName: dataAccountInfo?.fullName,
         avatarID: dataAccountInfo?.avatarID,
-        birthday: moment(dataAccountInfo?.birthday).format('DD/MM/YYYY'),
+        birthday: dataAccountInfo?.birthday
+          ? moment(dataAccountInfo?.birthday).format('DD/MM/YYYY')
+          : null,
       })
       if (dataAccountInfo?.phones) {
         setDataPhones([...dataAccountInfo?.phones])
@@ -100,52 +99,90 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
   }, [dataAccountInfo])
 
   // check xem đã có sự thay đổi với dữ liệu cũ không để cảnh báo
+  // useEffect(() => {
+  //   const resultPhone = dataPhones.filter((item) => item !== 'Rỗng')
+  //   let differenceArray = []
+  //   if (resultPhone.length <= dataPhones) {
+  //     differenceArray = resultPhone.filter((item) => !dataPhones.includes(item))
+  //   } else {
+  //     differenceArray = dataAccountInfo?.phones?.filter(
+  //       (item) => !resultPhone.includes(item)
+  //     )
+  //   }
+  //   if (
+  //     differenceArray?.length ||
+  //     data.fullName !== dataAccountInfo.fullName ||
+  //     data.birthday !==
+  //       moment(accountState.dataAccountInfo.birthday).format('DD/MM/YYYY') ||
+  //     data.avatarID !== dataAccountInfo.avatarID
+  //   ) {
+  //     setDataChange({
+  //       valueChange: { ...data, phones: resultPhone },
+  //       handle: updateUserInfo,
+  //     })
+  //     dispatch(setIsEdit({ keyEdit, isChanged: true }))
+  //   } else {
+  //     setDataChange({
+  //       valueChange: [],
+  //       handle: '',
+  //     })
+  //     dispatch(setIsEdit({ keyEdit, isChanged: false }))
+  //   }
+  // }, [data, dataPhones])
   useEffect(() => {
     const resultPhone = dataPhones.filter((item) => item !== 'Rỗng')
     let differenceArray = []
-    console.log('resultPhone', differenceArray, resultPhone)
-    if (resultPhone.length <= dataPhones) {
-      differenceArray = resultPhone.filter((item) => !dataPhones.includes(item))
+    if (resultPhone?.length <= dataAccountInfo.phones) {
+      differenceArray = resultPhone.filter(
+        (item) => !dataAccountInfo.phones.includes(item)
+      )
     } else {
       differenceArray = dataAccountInfo?.phones?.filter(
         (item) => !resultPhone.includes(item)
       )
     }
-    if (
-      differenceArray?.length ||
-      data.fullName !== dataAccountInfo.fullName ||
-      data.birthday !==
-        moment(accountState.dataAccountInfo.birthday).format('DD/MM/YYYY') ||
-      data.avatarID !== dataAccountInfo.avatarID
-    ) {
-      setDataChange({
-        valueChange: { ...data, phones: resultPhone },
-        handle: updateUserInfo,
-      })
-      dispatch(setIsEdit({ keyEdit, isChanged: true }))
-    } else {
-      setDataChange({
-        valueChange: [],
-        handle: '',
-      })
-      dispatch(setIsEdit({ keyEdit, isChanged: false }))
+
+    if (data.avatarID) {
+      if (
+        differenceArray?.length ||
+        data.fullName !== dataAccountInfo.fullName ||
+        data.birthday !==
+          moment(accountState.dataAccountInfo.birthday).format('DD/MM/YYYY') ||
+        data.avatarID !== dataAccountInfo.avatarID
+      ) {
+        setDataChange({
+          valueChange: { ...data, phones: resultPhone },
+          handle: updateUserInfo,
+        })
+        dispatch(setIsEdit({ keyEdit, isChanged: true }))
+      } else {
+        setDataChange({})
+        dispatch(setIsEdit({ keyEdit, isChanged: false }))
+      }
     }
   }, [data, dataPhones])
   // thực hiện chỉnh sửa dữ liệu
+  // const handleChangePhones = (index, newValue) => {
+  //   const result = dataPhones.map((item, i) => {
+  //     console.log(index, i)
+  //     if (i === index) {
+  //       return newValue
+  //     } else return item
+  //   })
+  //   setDataPhones(result)
+  // }
   const handleChangePhones = (index, newValue) => {
-    const result = dataPhones.map((item, i) => {
-      console.log(index, i)
-      if (i === index) {
-        return newValue
-      } else return item
-    })
-    setDataPhones(result)
+    console.log('newValue', index, newValue, dataPhones)
+    const result = dataPhones.map((item, i) => (i === index ? newValue : item))
+    if (!dataPhones.length) {
+      setDataPhones([newValue])
+    } else setDataPhones(result)
   }
   //lưu chỉnh sửa
   const handleUpdateUser = () => {
     const resultPhone = dataPhones.filter((item) => item !== 'Rỗng')
     let differenceArray = []
-    if (resultPhone.length <= dataAccountInfo.phones.length) {
+    if (resultPhone?.length <= dataAccountInfo?.phones?.length) {
       differenceArray = resultPhone.filter(
         (item) => !dataAccountInfo.phones.includes(item)
       )
@@ -181,6 +218,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
     } else {
       handleHiddenEdit()
     }
+    dispatch(setIsEdit({ keyEdit, isChanged: false }))
     dispatch(
       updateUserInfo({
         ...data,
@@ -368,7 +406,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                     }}
                   ></Input>
                 </div>
-                {dataPhones.length > 1 && !keyEdit ? (
+                {dataPhones?.length > 1 && !keyEdit ? (
                   <span
                     className="absolute iconSmooth cursor-pointer top-[50%] opacity-50 translate-y-[-50%] right-0"
                     onClick={() => setShowMorePhone(!showMorePhones)}
@@ -446,7 +484,7 @@ const UserInfor = ({ setShowConfirmEdit, setDataChange }) => {
                                 if (
                                   checkEmpty !== -1 ||
                                   checkNull !== -1 ||
-                                  !dataPhones.length
+                                  !dataPhones?.length
                                 ) {
                                   setIsEmpty(true)
                                   dispatch(
