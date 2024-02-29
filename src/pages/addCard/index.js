@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IconBackLeft, IconSaveCard } from '../../assets/icons'
 import { Col, Row } from 'antd'
 import AlignMent from './component/AlignMent'
@@ -12,13 +12,15 @@ import { useDispatch } from 'react-redux'
 import { notifyCustom } from '../../components/notifyCustom'
 import CreateCard from '../../components/cardCustom/CreateCard'
 import './addCard.scss'
-const AddCard = () => {
+import Package from '../cardManager/component/Package'
+import ViewProfile from '../cardManager/component/ViewProfile'
+const AddCard = ({ onClose, cardInfo }) => {
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
   const [alignMent, setAlignMent] = useState('left')
   const [colorPicker, setColorPicker] = useState({
-    key: 'start',
+    key: 'flat',
     value: '#1B94D2',
   })
   const [nameCard, setNameCard] = useState('Your name here')
@@ -32,7 +34,14 @@ const AddCard = () => {
   //boolen
   const [EnableFront, setEnableFront] = useState(true)
   const [EnableLogo, setEnableLogo] = useState(true)
-
+  useEffect(() => {
+    if (cardInfo?._id) {
+      const { alignMent, colorPicker } = cardInfo
+      setAlignMent(alignMent)
+      setColorPicker(colorPicker)
+      console.log("cardInfo", cardInfo)
+    }
+  }, [cardInfo])
   const onSave = async () => {
     const body = {
       alignMent: alignMent,
@@ -46,12 +55,11 @@ const AddCard = () => {
       logo: selectLogo,
     }
     const response = await dispatch(addCard(body))
-    // console.log('add-card', response)
-    // if (response.payload?.status) {
-    //   notifyCustom('Thông báo', 'Thêm card thành công', 'success')
-    // } else {
-    //   notifyCustom('Thông báo', 'Thêm card bị lỗi', 'error')
-    // }
+    if (response.payload?.status) {
+      onClose(false)
+    } else {
+      notifyCustom('Thông báo', 'Thêm card bị lỗi', 'error')
+    }
   }
 
   const onChangeSelect = ({ key, value, fileName }) => {
@@ -68,35 +76,45 @@ const AddCard = () => {
       return
     }
   }
+  const componentRoot = useRef(null);
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    console.log("scrollY", scrollY)
+  };
+  useEffect(() => {
+    console.log("componentRoot", componentRoot)
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [componentRoot]);
 
   return (
-    <div>
-      <div className="fixed-top card-config">
-        <IconBackLeft
-          style={{ marginBottom: 12 }}
-          onClick={() => navigate('/card-manager')}
-        />
-        <Row gutter={12}>
-          <Col className="gutter-row" xs={24} sm={12} md={12} lg={8}>
-            <CreateCard
-              onHandleIndexSlide={(e) => setKeyFlip(e)}
-              numberSlide={keyFlip}
-              nameCardBack={nameCardBack}
-              logo={selectLogo}
-              nameCard={nameCard}
-              textColor={FontColor}
-              isOff={true}
-              colorPicker={colorPicker}
-              FontFamily={FontFamily}
-              isEnableFront={EnableFront}
-              isEnableLogo={EnableLogo}
-              alignMent={alignMent}
-            />
-          </Col>
-        </Row>
+    <div className='relative'>
+      <div className='fixed z-[1300]'>
+        <div className='card-config' >
+          <CreateCard
+            onHandleIndexSlide={(e) => setKeyFlip(e)}
+            numberSlide={keyFlip}
+            nameCardBack={nameCardBack}
+            logo={selectLogo}
+            nameCard={nameCard}
+            textColor={FontColor}
+            isOff={true}
+            colorPicker={colorPicker}
+            FontFamily={FontFamily}
+            isEnableFront={EnableFront}
+            isEnableLogo={EnableLogo}
+            alignMent={alignMent}
+          />
+        </div>
+
+
       </div>
-      <div className="body-config">
-        <AlignMent handleChangeAlignment={setAlignMent} />
+      <div className="pt-[140px]">
+        <AlignMent handleChangeAlignment={setAlignMent} alignment={alignMent} />
         <ColorPicker
           onChangeSelect={onChangeSelect}
           selectImage={colorPicker}
@@ -118,12 +136,13 @@ const AddCard = () => {
           onBackText={(e) => setNameCardBack(e)}
           onSlide={() => setKeyFlip(1)}
         />
-        <div class="d-flex flex-row-reverse">
+        <div class="flex justify-end">
           <IconSaveCard
             style={{ marginTop: 12, marginBottom: 12 }}
             onClick={onSave}
           />
         </div>
+        <Package />
       </div>
     </div>
   )

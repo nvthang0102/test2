@@ -1,32 +1,33 @@
 .checked-select {
     .ant-radio-button-wrapper-checked {
         font-weight: bold;
-        border-radius: 8px;
-        background: #0096FF;
-        box-shadow: 4px 4px 8px 0px rgba(0, 47, 81, 0.8) inset, -4px -4px 8px 0px rgba(125, 229, 255, 0.4) inset;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 100%)!important;
+        box-shadow: none
     }
 
-    :where(.css-dev-only-do-not-override-pr0fja).ant-radio-button-wrapper {
+    .ant-radio-button-wrapper {
         color: #FFFFFF80;
-        background: rgba(0, 0, 0, 0);
+        // background: rgba(0, 0, 0, 0);
         border: 0px solid #d9d9d9;
-        margin-left: 5px;
+        margin-right: 5px;
     }
 
-    :where(.css-dev-only-do-not-override-pr0fja).ant-radio-button-wrapper:not(:first-child)::before {
+    .ant-radio-button-wrapper:not(:first-child)::before {
         width: 0px !important;
     }
 }
 
 .bg-primary-blue-dark-max {
     --tw-bg-opacity: 1;
-    background-color: rgb(30 37 48 / var(--tw-bg-opacity));
+    // background-color: rgb(30 37 48 / var(--tw-bg-opacity));
     height: 100%;
 }
 
 .text-white {
     --bs-text-opacity: 1;
-    color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+    // color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
 }
 
 .font-semibold {
@@ -36,14 +37,16 @@
 
 .ant-radio-group {
     box-shadow: 2px 2px 8px 0px #001940, -2px -2px 8px 0px rgba(60, 173, 255, 0.5);
-    background-color: #1E2530;
-    padding: 10px;
-    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(17, 17, 17, 0.64) 0%, rgba(17, 17, 17, 0.48) 100%);
+    padding: 0px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .\!shadow-none {
-    --tw-shadow: 0 0 #0000 !important;
-    --tw-shadow-colored: 0 0 #0000 !important;
+    // --tw-shadow: 0 0 #0000 !important;
+    // --tw-shadow-colored: 0 0 #0000 !important;
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 

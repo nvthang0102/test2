@@ -29,7 +29,7 @@ const ColorPicker = ({ onSelectColor }) => {
   };
 
   return (
-    <div className='d-flex'>
+    <div className='flex'>
       <CirclePicker color={selectedColor} colors={defaultColors} onChange={handleColorChange} />
       <input type="color" value={customColor} onChange={handleCustomColorChange} />
       {/* <div>

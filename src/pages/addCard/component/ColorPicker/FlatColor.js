@@ -2,7 +2,7 @@ import { ColorPicker, Radio, UploadProps, Upload, Button } from "antd";
 import { Icon } from "@iconify/react";
 import { useRef, useState } from "react";
 import { colors, gradient } from "../../AddCardConstants";
-
+import "./ColorPicker.scss"
 
 
 const FlatColor = ({ onSelectColor }) => {
@@ -70,7 +70,7 @@ const FlatColor = ({ onSelectColor }) => {
             <ColorPicker
                 open={colorPickerShowFlat}
                 placement="bottom"
-                disabledAlpha={true}
+                // disabledAlpha={true}
                 onChangeComplete={(e) => {
                     handleChangeBackgroundColor(e.toHexString());
 

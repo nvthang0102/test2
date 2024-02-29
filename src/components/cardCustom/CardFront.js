@@ -4,13 +4,13 @@ import { IconCard, IconDeleteCard, IconReload } from '../../assets/icons'
 const AlingMent = (e) => {
   switch (e) {
     case 'left':
-      return 'translate(-60%, -50%)'
+      return 'translate(-40%, -50%)'
     case 'center':
       return 'translate(-50%, -50%)'
     case 'right':
-      return 'translate(-40%, -50%)'
-    default:
       return 'translate(-60%, -50%)'
+    default:
+      return 'translate(-40%, -50%)'
   }
 }
 const CardFront = ({
@@ -20,7 +20,7 @@ const CardFront = ({
   isOff = false,
   onShowInfo,
   onDelete,
-  onBack,
+  onEdit,
   colorPicker,
   FontFamily,
   isEnableFront = true,
@@ -42,9 +42,9 @@ const CardFront = ({
       onClick={handleSwipeLeft}
     >
       {!isOff && (
-        <div class="d-flex justify-content-end custom-icon-back">
+        <div class="flex justify-end custom-icon-back">
           <div>
-            <IconReload onClick={onBack} />
+            <IconReload onClick={onEdit} />
           </div>
           <div style={{ width: 5 }}></div>
           <div>

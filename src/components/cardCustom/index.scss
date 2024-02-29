@@ -1,59 +1,26 @@
 @import '../../assets/styles/validate.scss';
 .cardBody{
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 12px;
     width: 100%;
     margin-bottom: 10px;
     position: relative;
     background-size: cover !important;
-    @media (max-width: 575px) {
-        height: 60vw;
-      }
-    
-    @media (min-width: 576px) and (max-width: 992px){
-    height: 30vw; 
-    }
-
-    @media (min-width: 992px) {
-    height: 20vw; 
-    }
+    height: 176px;
+    width: 280px;
 }
 
 .cardItem{
     position: absolute;
     top: 50%;
     left: 50%;
-    // text-align: center;
-
-    @media (max-width: 575px) {
-        width: 60vw;
-      }
-    
-    @media (min-width: 576px) and (max-width: 992px){
-        width: 30vw; 
-    }
-
-    @media (min-width: 992px) {
-        width: 20vw; 
-    }
+    width: 280px;
 }
 
 
 .cardIcon{
-    @media (max-width: 575px) {
-        height: 29vw;
-        width: 29vw;
-      }
-    
-    @media (min-width: 576px) and (max-width: 992px){
-        height: 15vw;
-        width: 15vw;
-    }
-
-    @media (min-width: 992px) {
-        height: 10vw;
-        width: 10vw;
-    }
+    height: 68px;
+    width: 68px;
 }
 
 .cardName{
@@ -65,7 +32,7 @@
 .cardNameBack{
     font-size: 1.2rem;
     font-weight: 500;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
     
 }
 
@@ -79,17 +46,8 @@
 
 .card-qr{
     align-items: center;
-    @media (max-width: 575px) {
-        width: 60vw;
-      }
-    
-    @media (min-width: 576px) and (max-width: 992px){
-        width: 30vw; 
-    }
-
-    @media (min-width: 992px) {
-        width: 20vw; 
-    }
+    width: 164px;
+    height: 82px;
 }
 
 .cardBackBottom{
@@ -108,18 +66,9 @@
 }
 
 .BodyCardBottom{
-    margin-top: 20px;
-    @media (max-width: 575px) {
-        width: 60vw;
-      }
-    
-    @media (min-width: 576px) and (max-width: 992px){
-        width: 30vw; 
-    }
-
-    @media (min-width: 992px) {
-        width: 20vw; 
-    }
+    // margin-top: 20px;
+    // height: 176px;
+    // width: 280px;
 }
 
 .backgound-card-back{
@@ -127,34 +76,26 @@
 }
 
 .cardBodyBack{
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 12px;
     width: 100%;
     margin-bottom: 10px;
     position: relative;
     background-size: cover !important;
-    @media (max-width: 575px) {
-        height: 60vw;
-      }
-    
-    @media (min-width: 576px) and (max-width: 992px){
-    height: 30vw; 
-    }
-
-    @media (min-width: 992px) {
-    height: 20vw; 
-    }
+    height: 176px;
+    width: 280px;
 }
 
 .cardBodyBack::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    border-radius: 8px;
     background: rgba(0, 0, 0, 0.5); /* Màu đen với độ mờ 0.5 (50%) */
+    backdrop-filter: blur(8px);
   }
 
 .icon-logo-custom{
@@ -165,5 +106,9 @@
 }
 .custom-icon-back{
     position: relative;
-    z-index: 9999;
+    z-index: 100;
+}
+
+.swiper-slide{
+    display: ruby !important;
 }

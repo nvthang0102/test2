@@ -1,27 +1,14 @@
 .ant-upload-select-image {
-    @media (max-width: 575px) {
-        height: 58vw !important;
-        width: 100% !important;
-    }
-
-    @media (min-width: 576px) and (max-width: 992px) {
-        height: 29vw !important;
-        width: 50vw !important;
-    }
-
-    @media (min-width: 992px) {
-        height: 19.5vw !important;
-        width: 33vw !important;
-    }
+    width: 100% !important;
+    height: 116px;
 }
-.select-image{
-    .ant-modal .ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
-        margin-bottom: 0;
-        margin-inline-start: 8px;
-        background: #4096ff;
-    }
-    
-     .ant-modal-wrap{
-        z-index: 2050 !important;
-    }
+
+.ant-modal .ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
+    margin-bottom: 0;
+    margin-inline-start: 8px;
+    background: #4096ff;
+}
+
+ .ant-modal-wrap{
+    z-index: 2050 !important;
 }

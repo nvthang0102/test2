@@ -24,7 +24,7 @@ const Logo = ({ onChangeSelect, onEnableLogo,selectLogo,selectAvata }) => {
         onChangeSelect({ key: logoType, value: e.value,fileName:e.fileName })
     }
     return (
-        <div className="rounded-2xl bg-primary-blue-dark-max px-3 py-[10px]" style={{ marginTop: 12 }}>
+        <div className="rounded-2xl bg-primary-blue-dark-max px-3 py-[10px] wrapperBoder" style={{ marginTop: 12 }}>
             <div className="flex justify-between">
                 <div className="text-[12px] font-semibold text-white">
                     Hình đại diện/ Logo

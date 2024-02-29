@@ -18,7 +18,8 @@ const CardCustom = (props) => {
     fontFamily,
     fontColor,
     onShowInfo,
-    onDelete
+    onDelete,
+    onEdit
   } = props;
 
   const [isFlipped, setIsFlipped] = useState(false);
@@ -26,7 +27,7 @@ const CardCustom = (props) => {
   const handleClick = () => {
     setIsFlipped(!isFlipped);
   };
-
+  console.log("backgroundColor gradient",backgroundColor?.includes("gradient"))
   const cardProps = {
     _id,
     logo: { value: logo ? `${window.URL_SERVER}/api/v2${logo}` : logo },
@@ -38,7 +39,7 @@ const CardCustom = (props) => {
     isEnableLogo: enableLogo,
     alignMent: alignment,
     colorPicker: {
-      key: backgroundImage ? 'image' : 'color',
+      key: backgroundImage ? 'image' : (backgroundColor?.includes("gradient")?'gradient':'flat'),
       value: backgroundImage ? `${window.URL_SERVER}/api/v2${backgroundImage}` : backgroundColor,
     },
     nameCardBack: backText,
@@ -47,22 +48,8 @@ const CardCustom = (props) => {
   };
 
   return (
-    <Swiper
-      effect={"flip"}
-      grabCursor={true}
-      pagination={false}
-      navigation={false}
-      loop={true}
-      modules={[EffectFlip]}
-      className="mySwiper"
-    >
-      <SwiperSlide>
-        <CardFront {...cardProps} onBack={handleClick} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <CardBack {...cardProps} onBack={handleClick} />
-      </SwiperSlide>
-    </Swiper>
+    <CardFront {...cardProps} onEdit={onEdit} />
+
 
   );
 };

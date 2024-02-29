@@ -200,16 +200,6 @@
     }
 
 
-.ant-popover .ant-popover-inner {
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    padding: 17px 14px;
-}
-
-.ant-popover .ant-popover-inner, .ant-popover-arrow:after, .ant-popover-arrow:before {
-    background: linear-gradient(180deg,hsla(0,0%,100%,.08),hsla(0,0%,100%,.02))!important;
-}
-
 .menu-btn:hover {
     background: linear-gradient(180deg,hsla(0,0%,100%,.15),hsla(0,0%,100%,.04));
     border-radius: 8px!important;
