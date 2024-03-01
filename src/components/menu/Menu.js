@@ -57,9 +57,12 @@ const SideBar = ({ showMenu, setShowMenu }) => {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : [])
     }
   }
-  console.log(openKeys)
   useEffect(() => {
-    setSelectedKey(window.location.pathname)
+    setSelectedKey(
+      window.location.pathname === '/'
+        ? '/account_manager'
+        : window.location.pathname
+    )
   }, [window.location.pathname])
   const handleChangePage = (value) => {
     navigate(`/${value}`, {})
@@ -216,7 +219,7 @@ const SideBar = ({ showMenu, setShowMenu }) => {
         </div>
         <div className="footerSideBar">
           <BaseButton
-            handleClick={() => handleChangePage('add-card')}
+            handleClick={() => handleChangePage('card-manager')}
             className={'text-[12px] w-full'}
             content={
               <div className="flex items-center">
@@ -224,7 +227,7 @@ const SideBar = ({ showMenu, setShowMenu }) => {
               </div>
             }
           />
-          <hr className="bg-[white] opacity-1 h-[2px]" />
+          <hr className="bg-[white] opacity-1 mt-[12px] h-[2px]" />
           <div className="itemMenuFooter cursor-pointer flex items-center px-[8px] py-[6px]">
             <IconContact opacity={0.6} />{' '}
             <span className="ml-3 text-[15px] text-labelText">Liên hệ</span>

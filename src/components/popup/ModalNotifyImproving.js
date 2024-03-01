@@ -16,6 +16,7 @@ const ModalNotifyImproving = ({ open, setOpen }) => {
     <PopupLayout
       clickOk={()=>setShowContact(true)}
       handleClose={()=>setEmail("")}
+      
       btnOk={
         showContact ? 
           <InputBase

@@ -5,12 +5,11 @@ import './cardManager.scss'
 import Tabs from '../../components/TabsCustom/Tabs'
 import Panel from '../../components/TabsCustom/Panel'
 import { IconAddCard, IconEmpty } from '../../assets/icons'
-import ModalCustom from '../../components/ModalCustom'
 import CardBack from '../../components/cardCustom/CardBack'
 import DeleteCard from './DeleteCard'
 import { useDispatch } from 'react-redux'
 import { deleteCard, getListCard } from '../../service/slices/CardManagerSlice'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { notifyCustom } from '../../components/notifyCustom'
 import CardFront from '../../components/cardCustom/CardFront'
 import AddCard from '../addCard'
@@ -21,8 +20,9 @@ import BaseButton from '../../components/button/BaseButton'
 import DeleteCardPU from '../../components/popup/DeleteCardPU'
 
 const CardManager = () => {
+  const location = useLocation()
   const dispatch = useDispatch()
-
+  const queryParams = new URLSearchParams(location.search)
   const [openInfoCard, setOpenInfoCard] = useState(false)
   const [cardInfo, setCardInfo] = useState(null)
   const [showDelete, setShowDelete] = useState(false)
