@@ -2,7 +2,12 @@ pipeline {
     agent any
 
     stages {
-       
+        stage('Checkout') {
+            steps {
+                // Lấy source code từ Git
+                git branch: 'master', url: 'https://github.com/nvthang0102/test2.git'
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
