@@ -9,14 +9,7 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                // Cài đặt các package cần thiết với npm
-                script {
-                    sh 'npm install'
-                }
-            }
-        }
+       
 
         stage('Build') {
             steps {
