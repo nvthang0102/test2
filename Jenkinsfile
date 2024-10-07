@@ -11,21 +11,20 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                // Cài đặt các package cần thiết với npm
                 script {
                     sh 'npm install --force'
                 }
             }
         }
 
-        // stage('Build') {
-        //     steps {
-        //         // Chạy lệnh build với npm
-        //         script {
-        //             sh 'npm run build'
-        //         }
-        //     }
-        // }
+        stage('Build') {
+            steps {
+                // Chạy lệnh build với npm
+                script {
+                    sh 'npm run build'
+                }
+            }
+        }
 
 
         // stage('Deploy') {
