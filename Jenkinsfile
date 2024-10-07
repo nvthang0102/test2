@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+    tools (nodejs "node")
     stages {
         stage('Checkout') {
             steps {
@@ -8,12 +8,7 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/nvthang0102/test2.git'
             }
         }
-        stage('Install Node.js') {
-            steps {
-                sh 'curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -'
-                sh 'sudo apt-get install -y nodejs'
-            }
-        }
+        
         stage('Install Dependencies') {
             steps {
                 // Cài đặt các package cần thiết với npm
